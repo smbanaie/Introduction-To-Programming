@@ -1,66 +1,100 @@
-# Session 8 Concepts: Algorithm Characteristics and Analysis
+# Session 8 Concepts: Algorithm Analysis & Types
 
-This folder contains detailed articles about what makes algorithms effective and how to analyze their performance. These concepts build on the algorithm definition and analysis introduced in the lecture.
+This folder contains detailed articles about algorithm classification, characteristics, and performance analysis in Persian. These concepts build on the lecture covering different algorithmic approaches and complexity analysis.
 
 ## Table of Contents
 
 ### Algorithm Fundamentals
-- **📋 [Algorithm Characteristics](algorithm-characteristics.md)**: Essential properties that define good algorithms
-- **🏗️ [Algorithm Types](algorithm-types.md)**: Classification by approach and problem-solving strategy
+- **📊 [Algorithm Characteristics](algorithm-characteristics.md)**: What makes a good algorithm - finiteness, definiteness, effectiveness, input, output
+- **🔍 [Algorithm Analysis](algorithm-analysis.md)**: Measuring performance and efficiency with Big O notation and complexity analysis
 
-### Performance Analysis
-- **📊 [Algorithm Analysis](algorithm-analysis.md)**: Measuring time and space complexity
+### Algorithm Classification
+- **🗂️ [Algorithm Types](algorithm-types.md)**: Comprehensive classification by approach (brute force, greedy, divide-and-conquer, dynamic programming, backtracking)
+
+## Persian Translations
+
+### Persian Concept Articles
+- **📊 [ویژگی‌های الگوریتم](algorithm-characteristics_fa.md)**: چه چیزی یک الگوریتم خوب را می‌سازد
+- **🔍 [تحلیل الگوریتم](algorithm-analysis_fa.md)**: اندازه‌گیری عملکرد و کارایی
+- **🗂️ [انواع الگوریتم](algorithm-types_fa.md)**: دسته‌بندی جامع الگوریتم‌ها
 
 ## Detailed Article Descriptions
 
-### 📋 [Algorithm Characteristics](algorithm-characteristics.md)
-Master the five fundamental characteristics that define a true algorithm: finiteness, definiteness, effectiveness, input, and output. Learn additional desirable qualities like correctness, efficiency, and optimality with practical examples.
+### 📊 [Algorithm Characteristics](algorithm-characteristics.md)
+Master the five fundamental characteristics that define true algorithms: finiteness, definiteness, effectiveness, input, and output. Learn about additional desirable qualities like correctness, efficiency, readability, generality, and optimality.
 
-### 🏗️ [Algorithm Types](algorithm-types.md)
-Explore different algorithmic approaches including brute force, greedy, divide-and-conquer, dynamic programming, and backtracking. Understand when to apply each strategy and see detailed implementations with code examples.
+### 🔍 [Algorithm Analysis](algorithm-analysis.md)
+Explore Big O notation, time complexity, space complexity, and practical performance measurement. Learn to analyze algorithms theoretically and benchmark them empirically.
 
-### 📊 [Algorithm Analysis](algorithm-analysis.md)
-Learn how to analyze algorithm performance using Big O notation and complexity analysis. Understand time and space complexity, best/average/worst cases, and practical performance measurement techniques.
+### 🗂️ [Algorithm Types](algorithm-types.md)
+Discover different algorithmic approaches including brute force, greedy, divide-and-conquer, dynamic programming, and backtracking. Understand when to apply each strategy and their trade-offs.
+
+## Persian Translation Details
+
+### 📊 [ویژگی‌های الگوریتم](algorithm-characteristics_fa.md)
+ترجمه کامل مقاله ویژگی‌های الگوریتم شامل پنج ویژگی بنیادی (پایان‌پذیری، قطعیت، مؤثر بودن، ورودی، خروجی) و ویژگی‌های مطلوب اضافی. مثال‌های کد به زبان پایتون و تحلیل پیچیدگی زمانی و فضایی.
+
+### 🔍 [تحلیل الگوریتم](algorithm-analysis_fa.md)
+ترجمه جامع تحلیل الگوریتم شامل نمادگذاری Big O، پیچیدگی زمانی و فضایی، تحلیل amortized، benchmarking عملی، و مقایسه الگوریتم‌ها. شامل مثال‌های عملی و تکنیک‌های بهینه‌سازی.
+
+### 🗂️ [انواع الگوریتم](algorithm-types_fa.md)
+ترجمه کامل دسته‌بندی الگوریتم‌ها شامل رویکردهای مختلف (زورآزمایی، حریصانه، تقسیم و حل، برنامه‌ریزی پویا، پس‌گرد) با مثال‌های کاربردی و تحلیل زمانی هر رویکرد.
 
 ## How to Use These Articles
 
-1. **Start with characteristics**: Understand what makes algorithms work
-2. **Explore types**: Learn different problem-solving approaches
-3. **Master analysis**: Learn to evaluate and compare algorithms
-4. **Apply practically**: Use these concepts to design and analyze your own algorithms
+1. **Start with algorithm characteristics**: Learn what defines a proper algorithm
+2. **Study algorithm types**: Understand different problem-solving approaches
+3. **Master analysis techniques**: Learn to evaluate algorithm performance
+4. **Apply in practice**: Use the Persian translations for better understanding
+5. **Compare approaches**: Choose the right algorithm for different problems
 
 ## Key Themes
 
-- **Algorithm quality**: What separates good algorithms from poor ones
-- **Problem-solving strategies**: Different approaches to different problem types
-- **Performance evaluation**: Tools and techniques for measuring efficiency
-- **Algorithm selection**: Choosing the right approach for specific problems
+- **Algorithm definition**: Clear criteria for what constitutes an algorithm
+- **Performance measurement**: Quantitative analysis of time and space requirements
+- **Strategic approaches**: Different methods for solving computational problems
+- **Comparative analysis**: Understanding trade-offs between different algorithms
+- **Practical application**: Choosing algorithms based on problem constraints
 
 ## Prerequisites
 
 These articles assume you've watched the Session 8 lecture covering:
-- Basic algorithm definition and properties
-- Introduction to different algorithm types
-- Basic complexity analysis concepts
-- Time and space complexity examples
+- Basic algorithm concepts and terminology
+- Introduction to Big O notation
+- Simple algorithm examples
+- Basic complexity analysis
 
 ## Learning Objectives
 
 After reading these articles, you'll understand:
-- The five fundamental characteristics that define algorithms
-- Different algorithmic paradigms and when to use them
-- How to analyze algorithm performance using Big O notation
-- Techniques for comparing and selecting algorithms
-- Practical approaches to algorithm design and optimization
+- Five fundamental characteristics of algorithms and their importance
+- Complete Big O notation and complexity analysis techniques
+- Different algorithmic paradigms and when to apply each
+- How to analyze and compare algorithm performance
+- Practical algorithm selection and optimization strategies
+
+## Persian Learning Benefits
+
+### 🌍 **Enhanced Comprehension**
+- Technical concepts explained in natural Persian
+- Cultural context and familiar analogies
+- Reduced language barrier for complex mathematical concepts
+- Improved retention through native language learning
+
+### 📚 **Educational Accessibility**
+- Makes advanced computer science accessible to Persian speakers
+- Bridges the gap between English technical resources and Persian learners
+- Supports self-paced learning in native language
+- Enables broader participation in algorithm education
 
 ## Next Steps
 
 After mastering these concepts, you'll be ready for:
-- Session 9: Pseudocode and control structures
-- Learning to express algorithms in structured English
-- Understanding sequence, selection, and iteration
-- Translating algorithms into programming constructs
+- Session 9: Pseudocode and Code Translation
+- Learning structured English for algorithm representation
+- Translating pseudocode to Python and other languages
+- Understanding control structures across programming languages
 
 ---
 
-*These articles provide the theoretical foundation for algorithm design and analysis - essential skills for becoming a proficient programmer.*
+*These articles provide a comprehensive foundation in algorithm design and analysis, essential for becoming a proficient programmer. The Persian translations ensure accessibility while maintaining technical rigor and educational quality.*

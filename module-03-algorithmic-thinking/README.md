@@ -37,6 +37,73 @@ By the end of this module, you will be able to:
 - Algorithm refinement and improvement
 - Preparing for actual code implementation
 
+## Concepts Materials
+
+This module includes detailed concept articles for each session, providing in-depth explanations and practical examples beyond the lecture content.
+
+### Session 7: From Data to Problems – Inputs, Outputs, and State
+This session includes detailed concept articles in the `session-07/concepts/` folder:
+
+#### 📥 [Input Process Output](session-07/concepts/input-process-output.md)
+- Complete IPO model explanation with real-world examples
+- State management and data flow understanding
+- Problem decomposition using IPO framework
+- Practical applications in system design and analysis
+
+#### 🧠 [State Management](session-07/concepts/state-management.md)
+- Understanding program state and data persistence
+- State representation using variables and data structures
+- State transitions and lifecycle management
+- State management in algorithmic problem-solving
+
+#### 🌍 [IPO Real World Applications](session-07/concepts/ipo-real-world-applications.md)
+- IPO model applied to consumer electronics, business applications, and industrial systems
+- Comprehensive examples from software systems and scientific applications
+- Universal applicability of IPO model across different domains
+- Case studies and practical implementations
+
+### Session 8: What Is an Algorithm? Natural Language Descriptions
+This session includes detailed concept articles in the `session-08/concepts/` folder:
+
+#### 📊 [Algorithm Characteristics](session-08/concepts/algorithm-characteristics.md)
+- Five fundamental characteristics: finiteness, definiteness, effectiveness, input, output
+- Additional desirable qualities: correctness, efficiency, readability, generality, optimality
+- Algorithm classification by approach and problem type
+- Time and space complexity analysis foundations
+
+#### 🔍 [Algorithm Analysis](session-08/concepts/algorithm-analysis.md)
+- Big O notation and asymptotic analysis
+- Time complexity, space complexity, and practical benchmarking
+- Best/average/worst case analysis and amortized analysis
+- Performance optimization techniques and algorithm comparison
+
+#### 🗂️ [Algorithm Types](session-08/concepts/algorithm-types.md)
+- Comprehensive classification: brute force, greedy, divide-and-conquer, dynamic programming, backtracking
+- Detailed examples with code implementations
+- When to apply different algorithmic strategies
+- Trade-offs and performance considerations
+
+### Session 9: Pseudocode and Basic Control Structures
+This session includes detailed concept articles in the `session-09/concepts/` folder:
+
+#### 📝 [Pseudocode Fundamentals](session-09/concepts/pseudocode-fundamentals.md)
+- Pseudocode definition and structured English notation
+- Basic elements: variables, operations, control structures
+- Pseudocode writing conventions and best practices
+- Language-independent algorithm representation
+
+#### 🎛️ [Control Structures](session-09/concepts/control-structures.md)
+- Sequence, selection (if/elif/else), and iteration (loops) structures
+- Control flow diagrams and implementation patterns
+- Nested structures and complex decision making
+- Error handling and edge case management in pseudocode
+
+#### 🔄 [Pseudocode to Code](session-09/concepts/pseudocode-to-code.md)
+- Translation process from pseudocode to Python, JavaScript, and Java
+- Language-specific syntax mapping and differences
+- Variable declaration, function calls, and data structure translation
+- Handling language differences and error management
+
 ## Key Concepts Covered
 
 ### Problem Analysis

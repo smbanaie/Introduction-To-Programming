@@ -11,6 +11,13 @@ This folder contains detailed articles about getting started with Python program
 ### Development Tools
 - **🛠️ [Python Development Environment](python-development-environment.md)**: Tools, editors, and best practices for Python development
 
+## Persian Translations
+
+### Persian Concept Articles
+- **🐍 [مفسر پایتون](python-interpreter_fa.md)**: چگونه کد پایتون اجرا می‌شود
+- **📝 [نحو پایه پایتون](basic-python-syntax_fa.md)**: نوشتن اولین کد شما
+- **🛠️ [محیط توسعه پایتون](python-development-environment_fa.md)**: ابزارها برای برنامه‌نویسی
+
 ## Detailed Article Descriptions
 
 ### 🐍 [Python Interpreter](python-interpreter.md)
@@ -21,6 +28,17 @@ Master the fundamental rules of Python programming. Learn about statements, expr
 
 ### 🛠️ [Python Development Environment](python-development-environment.md)
 Set up a professional Python development environment. Learn about editors, IDEs, package management, virtual environments, version control, and essential tools for Python development.
+
+## Persian Translation Details
+
+### 🐍 [مفسر پایتون](python-interpreter_fa.md)
+ترجمه جامع مفسر پایتون شامل فرآیند اجرای پایتون، ماشین مجازی پایتون، حالت‌های تعاملی در برابر اسکریپت، پیاده‌سازی‌های مختلف پایتون، نسخه‌ها، تنظیم محیط، اجرای کد پایتون، مدیریت خطا و اشکال‌زدایی، ملاحظات عملکرد، و کاربردهای مختلف پایتون.
+
+### 📝 [نحو پایه پایتون](basic-python-syntax_fa.md)
+ترجمه کامل نحو پایه پایتون شامل ساختار برنامه، دستورات و عبارات، متغیرها و انتساب، انواع داده و literals، عملیات پایه، جریان کنترل، توابع، کامنت‌ها و مستندسازی، ورودی و خروجی، خطاهای نحوی رایج، سبک کد و بهترین روش‌ها، و اجرای برنامه‌های پایتون.
+
+### 🛠️ [محیط توسعه پایتون](python-development-environment_fa.md)
+ترجمه گسترده محیط توسعه پایتون شامل نصب پایتون، ویرایشگرهای کد و IDEها، ابزارهای خط فرمان، مدیریت بسته‌ها، محیط‌های مجازی، کنترل نسخه، تست و اشکال‌زدایی، مستندسازی و کمک، سازماندهی پروژه، جریان کاری توسعه، ابزارهای عملکرد، و توسعه چند سکویی.
 
 ## How to Use These Articles
 
