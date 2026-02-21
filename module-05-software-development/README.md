@@ -56,6 +56,136 @@ By the end of this module, you will be able to:
 - Portfolio preparation
 - Next steps in programming journey
 
+## Concepts Materials
+
+This module includes detailed concept articles for each session, providing in-depth explanations and practical examples beyond the lecture content.
+
+### Session 17: Functions – Reusable Blocks of Code
+This session includes detailed concept articles in the `session-17/concepts/` folder:
+
+#### 🔧 [Function Definition](session-17/concepts/function-definition.md)
+- Complete function syntax including parameters, return values, and scope
+- Function documentation with docstrings and type hints
+- Advanced parameter patterns and argument unpacking
+- Function testing and debugging strategies
+
+#### 📋 [Function Parameters](session-17/concepts/function-parameters.md)
+- Positional and keyword arguments with default values
+- Variable-length arguments (*args and **kwargs)
+- Parameter validation and type checking
+- Function overloading patterns and parameter dependency injection
+
+#### 🏗️ [Modular Design](session-17/concepts/modular-design.md)
+- Separation of concerns and single responsibility principle
+- Function composition and code organization patterns
+- Dependency management and testing modular code
+- Documentation standards and performance considerations
+
+### Session 18: Basic Error Handling and Debugging
+This session includes detailed concept articles in the `session-18/concepts/` folder:
+
+#### ⚠️ [Exception Handling](session-18/concepts/exception-handling.md)
+- Try/except blocks with multiple exception types and finally clauses
+- Context managers for resource management
+- Custom exceptions and exception chaining
+- Error handling best practices and testing strategies
+
+#### 🔍 [Debugging Techniques](session-18/concepts/debugging-techniques.md)
+- Systematic debugging process (reproduce, isolate, identify, fix)
+- Print debugging, logging, and interactive debuggers
+- Assertion testing and performance profiling
+- Advanced debugging patterns and tools
+
+#### 🛡️ [Common Errors](session-18/concepts/common-errors.md)
+- Syntax, runtime, and logical error patterns
+- Type errors, boundary condition issues, and resource management mistakes
+- Defensive programming techniques and validation strategies
+- Testing approaches for error prevention
+
+### Session 19: Working with Files – Reading and Writing Text Files
+This session includes detailed concept articles in the `session-19/concepts/` folder:
+
+#### 📁 [File Operations](session-19/concepts/file-operations.md)
+- File opening modes and context managers
+- Reading files with different methods (read, readline, readlines)
+- Writing text and binary data to files
+- File seeking and positioning operations
+
+#### 📄 [Text File Processing](session-19/concepts/text-file-processing.md)
+- Processing CSV, JSON, and plain text files
+- Character encoding and Unicode handling
+- Large file processing techniques
+- File parsing patterns and data validation
+
+#### 🔒 [File Error Handling](session-19/concepts/file-error-handling.md)
+- Handling file operation exceptions
+- Permission and disk space error management
+- Atomic file operations and temporary files
+- Cross-platform file path handling
+
+### Session 20: Organizing Code – Modules and a Small Multi-File Program
+This session includes detailed concept articles in the `session-20/concepts/` folder:
+
+#### 📦 [Python Modules](session-20/concepts/python-modules.md)
+- Module creation, importing, and namespace management
+- Package structure and __init__.py files
+- Relative and absolute imports
+- Module search path and sys.path management
+
+#### 🏛️ [Code Organization](session-20/concepts/code-organization.md)
+- Multi-file program architecture and design patterns
+- Separation of concerns in larger applications
+- Configuration management and environment handling
+- Code refactoring and maintainability
+
+#### 🔧 [Project Structure](session-20/concepts/project-structure.md)
+- Standard Python project layouts and best practices
+- Virtual environments and dependency management
+- Entry points and command-line interfaces
+- Documentation and README files
+
+### Session 21: Mini-Project 1 – Data Processing Script
+This session includes detailed concept articles in the `session-21/concepts/` folder:
+
+#### 📊 [Project Planning](session-21/concepts/project-planning.md)
+- Requirements analysis and feature specification
+- Project breakdown into manageable tasks
+- Timeline and milestone planning
+- Risk assessment and contingency planning
+
+#### 🧪 [Testing Strategies](session-21/concepts/testing-strategies.md)
+- Unit testing with pytest and unittest
+- Integration testing for multi-component systems
+- Test-driven development (TDD) approach
+- Debugging and troubleshooting techniques
+
+#### 🚀 [Implementation Patterns](session-21/concepts/implementation-patterns.md)
+- Modular implementation with clear interfaces
+- Error handling and robust design
+- Performance optimization and profiling
+- Code documentation and maintainability
+
+### Session 22: Review, Consolidation, and Capstone Mini-Projects
+This session includes detailed concept articles in the `session-22/concepts/` folder:
+
+#### 📚 [Course Review](session-22/concepts/course-review.md)
+- Comprehensive review of all course concepts
+- Key learning outcomes and skill assessment
+- Common pitfalls and best practices summary
+- Advanced topic connections and relationships
+
+#### 🎯 [Capstone Development](session-22/concepts/capstone-development.md)
+- Personal project planning and execution
+- Portfolio development and presentation skills
+- Code quality and documentation standards
+- Professional development and career preparation
+
+#### 🚀 [Next Steps](session-22/concepts/next-steps.md)
+- Further learning pathways and resources
+- Specialization options (web dev, data science, etc.)
+- Open source contribution and community involvement
+- Career development and interview preparation
+
 ## Key Concepts Covered
 
 ### Advanced Programming

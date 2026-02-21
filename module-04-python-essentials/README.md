@@ -62,6 +62,157 @@ By the end of this module, you will be able to:
 - Tuple immutability concepts
 - Set operations and use cases
 
+## Concepts Materials
+
+This module includes detailed concept articles for each session, providing in-depth explanations and practical examples beyond the lecture content.
+
+### Session 10: Python Environment & First Steps
+This session includes detailed concept articles in the `session-10/concepts/` folder:
+
+#### 🐍 [Python Interpreter](session-10/concepts/python-interpreter.md)
+- How Python code runs and execution models
+- Different Python implementations (CPython, PyPy, Jython)
+- Interactive vs script mode execution
+- Python Virtual Machine and bytecode compilation
+
+#### 📝 [Basic Python Syntax](session-10/concepts/basic-python-syntax.md)
+- Essential Python language rules and structure
+- Variables, expressions, and statements
+- Control flow basics and indentation
+- Data types and basic operations
+
+#### 🛠️ [Python Development Environment](session-10/concepts/python-development-environment.md)
+- Setting up professional Python development tools
+- IDEs, editors, and package management
+- Virtual environments and dependency isolation
+- Version control and debugging tools
+
+### Session 11: Variables & Data Types
+This session includes detailed concept articles in the `session-11/concepts/` folder:
+
+#### 📦 [Python Variables](session-11/concepts/python-variables.md)
+- Variable declaration, assignment, and naming conventions
+- Variable scope (local, global, nonlocal)
+- Memory management and reference counting
+- Variable shadowing and resolution rules
+
+#### 📊 [Python Data Types](session-11/concepts/python-data-types.md)
+- Comprehensive overview of Python's built-in types
+- Numeric types (int, float, complex)
+- Text type (str) and boolean type (bool)
+- Sequence types (list, tuple, range)
+
+#### 🔄 [Type Conversion](session-11/concepts/type-conversion.md)
+- Implicit vs explicit type conversion
+- Safe conversion techniques and error handling
+- Advanced conversion patterns and validation
+- Type checking and conversion utilities
+
+### Session 12: Input/Output & Expressions
+This session includes detailed concept articles in the `session-12/concepts/` folder:
+
+#### 📥 [Input and Output](session-12/concepts/input-output.md)
+- Console input with input() function
+- Formatted output with print() and string formatting
+- File I/O operations (reading, writing, modes)
+- Error handling for I/O operations
+
+#### 🔢 [Expressions and Operators](session-12/concepts/expressions-operators.md)
+- Arithmetic, comparison, and logical operators
+- Operator precedence and associativity
+- Bitwise operators and advanced expressions
+- Lambda expressions and conditional expressions
+
+#### ⚖️ [Evaluation Order](session-12/concepts/evaluation-order.md)
+- Complete operator precedence hierarchy
+- Expression evaluation rules and associativity
+- Short-circuit evaluation in logical operators
+- Complex expression debugging and optimization
+
+### Session 13: Decision Making (if/elif/else)
+This session includes detailed concept articles in the `session-13/concepts/` folder:
+
+#### 🔀 [Conditional Statements](session-13/concepts/conditional-statements.md)
+- if/elif/else statement patterns and best practices
+- Truthy/falsy value evaluation
+- Comparison operators in conditions
+- Real-world conditional logic examples
+
+#### 🔵 [Boolean Logic](session-13/concepts/boolean-logic.md)
+- Boolean values and logical operators (AND, OR, NOT)
+- Truth tables and boolean algebra laws
+- De Morgan's laws and logical equivalences
+- Complex boolean expressions and short-circuit evaluation
+
+#### 📊 [Nested Conditionals](session-13/concepts/nested-conditionals.md)
+- Nested conditional structures and patterns
+- Guard clauses and early returns
+- Complex decision trees and refactoring techniques
+- Performance considerations for nested logic
+
+### Session 14: Loops (while/for)
+This session includes detailed concept articles in the `session-14/concepts/` folder:
+
+#### 🔄 [For Loops](session-14/concepts/for-loops.md)
+- Iterating over collections and sequences
+- List comprehensions and generator expressions
+- enumerate(), zip(), and advanced iteration patterns
+- Nested loops and performance considerations
+
+#### 🔂 [While Loops](session-14/concepts/while-loops.md)
+- Conditional iteration with while loops
+- Infinite loops and how to avoid/control them
+- Input validation and menu systems
+- Break and continue in while loops
+
+#### 🎛️ [Loop Control](session-14/concepts/loop-control.md)
+- break, continue, and pass statements
+- else clauses with loops
+- Advanced control patterns and early exits
+- Loop control best practices and common mistakes
+
+### Session 15: Working with Strings
+This session includes detailed concept articles in the `session-15/concepts/` folder:
+
+#### 🔤 [String Operations](session-15/concepts/string-operations.md)
+- String creation, indexing, and slicing
+- String methods for searching and modification
+- Concatenation, repetition, and membership testing
+- String encoding and advanced operations
+
+#### 📝 [String Formatting](session-15/concepts/string-formatting.md)
+- F-strings (Python 3.6+) for modern formatting
+- .format() method and positional/named arguments
+- Old-style % formatting for compatibility
+- Custom formatting and advanced techniques
+
+#### 📊 [Text Processing](session-15/concepts/text-processing.md)
+- Regular expressions for pattern matching
+- Text cleaning, validation, and normalization
+- String searching, splitting, and joining
+- Advanced text analysis and processing techniques
+
+### Session 16: Collections (lists, dicts, etc.)
+This session includes detailed concept articles in the `session-16/concepts/` folder:
+
+#### 📋 [Python Lists](session-16/concepts/python-lists.md)
+- List creation, indexing, and slicing operations
+- List modification methods (append, insert, remove, sort)
+- List comprehensions and advanced patterns
+- Performance considerations and memory usage
+
+#### 🔑 [Python Dictionaries](session-16/concepts/python-dictionaries.md)
+- Dictionary creation and key-value access patterns
+- Dictionary modification and iteration methods
+- Dictionary comprehensions and advanced techniques
+- Default dictionaries and special dictionary types
+
+#### 🔗 [Sets and Tuples](session-16/concepts/sets-tuples.md)
+- Tuple creation and immutability concepts
+- Set operations and mathematical set theory
+- Named tuples and frozen sets
+- Choosing between lists, tuples, and sets
+
 ## Key Concepts Covered
 
 ### Programming Fundamentals
