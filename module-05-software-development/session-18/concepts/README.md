@@ -24,6 +24,24 @@ Learn systematic debugging approaches including print debugging, logging, intera
 ### 🛡️ [Common Errors](common-errors.md)
 Explore frequent programming mistakes including syntax errors, runtime errors, logical errors, and resource management issues, with prevention strategies and defensive programming techniques.
 
+## Persian Translations
+
+### Persian Concept Articles
+- **⚠️ [مدیریت استثنا](exception-handling_fa.md)**: مدیریت خطاهای زمان اجرا با بلوک‌های try/except و context managerها
+- **🔍 [تکنیک‌های اشکال‌زدایی](debugging-techniques_fa.md)**: رویکردهای سیستمی برای یافتن و رفع باگ‌های برنامه
+- **🛡️ [خطاهای رایج](common-errors_fa.md)**: شناسایی و پیشگیری از اشتباهات برنامه‌نویسی مکرر
+
+## Persian Translation Details
+
+### ⚠️ [مدیریت استثنا](exception-handling_fa.md)
+ترجمه کامل مقاله مدیریت استثنا شامل بلوک‌های try/except، انواع استثنا، context managerها، استثناهای سفارشی، الگوهای مدیریت استثنا، و بهترین روش‌ها برای مدیریت خطای قوی در کد تولید.
+
+### 🔍 [تکنیک‌های اشکال‌زدایی](debugging-techniques_fa.md)
+ترجمه جامع تکنیک‌های اشکال‌زدایی شامل درک وضعیت برنامه، اشکال‌زدایی تعاملی، فرآیند اشکال‌زدایی سیستمی، ابزارهای رایج اشکال‌زدایی، تکنیک‌های پیشرفته، و بهترین روش‌های اشکال‌زدایی.
+
+### 🛡️ [خطاهای رایج](common-errors_fa.md)
+ترجمه گسترده خطاهای رایج برنامه‌نویسی شامل خطاهای نحوی، زمان اجرا، منطقی، مدیریت منابع، همزمانی، اعتبار سنجی داده‌ها، الگوریتم، import، استراتژی‌های تست، و الگوهای بازیابی خطا.
+
 ## How to Use These Articles
 
 1. **Start with exception handling**: Learn how to manage runtime errors gracefully
