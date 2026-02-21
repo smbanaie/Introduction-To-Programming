@@ -6,11 +6,11 @@ Dive into the fundamental building blocks of computing. This session demystifies
 
 | Topic | Description |
 |-------|-------------|
-| **🔄 Process Lifecycle** | How programs come to life as processes, from creation to termination |
-| **🧠 Memory Architecture** | How computers organize and manage memory (RAM, cache, virtual memory) |
-| **📁 File System** | How data is organized on storage devices and file operations |
-| **🔢 Binary Format** | Why computers use binary (0s and 1s) for all digital information |
-| **⚙️ Operating System** | The software that manages your computer and coordinates hardware/software |
+| **🔄 [Process Lifecycle](concepts/process-lifecycle.md)** | How programs come to life as processes, from creation to termination |
+| **🧠 [Memory Architecture](concepts/memory-architecture.md)** | How computers organize and manage memory (RAM, cache, virtual memory) |
+| **📁 [File System](concepts/file-system.md)** | How data is organized on storage devices and file operations |
+| **🔢 [Binary Format](concepts/binary-format.md)** | Why computers use binary (0s and 1s) for all digital information |
+| **⚙️ [Operating System](concepts/operating-system.md)** | The software that manages your computer and coordinates hardware/software |
 
 ## 📖 Detailed Concepts
 

@@ -6,11 +6,11 @@ Explore the transformation journey from human-readable code to machine-executabl
 
 | Topic | Description |
 |-------|-------------|
-| **🐍 Python Execution Model** | How Python runs your code through interpretation and bytecode |
-| **🔧 Programming Paradigms** | Different approaches to writing code (procedural, object-oriented, functional) |
-| **⚡ Interpretation Process** | How interpreted languages execute code line by line |
-| **🔨 Compilation Process** | How compiled languages translate entire programs to machine code |
-| **📄 Source Machine Bytecode** | Python's intermediate bytecode and the compilation/interpretation balance |
+| **🐍 [Python Execution Model](concepts/python-execution-model.md)** | How Python runs your code through interpretation and bytecode |
+| **🔧 [Programming Paradigms](concepts/programming-paradigms.md)** | Different approaches to writing code (procedural, object-oriented, functional) |
+| **⚡ [Interpretation Process](concepts/interpretation-process.md)** | How interpreted languages execute code line by line |
+| **🔨 [Compilation Process](concepts/compilation-process.md)** | How compiled languages translate entire programs to machine code |
+| **📄 [Source Machine Bytecode](concepts/source-machine-bytecode.md)** | Python's intermediate bytecode and the compilation/interpretation balance |
 
 ## 📖 Detailed Concepts
 
