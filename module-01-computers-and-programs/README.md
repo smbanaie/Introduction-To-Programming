@@ -73,7 +73,7 @@ Upon successful completion of this module, students will demonstrate:
 
 ### Required Reading
 - Module concept articles in the `concepts/` folder
-- Session materials and lecture notes
+- Session materials and detailed explanations
 
 ### Recommended Resources
 - "Computer Science: An Interdisciplinary Approach" by Sedgewick and Wayne
