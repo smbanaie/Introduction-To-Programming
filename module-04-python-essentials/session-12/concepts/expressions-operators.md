@@ -1,418 +1,445 @@
-# Expressions and Operators: Building Computations
+# Expressions and Operators: Making Calculations
 
-## What Are Expressions?
+## What You'll Learn
+- How to do math in Python
+- How to compare values
+- How to combine multiple conditions
+- Common beginner mistakes
 
-Expressions are combinations of values, variables, and operators that Python evaluates to produce a result. They are the building blocks of computations in programming.
+---
 
-## Arithmetic Operators
+## What Are Operators?
 
-### Basic Math Operations
-```python
-# Addition
-result = 5 + 3  # 8
+Operators are special symbols that tell Python to perform specific operations. Think of them like buttons on a calculator.
 
-# Subtraction
-result = 10 - 4  # 6
-
-# Multiplication
-result = 6 * 7   # 42
-
-# Division (floating point)
-result = 15 / 4  # 3.75
-
-# Integer division (floor division)
-result = 15 // 4 # 3
-
-# Modulo (remainder)
-result = 15 % 4  # 3
-
-# Exponentiation
-result = 2 ** 3  # 8
-result = 2 ** 0.5  # 1.4142135623730951 (square root)
+```
+5 + 3    →  The + button adds
+10 - 2   →  The - button subtracts
+5 > 3    →  The > button compares
 ```
 
-### Operator Precedence
-Python follows mathematical order of operations:
+---
+
+## Arithmetic Operators: Basic Math
+
+### The Four Basic Operations
 
 ```python
-# PEMDAS: Parentheses, Exponents, Multiplication/Division, Addition/Subtraction
-result = 2 + 3 * 4       # 14 (multiplication first)
-result = (2 + 3) * 4     # 20 (parentheses force addition first)
-result = 2 ** 3 * 2      # 16 (exponentiation before multiplication)
-result = 10 - 5 + 2      # 7 (left to right for same precedence)
+# Addition (+)
+result = 5 + 3       # 8
+print(f"5 + 3 = {result}")
+
+# Subtraction (-)
+result = 10 - 4      # 6
+print(f"10 - 4 = {result}")
+
+# Multiplication (*)
+result = 6 * 7       # 42
+print(f"6 * 7 = {result}")
+
+# Division (/)
+result = 15 / 3      # 5.0
+print(f"15 / 3 = {result}")
 ```
 
-### Augmented Assignment Operators
+### More Math Operators
+
 ```python
-x = 5
+# Integer Division (//) - drops the decimal
+result = 17 // 5     # 3 (not 3.4!)
+print(f"17 // 5 = {result}")
 
-x += 3   # x = x + 3 → 8
-x -= 2   # x = x - 2 → 6
-x *= 4   # x = x * 4 → 24
-x /= 2   # x = x / 2 → 12.0
-x //= 3  # x = x // 3 → 4.0
-x %= 3   # x = x % 3 → 1.0
-x **= 2  # x = x ** 2 → 1.0
+# Modulo (%) - gives the remainder
+result = 17 % 5      # 2 (17 = 3*5 + 2)
+print(f"17 % 5 = {result}")
+
+# Exponentiation (**)
+result = 2 ** 3      # 8 (2*2*2)
+print(f"2 ** 3 = {result}")
+
+# Square root
+result = 16 ** 0.5   # 4.0
+print(f"Square root of 16 = {result}")
 ```
 
-## Comparison Operators
+### ASCII Diagram: Math Operations
+
+```
+Integer Division (//)          Modulo (%)
+17 ÷ 5 = 3 R 2               17 ÷ 5 = 3 R 2
+┌──────────┐                 ┌──────────┐
+│  17 // 5 │                 │  17 % 5  │
+│     ↓    │                 │     ↓    │
+│    3     │                 │    2     │
+│ (quotient)│                │ (remainder)│
+└──────────┘                 └──────────┘
+```
+
+---
+
+## Comparison Operators: Comparing Values
+
+These operators compare two values and return `True` or `False`.
 
 ### Basic Comparisons
+
 ```python
-# Equal to
-result = 5 == 5      # True
-result = 5 == 6      # False
-
-# Not equal to
-result = 5 != 6      # True
-result = 5 != 5      # False
-
-# Greater than
-result = 7 > 5       # True
-result = 5 > 7       # False
-
-# Less than
-result = 3 < 8       # True
-result = 8 < 3       # False
-
-# Greater than or equal
-result = 5 >= 5      # True
-result = 5 >= 3      # True
-
-# Less than or equal
-result = 4 <= 4      # True
-result = 4 <= 6      # True
-```
-
-### String Comparisons
-```python
-# Lexicographic comparison (dictionary order)
-result = "apple" < "banana"    # True ('a' comes before 'b')
-result = "Apple" < "apple"     # True (uppercase before lowercase)
-result = "apple" == "Apple"    # False (case sensitive)
-```
-
-### Chaining Comparisons
-```python
-# Multiple comparisons
-x = 5
-result = 3 < x < 10   # True (equivalent to 3 < x and x < 10)
-result = x < 10 > 7   # True (equivalent to x < 10 and 10 > 7)
-
-# More complex chains
 age = 25
-result = 18 <= age <= 65  # True (valid working age)
+
+# Equal to (==)
+print(age == 25)     # True
+print(age == 30)     # False
+
+# Not equal to (!=)
+print(age != 30)     # True
+print(age != 25)     # False
+
+# Greater than (>)
+print(age > 20)      # True
+print(age > 30)      # False
+
+# Less than (<)
+print(age < 30)      # True
+print(age < 20)      # False
+
+# Greater than or equal (>=)
+print(age >= 25)     # True
+print(age >= 30)     # False
+
+# Less than or equal (<=)
+print(age <= 25)     # True
+print(age <= 20)     # False
 ```
 
-## Logical Operators
+### Comparison Table
 
-### Boolean Logic
-```python
-# AND: both conditions must be true
-result = True and True    # True
-result = True and False   # False
-result = (5 > 3) and (10 < 20)  # True
+| Operator | Meaning | Example | Result |
+|----------|---------|---------|--------|
+| `==` | Equal to | `5 == 5` | `True` |
+| `!=` | Not equal to | `5 != 3` | `True` |
+| `>` | Greater than | `7 > 5` | `True` |
+| `<` | Less than | `3 < 5` | `True` |
+| `>=` | Greater or equal | `5 >= 5` | `True` |
+| `<=` | Less or equal | `5 <= 7` | `True` |
 
-# OR: at least one condition must be true
-result = True or False    # True
-result = False or False   # False
-result = (5 < 3) or (10 > 5)  # True
+---
 
-# NOT: reverses the truth value
-result = not True         # False
-result = not False        # True
-result = not (5 > 3)      # False
-```
+## Logical Operators: Combining Conditions
 
-### Short-Circuit Evaluation
-Python stops evaluating as soon as the result is known:
+Sometimes you need to check multiple things at once.
+
+### AND (both must be True)
 
 ```python
-# AND short-circuit
-def check_condition():
-    print("Checking condition...")
-    return True
-
-# If first part is False, second part isn't evaluated
-result = False and check_condition()  # Doesn't print "Checking condition..."
-
-# OR short-circuit
-result = True or check_condition()    # Doesn't print "Checking condition..."
-```
-
-### Complex Logical Expressions
-```python
-# User validation
 age = 25
-has_id = True
-is_student = False
+has_license = True
 
-# Complex condition with parentheses
-can_enter = (age >= 18 and has_id) or is_student
-print(can_enter)  # True
-
-# Nested conditions
-is_eligible = age >= 18 and (has_id or is_student)
-print(is_eligible)  # True
-```
-
-## Bitwise Operators
-
-### Binary Operations
-```python
-# AND (&): 1 only where both bits are 1
-result = 5 & 3   # 1 (binary: 101 & 011 = 001)
-
-# OR (|): 1 where either bit is 1
-result = 5 | 3   # 7 (binary: 101 | 011 = 111)
-
-# XOR (^): 1 where bits are different
-result = 5 ^ 3   # 6 (binary: 101 ^ 011 = 110)
-
-# NOT (~): Flip all bits
-result = ~5      # -6 (two's complement)
-
-# Left shift (<<): Move bits left
-result = 5 << 1  # 10 (binary: 101 → 1010)
-
-# Right shift (>>): Move bits right
-result = 10 >> 1 # 5 (binary: 1010 → 101)
-```
-
-### Practical Bitwise Applications
-```python
-# Check if number is even
-is_even = (number & 1) == 0
-
-# Check if number is power of 2
-is_power_of_2 = (number & (number - 1)) == 0 and number > 0
-
-# Extract individual bits
-bit_0 = number & 1
-bit_1 = (number >> 1) & 1
-bit_2 = (number >> 2) & 1
-```
-
-## Membership and Identity Operators
-
-### Membership Operators
-```python
-# in: check if value exists in collection
-result = 5 in [1, 2, 3, 4, 5]        # True
-result = "a" in "banana"              # True
-result = "z" in "banana"              # False
-result = "key" in {"key": "value"}    # True (checks keys)
-
-# not in: opposite of in
-result = 6 not in [1, 2, 3, 4, 5]    # True
-```
-
-### Identity Operators
-```python
-# is: check if two variables reference the same object
-a = [1, 2, 3]
-b = a
-c = [1, 2, 3]
-
-result = a is b     # True (same object)
-result = a is c     # False (different objects, same content)
-
-# is not: opposite of is
-result = a is not c # True
-
-# Important: Don't use == with None, use is
-result = None is None     # True
-result = value is None    # Correct way to check for None
-```
-
-## Expression Evaluation Order
-
-### Complete Precedence Table
-From highest to lowest precedence:
-
-```python
-# 1. Parentheses
-result = (2 + 3) * 4   # 20
-
-# 2. Exponentiation
-result = 2 ** 3 ** 2   # 512 (right to left)
-
-# 3. Unary operators (+, -, ~)
-result = -2 ** 2       # -4 (not (-2)**2)
-
-# 4. Multiplication, division, modulo
-result = 10 * 2 + 5    # 25 (not 10*(2+5))
-
-# 5. Addition, subtraction
-result = 10 + 5 * 2    # 20
-
-# 6. Bitwise shifts
-result = 1 << 2 + 1    # 8 (1 << (2 + 1))
-
-# 7. Bitwise AND
-result = 5 & 3 | 2     # 2 ((5 & 3) | 2)
-
-# 8. Bitwise XOR
-# 9. Bitwise OR
-
-# 10. Comparison operators
-result = 5 < 10 == True  # False ((5 < 10) == True)
-
-# 11. Identity operators (is, is not)
-
-# 12. Membership operators (in, not in)
-
-# 13. Logical NOT
-
-# 14. Logical AND
-
-# 15. Logical OR
-```
-
-### Associativity
-```python
-# Left-associative (most operators)
-result = 10 - 5 - 2   # (10 - 5) - 2 = 3
-
-# Right-associative (exponentiation, assignment)
-result = 2 ** 3 ** 2  # 2 ** (3 ** 2) = 512
-x = y = z = 5        # All variables become 5
-```
-
-## Conditional Expressions
-
-### Ternary Operator
-```python
-# condition ? true_value : false_value (other languages)
-# Python syntax: true_value if condition else false_value
-
-age = 25
-status = "adult" if age >= 18 else "minor"
-print(status)  # "adult"
-
-# More complex example
-x = 10
-y = 20
-maximum = x if x > y else y
-print(maximum)  # 20
-
-# Nested ternary
-score = 85
-grade = "A" if score >= 90 else ("B" if score >= 80 else "C")
-print(grade)  # "B"
-```
-
-## Lambda Expressions
-
-### Anonymous Functions
-```python
-# Regular function
-def add(x, y):
-    return x + y
-
-# Lambda equivalent
-add_lambda = lambda x, y: x + y
-
-# Usage
-result = add_lambda(3, 5)  # 8
-
-# Common use cases
-numbers = [1, 2, 3, 4, 5]
-
-# Sort by custom key
-sorted_numbers = sorted(numbers, key=lambda x: -x)  # [5, 4, 3, 2, 1]
-
-# Filter with condition
-even_numbers = list(filter(lambda x: x % 2 == 0, numbers))  # [2, 4]
-
-# Transform elements
-squared = list(map(lambda x: x ** 2, numbers))  # [1, 4, 9, 16, 25]
-```
-
-## Expression Best Practices
-
-### Readability
-```python
-# Clear and readable
+# Both conditions must be true
 if age >= 18 and has_license:
-    can_drive = True
+    print("You can drive!")
 
-# Less readable (but equivalent)
-can_drive = age >= 18 and has_license
-
-# Even less readable
-can_drive = 18 <= age and has_license
+# Visual:
+# age >= 18    →  True
+# has_license  →  True
+#               AND
+# Result       →  True ✓
 ```
 
-### Avoiding Common Mistakes
+**AND Truth Table:**
+```
+True  and True   → True ✓
+True  and False  → False
+False and True   → False
+False and False  → False
+```
+
+### OR (at least one must be True)
+
 ```python
-# Wrong: assignment instead of comparison
-if x = 5:  # SyntaxError in Python (unlike C/C++)
-    print("This won't work")
+day = "Saturday"
 
-# Correct
-if x == 5:
-    print("Equal to 5")
+# Either condition can be true
+if day == "Saturday" or day == "Sunday":
+    print("It's the weekend!")
 
-# Careful with floating point
-if abs(a - b) < 0.0001:  # Use epsilon for float comparison
+# Visual:
+# day == "Saturday"  →  True
+# day == "Sunday"    →  False
+#                     OR
+# Result             →  True ✓
+```
+
+**OR Truth Table:**
+```
+True  or True   → True ✓
+True  or False  → True ✓
+False or True   → True ✓
+False or False  → False
+```
+
+### NOT (reverses the value)
+
+```python
+is_raining = False
+
+if not is_raining:
+    print("You don't need an umbrella")
+
+# Visual:
+# is_raining  →  False
+# not False   →  True ✓
+```
+
+---
+
+## Operator Precedence: Order of Operations
+
+Just like in math, Python follows an order when there are multiple operations.
+
+### The Order (Highest to Lowest)
+
+1. **Parentheses** `()`
+2. **Exponentiation** `**`
+3. **Multiplication/Division** `* / // %`
+4. **Addition/Subtraction** `+ -`
+5. **Comparisons** `== != > < >= <=`
+6. **Logical NOT** `not`
+7. **Logical AND** `and`
+8. **Logical OR** `or`
+
+### Examples
+
+```python
+# Without parentheses
+result = 2 + 3 * 4      # 14 (not 20!)
+# Because: 3 * 4 = 12, then 2 + 12 = 14
+
+# With parentheses
+result = (2 + 3) * 4    # 20
+# Because: 2 + 3 = 5, then 5 * 4 = 20
+
+# Complex example
+result = 10 + 5 * 2 ** 2 - 8 / 4
+# Step 1: 2 ** 2 = 4
+# Step 2: 5 * 4 = 20
+# Step 3: 8 / 4 = 2.0
+# Step 4: 10 + 20 - 2.0 = 28.0
+```
+
+### Pro Tip: Use Parentheses!
+
+```python
+# Even if you know the order, use parentheses for clarity
+# Good:
+total = (price + tax) * quantity
+
+# Not as clear:
+total = price + tax * quantity  # Different result!
+```
+
+---
+
+## Augmented Assignment: Shortcuts
+
+When you want to update a variable with an operation.
+
+```python
+score = 10
+
+# Instead of: score = score + 5
+score += 5      # score is now 15
+
+# Instead of: score = score - 3
+score -= 3      # score is now 12
+
+# Instead of: score = score * 2
+score *= 2      # score is now 24
+
+# Instead of: score = score / 4
+score /= 4      # score is now 6.0
+```
+
+| Long Way | Shortcut | Meaning |
+|----------|----------|---------|
+| `x = x + 5` | `x += 5` | Add 5 to x |
+| `x = x - 3` | `x -= 3` | Subtract 3 from x |
+| `x = x * 2` | `x *= 2` | Multiply x by 2 |
+| `x = x / 2` | `x /= 2` | Divide x by 2 |
+
+---
+
+## Common Beginner Mistakes
+
+### Mistake 1: Using = Instead of ==
+
+```python
+# ❌ Wrong (= is for assignment)
+if age = 18:
+    print("You're 18")
+
+# ✅ Correct (== is for comparison)
+if age == 18:
+    print("You're 18")
+```
+
+### Mistake 2: String vs Number Comparison
+
+```python
+# ❌ Wrong - comparing text to number
+age = "25"  # This is text!
+if age > 18:  # ERROR! Can't compare text to number
+    print("Adult")
+
+# ✅ Correct
+age = 25  # This is a number
+if age > 18:
+    print("Adult")
+```
+
+### Mistake 3: Integer Division Confusion
+
+```python
+# ❌ Wrong - expecting decimal
+result = 5 / 2      # Gives 2.5 (in Python 3)
+
+# Integer division gives whole number
+result = 5 // 2     # Gives 2
+```
+
+### Mistake 4: Floating Point Comparisons
+
+```python
+# ❌ Wrong - floating point is imprecise
+price = 0.1 + 0.2
+if price == 0.3:    # Might be False!
+    print("Equal")
+
+# ✅ Correct - use tolerance
+if abs(price - 0.3) < 0.0001:
     print("Approximately equal")
-
-# None checking
-if value is None:  # Use 'is' for None
-    print("No value")
 ```
 
-### Complex Expressions
+### Mistake 5: Chaining Comparisons Incorrectly
+
 ```python
-# Break complex expressions into parts
-is_valid_user = (
-    user is not None and
-    user.age >= 18 and
-    user.is_active and
-    user.email_verified
-)
+# ❌ Wrong - this doesn't work like math
+if 5 < age < 10:   # This actually works in Python!
+    pass
 
-# Or use intermediate variables
-user_exists = user is not None
-is_adult = user.age >= 18 if user_exists else False
-is_active = user.is_active if user_exists else False
-is_verified = user.email_verified if user_exists else False
-
-is_valid_user = user_exists and is_adult and is_active and is_verified
+# But this is confusing:
+if 5 < 10 > 3:     # True (5 < 10 is True, 10 > 3 is True)
+    pass
 ```
 
-## Performance Considerations
+---
 
-### Short-Circuit Evaluation Benefits
+## Try It Yourself: Exercises
+
+### Exercise 1: Temperature Converter
+
+Convert Celsius to Fahrenheit: `F = (C × 9/5) + 32`
+
 ```python
-# Avoid expensive operations when possible
-if user_exists and user_has_permission():  # Second function not called if user doesn't exist
-    perform_action()
+celsius = float(input("Enter temperature in Celsius: "))
+fahrenheit = (celsius * 9/5) + 32
+print(f"{celsius}°C = {fahrenheit}°F")
 ```
 
-### Expression Optimization
+### Exercise 2: Shopping Calculator
+
+Calculate total with tax and discount.
+
 ```python
-# Python optimizes some expressions
-x = 5
-y = x * 2 + 10  # Calculated efficiently
+price = float(input("Item price: $"))
+quantity = int(input("Quantity: "))
+tax_rate = 0.08  # 8% tax
 
-# But don't over-optimize prematurely
-# Readable code is better than micro-optimized code
+subtotal = price * quantity
+tax = subtotal * tax_rate
+total = subtotal + tax
+
+print(f"\nSubtotal: ${subtotal:.2f}")
+print(f"Tax ({tax_rate*100}%): ${tax:.2f}")
+print(f"Total: ${total:.2f}")
 ```
+
+### Exercise 3: Check Voting Eligibility
+
+Check if someone can vote (18+ and citizen).
+
+```python
+age = int(input("Enter your age: "))
+is_citizen = input("Are you a citizen? (yes/no): ").lower() == "yes"
+
+if age >= 18 and is_citizen:
+    print("You are eligible to vote!")
+else:
+    if age < 18:
+        print(f"You need to wait {18 - age} more years.")
+    if not is_citizen:
+        print("You must be a citizen to vote.")
+```
+
+### Exercise 4: Fix the Errors
+
+Find and fix the errors in this code:
+
+```python
+# Buggy code
+num1 = input("First number: ")
+num2 = input("Second number: ")
+sum = num1 + num2
+average = sum / 2
+
+if average > 50
+    print("Above average")
+else
+    print("Below average")
+```
+
+<details>
+<summary>Click to see the answer</summary>
+
+```python
+# Fixed code
+num1 = float(input("First number: "))  # Convert to number
+num2 = float(input("Second number: "))
+sum_result = num1 + num2               # 'sum' is a built-in function!
+average = sum_result / 2
+
+if average > 50:                      # Missing colon
+    print("Above average")
+else:                                 # Missing colon
+    print("Below average")
+```
+</details>
+
+---
+
+## Quick Reference
+
+| Type | Operators | Example |
+|------|-----------|---------|
+| Math | `+ - * / // % **` | `5 + 3 = 8` |
+| Compare | `== != > < >= <=` | `5 > 3 → True` |
+| Logical | `and or not` | `True and False → False` |
+| Assignment | `= += -= *= /=` | `x += 5` |
+
+---
 
 ## Key Takeaways
 
-1. **Expressions combine values and operators** to produce results
-2. **Operator precedence** determines evaluation order
-3. **Logical operators** enable complex conditions
-4. **Comparison operators** work with different data types
-5. **Bitwise operators** manipulate binary representations
-6. **Clarity matters** more than clever expressions
+1. **Math operators** work like a calculator: `+ - * / // % **`
+2. **Comparison operators** give `True` or `False`: `== != > < >= <=`
+3. **Logical operators** combine conditions: `and`, `or`, `not`
+4. **Parentheses** control the order of operations
+5. **`=` assigns**, **`==` compares** - don't confuse them!
 
-## Further Reading
-- Python operator precedence documentation
-- Boolean logic and truth tables
-- Bit manipulation techniques
-- Functional programming with lambda expressions
-- Expression optimization strategies
+---
+
+## What's Next?
+
+Now you know how to calculate! Next, we'll learn:
+- How to control what code runs (conditions)
+- How to repeat code (loops)
+- How to organize code (functions)
