@@ -1,489 +1,597 @@
 # Sets and Tuples: Specialized Collections
 
-## Introduction to Additional Collections
+## Introduction: When to Use What
 
-Beyond lists and dictionaries, Python provides specialized collection types for specific use cases: sets for unique elements and tuples for immutable sequences.
+Python gives us several built-in collection types. Here's when to use each:
+
+| Type | Use When... | Example |
+|------|-------------|---------|
+| **List** | Order matters, duplicates OK | Shopping list with multiple apples |
+| **Dictionary** | Need key-value pairs | Student grades by name |
+| **Tuple** | Data shouldn't change | Coordinates (x, y) |
+| **Set** | Only care about unique items, order doesn't matter | Unique website visitors |
+
+---
 
 ## Tuples: Immutable Sequences
 
-### Creating Tuples
+### What is a Tuple?
+
+A **tuple** is like a list that cannot be changed after creation. Think of it as a sealed container - you can look inside, but you can't modify the contents.
+
 ```python
-# Empty tuple
-empty_tuple = ()
-empty_tuple = tuple()
-
-# Single element tuple (note the comma!)
-single = (42,)
-single = 42,  # Alternative
-
-# Multiple elements
+# Creating tuples
 coordinates = (10, 20)
 person = ("Alice", 25, "Engineer")
-
-# Without parentheses
-colors = "red", "green", "blue"
-
-# From iterable
-numbers = tuple([1, 2, 3, 4])
-letters = tuple("hello")
 ```
 
-### Tuple Operations
+### Why Use Tuples?
+
+1. **Protection**: Data that shouldn't be accidentally modified
+2. **Performance**: Tuples are slightly faster than lists
+3. **Dictionary keys**: Tuples can be dictionary keys (lists can't!)
+4. **Function returns**: Returning multiple values
+
+### Creating Tuples
+
+```python
+# Empty tuple
+empty = ()
+empty = tuple()
+
+# Single element tuple (REQUIRES COMMA!)
+single = (42,)   # ← Note the comma!
+not_a_tuple = (42)  # This is just the number 42 in parentheses
+
+# Multiple elements
+point = (3, 4)
+colors = ("red", "green", "blue")
+
+# Without parentheses (tuple packing)
+values = 1, 2, 3   # Same as (1, 2, 3)
+
+# From other iterables
+letters = tuple("hello")   # ('h', 'e', 'l', 'l', 'o')
+numbers = tuple([1, 2, 3]) # (1, 2, 3)
+```
+
+### Accessing Tuple Elements
+
 ```python
 point = (3, 4, 5)
 
+# Same as lists - use indexing
+x = point[0]        # 3
+y = point[1]        # 4
+last = point[-1]    # 5
+
+# Slicing works too
+first_two = point[:2]    # (3, 4)
+```
+
+### Tuple Operations
+
+```python
+t1 = (1, 2, 3)
+t2 = (4, 5, 6)
+
+# Concatenation (creates new tuple)
+combined = t1 + t2      # (1, 2, 3, 4, 5, 6)
+
+# Repetition
+repeated = t1 * 3       # (1, 2, 3, 1, 2, 3, 1, 2, 3)
+
 # Length
-print(len(point))     # 3
-
-# Indexing (same as lists)
-print(point[0])       # 3
-print(point[-1])      # 5
-
-# Slicing
-print(point[1:])      # (4, 5)
-print(point[::-1])    # (5, 4, 3)
+size = len(t1)          # 3
 
 # Membership
-print(4 in point)     # True
-print(6 in point)     # False
+two_in_t1 = 2 in t1     # True
 
-# Counting
-print(point.count(4)) # 1
-print(point.index(4)) # 1 (first occurrence)
+# Count and index (same as lists)
+count = t1.count(2)     # 1
+position = t1.index(2)  # 1
+```
+
+### Important: Tuples Are Immutable
+
+```python
+point = (3, 4)
+
+# WRONG - cannot modify!
+point[0] = 5   # TypeError!
+
+# RIGHT - create new tuple
+new_point = (5, point[1])   # (5, 4)
 ```
 
 ### Tuple Unpacking
+
 ```python
-# Basic unpacking
-x, y = (10, 20)
-print(x, y)  # 10 20
+# Assign tuple values to multiple variables
+point = (10, 20)
+x, y = point
+print(x)    # 10
+print(y)    # 20
 
 # Extended unpacking
 first, *middle, last = (1, 2, 3, 4, 5)
-print(first)   # 1
-print(middle)  # [2, 3, 4]
-print(last)    # 5
+print(first)    # 1
+print(middle)   # [2, 3, 4]
+print(last)     # 5
 
-# Ignore values
+# Ignore unwanted values
 name, _, age = ("Alice", "female", 25)
-print(name, age)  # Alice 25
+print(name, age)    # Alice 25
 
-# Swap values
+# Swap values (Pythonic!)
 a, b = 1, 2
 a, b = b, a
-print(a, b)  # 2 1
+print(a, b)    # 2 1
 ```
 
-### Tuple Methods and Operations
+### Multiple Return Values
+
 ```python
-tuple1 = (1, 2, 3)
-tuple2 = (4, 5, 6)
+def get_min_max(numbers):
+    """Return both min and max."""
+    return min(numbers), max(numbers)
 
-# Concatenation (creates new tuple)
-combined = tuple1 + tuple2
-print(combined)  # (1, 2, 3, 4, 5, 6)
+# Unpack the returned tuple
+minimum, maximum = get_min_max([3, 1, 4, 1, 5])
+print(f"Min: {minimum}, Max: {maximum}")  # Min: 1, Max: 5
 
-# Repetition
-repeated = tuple1 * 3
-print(repeated)  # (1, 2, 3, 1, 2, 3, 1, 2, 3)
-
-# Comparison
-print((1, 2) < (1, 3))    # True (lexicographic comparison)
-print((2, 1) > (1, 5))    # True
-
-# Iteration
-for item in tuple1:
-    print(item, end=" ")  # 1 2 3
+# Or receive as tuple
+result = get_min_max([3, 1, 4, 1, 5])
+print(result)   # (1, 5)
 ```
 
-### Named Tuples
-```python
-from collections import namedtuple
-
-# Define named tuple class
-Point = namedtuple('Point', ['x', 'y'])
-Person = namedtuple('Person', 'name age city')
-
-# Create instances
-p1 = Point(10, 20)
-person1 = Person("Alice", 25, "New York")
-
-# Access by index
-print(p1[0], p1[1])        # 10 20
-
-# Access by name
-print(p1.x, p1.y)          # 10 20
-print(person1.name)        # "Alice"
-print(person1.age)         # 25
-
-# Convert to dictionary
-print(person1._asdict())   # {'name': 'Alice', 'age': 25, 'city': 'New York'}
-
-# Replace values
-person2 = person1._replace(age=26)
-print(person2)             # Person(name='Alice', age=26, city='New York')
-```
+---
 
 ## Sets: Collections of Unique Elements
 
-### Creating Sets
-```python
-# Empty set
-empty_set = set()
+### What is a Set?
 
-# Set with initial values
+A **set** is an unordered collection of unique items. Think of it like a bag where you can't have duplicates and you can't rely on the order.
+
+```python
+# Creating sets
 fruits = {"apple", "banana", "cherry"}
 numbers = {1, 2, 3, 4, 5}
+```
 
-# From iterable (removes duplicates)
-duplicates = [1, 2, 2, 3, 3, 3]
-unique_numbers = set(duplicates)  # {1, 2, 3}
+### Why Use Sets?
 
-# From string
-letters = set("hello")  # {'h', 'e', 'l', 'o'}
+1. **Automatic duplicates removal**: Sets only keep unique items
+2. **Fast membership testing**: Checking if an item exists is very fast
+3. **Mathematical operations**: Unions, intersections, differences
+4. **Removing duplicates from lists**: Easy conversion
+
+### Creating Sets
+
+```python
+# Empty set (NOT {} - that's an empty dictionary!)
+empty = set()
+
+# Set with values
+fruits = {"apple", "banana", "cherry"}
+
+# From list (removes duplicates!)
+numbers = set([1, 2, 2, 3, 3, 3, 4])
+# Result: {1, 2, 3, 4}
+
+# From string (unique characters)
+unique_chars = set("hello")
+# Result: {'h', 'e', 'l', 'o'}
+```
+
+### Important: Sets Are Unordered
+
+```python
+my_set = {3, 1, 4, 1, 5}
+print(my_set)
+# Might print: {1, 3, 4, 5} (order not guaranteed!)
+
+# Can't access by index
+my_set[0]   # TypeError!
 ```
 
 ### Set Operations
+
 ```python
 set1 = {1, 2, 3, 4}
 set2 = {3, 4, 5, 6}
 
-# Union (elements in either set)
-print(set1 | set2)          # {1, 2, 3, 4, 5, 6}
-print(set1.union(set2))     # Same result
+# Union - elements in either set
+union = set1 | set2              # {1, 2, 3, 4, 5, 6}
+union = set1.union(set2)         # Same thing
 
-# Intersection (elements in both sets)
-print(set1 & set2)          # {3, 4}
-print(set1.intersection(set2))  # Same result
+# Intersection - elements in both sets
+intersection = set1 & set2       # {3, 4}
+intersection = set1.intersection(set2)
 
-# Difference (elements in set1 but not set2)
-print(set1 - set2)          # {1, 2}
-print(set1.difference(set2))  # Same result
+# Difference - in set1 but not set2
+diff = set1 - set2               # {1, 2}
+diff = set1.difference(set2)
 
-# Symmetric difference (elements in either set but not both)
-print(set1 ^ set2)          # {1, 2, 5, 6}
-print(set1.symmetric_difference(set2))  # Same result
+# Symmetric difference - in either but not both
+sym_diff = set1 ^ set2           # {1, 2, 5, 6}
+sym_diff = set1.symmetric_difference(set2)
 ```
 
 ### Set Methods
-```python
-fruits = {"apple", "banana", "cherry"}
 
-# Add elements
-fruits.add("date")
-print(fruits)  # {'apple', 'banana', 'cherry', 'date'}
+```python
+fruits = {"apple", "banana"}
+
+# Add single element
+fruits.add("cherry")      # {"apple", "banana", "cherry"}
 
 # Add multiple elements
-fruits.update(["elderberry", "fig"])
-print(fruits)  # {'apple', 'banana', 'cherry', 'date', 'elderberry', 'fig'}
+fruits.update(["date", "elderberry", "fig"])
 
-# Remove elements
-fruits.remove("banana")     # Raises KeyError if not found
-print(fruits)
+# Remove (raises error if not found)
+fruits.remove("banana")
 
-fruits.discard("grape")     # No error if not found
-fruits.discard("apple")     # Removes if found
-print(fruits)
+# Remove (no error if not found)
+fruits.discard("grape")   # No error even if "grape" isn't there
 
-# Pop random element
+# Remove and return arbitrary element
 removed = fruits.pop()
-print(f"Removed: {removed}")
 
-# Clear set
-fruits.clear()
-print(fruits)  # set()
-```
+# Check membership
+"apple" in fruits         # True
 
-### Set Membership and Size
-```python
-numbers = {1, 2, 3, 4, 5}
-
-# Membership testing (very fast O(1))
-print(3 in numbers)      # True
-print(6 in numbers)      # False
-
-# Size
-print(len(numbers))      # 5
-
-# Check if empty
-print(bool(numbers))     # True
-print(len(numbers) == 0) # False
+# Clear all
+fruits.clear()            # set()
 ```
 
 ### Set Comprehensions
+
 ```python
-# Basic set comprehension
-squares = {x**2 for x in range(1, 6)}
-print(squares)  # {1, 4, 9, 16, 25}
+# Like list comprehensions but for sets
+numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
-# With condition
-even_squares = {x**2 for x in range(1, 11) if x % 2 == 0}
-print(even_squares)  # {4, 16, 36, 64, 100}
+# Even numbers
+evens = {x for x in numbers if x % 2 == 0}
+# Result: {2, 4, 6, 8, 10}
 
-# String processing
-words = ["hello", "world", "python"]
-first_letters = {word[0] for word in words}
-print(first_letters)  # {'h', 'w', 'p'}
+# Squares
+squares = {x ** 2 for x in range(1, 6)}
+# Result: {1, 4, 9, 16, 25}
 ```
 
-### Frozen Sets
+---
+
+## Practical Examples
+
+### Example 1: Remove Duplicates from List
+
 ```python
-# Immutable set
-normal_set = {1, 2, 3}
-frozen_set = frozenset([1, 2, 3])
+def remove_duplicates(items):
+    """Remove duplicates while preserving order."""
+    seen = set()
+    result = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
 
-# Normal set is mutable
-normal_set.add(4)
-print(normal_set)  # {1, 2, 3, 4}
-
-# Frozen set is immutable
-# frozen_set.add(4)  # AttributeError
-
-# But can be used as dictionary keys
-set_dict = {frozen_set: "value"}
-print(set_dict[frozen_set])  # "value"
-
-# Can contain mutable objects
-complex_frozen = frozenset([1, 2, (3, 4)])  # OK
-# complex_frozen = frozenset([1, 2, [3, 4]])  # TypeError (list not hashable)
-```
-
-## Collection Comparisons
-
-### List vs Tuple
-```python
-# Lists are mutable, tuples are immutable
-my_list = [1, 2, 3]
-my_tuple = (1, 2, 3)
-
-my_list[0] = 999    # OK
-# my_tuple[0] = 999 # TypeError
-
-# Tuples are slightly more memory efficient
-import sys
-print(sys.getsizeof(my_list))   # ~104 bytes
-print(sys.getsizeof(my_tuple))  # ~72 bytes
-
-# Tuples can be dictionary keys (if hashable)
-dict_with_tuple_key = {my_tuple: "value"}
-# dict_with_list_key = {my_list: "value"}  # TypeError
-```
-
-### List vs Set
-```python
-# Lists maintain order, allow duplicates
-my_list = [1, 2, 2, 3, 1]
-print(my_list)       # [1, 2, 2, 3, 1]
-print(len(my_list))  # 5
-
-# Sets are unordered, unique elements only
-my_set = {1, 2, 2, 3, 1}
-print(my_set)        # {1, 2, 3} (order not guaranteed)
-print(len(my_set))   # 3
-
-# Performance: sets are faster for membership testing
-large_list = list(range(10000))
-large_set = set(range(10000))
-
-import time
-start = time.time()
-9999 in large_list  # O(n)
-list_time = time.time() - start
-
-start = time.time()
-9999 in large_set   # O(1)
-set_time = time.time() - start
-
-print(f"List lookup: {list_time:.6f}s")
-print(f"Set lookup: {set_time:.6f}s")
-```
-
-## Practical Applications
-
-### Removing Duplicates
-```python
-# From list
+# Usage
 original = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-unique = list(set(original))
-print(unique)  # [1, 2, 3, 4] (order may vary)
+unique = remove_duplicates(original)
+print(unique)   # [1, 2, 3, 4]
 
-# Preserve order
-seen = set()
-ordered_unique = []
-for item in original:
-    if item not in seen:
-        seen.add(item)
-        ordered_unique.append(item)
-
-print(ordered_unique)  # [1, 2, 3, 4] (order preserved)
+# Quick way (loses order)
+unique_fast = list(set(original))
 ```
 
-### Finding Common Elements
+### Example 2: Find Common Friends
+
 ```python
-list1 = [1, 2, 3, 4, 5]
-list2 = [3, 4, 5, 6, 7]
-list3 = [4, 5, 6, 7, 8]
+def find_common_friends(user1_friends, user2_friends):
+    """Find friends that both users have."""
+    set1 = set(user1_friends)
+    set2 = set(user2_friends)
+    return set1 & set2
 
-# Convert to sets for set operations
-set1, set2, set3 = set(list1), set(list2), set(list3)
+# Usage
+alice_friends = ["Bob", "Charlie", "Diana", "Eve"]
+bob_friends = ["Alice", "Charlie", "Eve", "Frank"]
 
-# Common to all three
-common_all = set1 & set2 & set3
-print(common_all)  # {4, 5}
+common = find_common_friends(alice_friends, bob_friends)
+print(f"Common friends: {common}")  # {'Charlie', 'Eve'}
 
-# Common to at least two
-common_two = (set1 & set2) | (set1 & set3) | (set2 & set3)
-print(common_two)  # {3, 4, 5, 6, 7}
-
-# Unique to each
-unique1 = set1 - (set2 | set3)
-unique2 = set2 - (set1 | set3)
-unique3 = set3 - (set1 | set2)
-
-print(f"Unique to list1: {unique1}")  # {1, 2}
-print(f"Unique to list2: {unique2}")  # {3}
-print(f"Unique to list3: {unique3}")  # {8}
+# Find unique to each
+alice_only = set(alice_friends) - set(bob_friends)
+bob_only = set(bob_friends) - set(alice_friends)
 ```
 
-### Data Validation
+### Example 3: Validate User Input
+
 ```python
-# Valid options
-valid_colors = {"red", "green", "blue", "yellow"}
-valid_sizes = {"small", "medium", "large"}
+def validate_selection(user_selection, valid_options):
+    """Check if user selected valid options."""
+    user_set = set(user_selection)
+    valid_set = set(valid_options)
 
-# User selections
-selected_colors = ["red", "purple", "green", "blue"]
-selected_sizes = ["medium", "extra-large"]
+    # Find invalid selections
+    invalid = user_set - valid_set
 
-# Find invalid selections
-invalid_colors = set(selected_colors) - valid_colors
-invalid_sizes = set(selected_sizes) - valid_sizes
+    # Find missing required
+    missing = valid_set - user_set
 
-print(f"Invalid colors: {invalid_colors}")    # {'purple'}
-print(f"Invalid sizes: {invalid_sizes}")      # {'extra-large'}
+    return {
+        "valid": not invalid,
+        "invalid": invalid,
+        "all_selected": not missing,
+        "missing": missing
+    }
 
-# Check if all selections are valid
-colors_valid = set(selected_colors).issubset(valid_colors)
-sizes_valid = set(selected_sizes).issubset(valid_sizes)
+# Usage
+valid_colors = ["red", "green", "blue", "yellow"]
+user_picked = ["red", "purple", "green"]
 
-print(f"All colors valid: {colors_valid}")    # False
-print(f"All sizes valid: {sizes_valid}")      # False
+result = validate_selection(user_picked, valid_colors)
+print(f"Invalid colors: {result['invalid']}")  # {'purple'}
 ```
 
-### Configuration Management
+### Example 4: Configuration as Tuples
+
 ```python
-# Immutable configuration
+# Use tuples for configuration that shouldn't change
 DATABASE_CONFIG = (
     "localhost",  # host
     5432,         # port
-    "myapp",      # database name
+    "myapp",      # database
     "user",       # username
     "password"    # password
 )
 
-# Unpack configuration
+# Unpack for use
 host, port, dbname, user, password = DATABASE_CONFIG
 
-# Cannot accidentally modify
-# DATABASE_CONFIG[0] = "remote"  # TypeError
-
-# For mutable config, use dict
-APP_CONFIG = {
-    "debug": True,
-    "max_connections": 100,
-    "timeout": 30
-}
-
-# Can modify
-APP_CONFIG["timeout"] = 60
+# Can't accidentally modify
+# DATABASE_CONFIG[0] = "other"  # TypeError!
 ```
 
-### Mathematical Set Operations
+### Example 5: Word Analysis
+
 ```python
-# Students in different classes
-math_class = {"Alice", "Bob", "Charlie", "David"}
-science_class = {"Bob", "Charlie", "Eve", "Frank"}
-history_class = {"Alice", "Charlie", "Eve", "George"}
+def analyze_vocab(text1, text2):
+    """Compare vocabulary between two texts."""
+    # Extract words (simplified)
+    words1 = set(text1.lower().split())
+    words2 = set(text2.lower().split())
 
-# Students taking all three classes
-takes_all_three = math_class & science_class & history_class
-print(takes_all_three)  # {'Charlie'}
+    # Remove punctuation (simple)
+    punctuation = ".,!?;:'\""
+    for p in punctuation:
+        words1 = {w.replace(p, "") for w in words1}
+        words2 = {w.replace(p, "") for w in words2}
 
-# Students taking math or science
-takes_math_or_science = math_class | science_class
-print(takes_math_or_science)  # {'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'}
+    # Remove empty strings
+    words1 = {w for w in words1 if w}
+    words2 = {w for w in words2 if w}
 
-# Students taking only math
-only_math = math_class - (science_class | history_class)
-print(only_math)  # {'David'}
+    return {
+        "unique_to_text1": words1 - words2,
+        "unique_to_text2": words2 - words1,
+        "common": words1 & words2,
+        "total_unique": words1 | words2
+    }
 
-# Students taking exactly one class
-all_students = math_class | science_class | history_class
-takes_multiple = (math_class & science_class) | (math_class & history_class) | (science_class & history_class)
-takes_one_class = all_students - takes_multiple
-print(takes_one_class)  # {'David', 'Frank', 'George'}
+# Usage
+text_a = "Python is great for data science"
+text_b = "Python is also great for web development"
+
+analysis = analyze_vocab(text_a, text_b)
+print(f"Common words: {analysis['common']}")
+print(f"Unique to text A: {analysis['unique_to_text1']}")
 ```
 
-## Performance Considerations
+---
 
-### Choosing the Right Collection
+## Common Beginner Mistakes
+
+### Mistake 1: Creating Empty Set Wrong
+
 ```python
-# For ordered sequences with duplicates: list
-shopping_list = ["milk", "bread", "eggs", "bread"]
+# WRONG - this creates an empty dictionary!
+empty = {}
+type(empty)   # <class 'dict'>
 
-# For ordered sequences without duplicates: tuple (if immutable)
-coordinates = (10.5, 20.3)
-
-# For unique unordered elements: set
-unique_visitors = {"alice", "bob", "charlie"}
-
-# For key-value mapping: dict
-user_info = {"name": "Alice", "age": 25}
-
-# For immutable key-value mapping: namedtuple or frozenset of pairs
-Point = namedtuple('Point', ['x', 'y'])
-point = Point(10, 20)
+# RIGHT
+empty = set()
+type(empty)   # <class 'set'>
 ```
 
-### Memory Usage
+### Mistake 2: Forgetting Tuple Comma
+
 ```python
-import sys
+# WRONG - not a tuple!
+single = (5)
+type(single)   # <class 'int'>
 
-# Compare memory usage
-my_list = [1, 2, 3, 4, 5]
-my_tuple = (1, 2, 3, 4, 5)
-my_set = {1, 2, 3, 4, 5}
-
-print(f"List: {sys.getsizeof(my_list)} bytes")
-print(f"Tuple: {sys.getsizeof(my_tuple)} bytes")
-print(f"Set: {sys.getsizeof(my_set)} bytes")
-
-# Tuples are most memory efficient for small collections
-# Sets have overhead for hash table
+# RIGHT
+single = (5,)
+type(single)   # <class 'tuple'>
 ```
 
-### Operation Time Complexity
+### Mistake 3: Trying to Access Set by Index
+
 ```python
-# Lists: O(1) access by index, O(n) search
-# Tuples: O(1) access by index, O(n) search (same as lists)
-# Sets: O(1) membership test, O(1) add/remove
-# Dicts: O(1) key access, O(1) key existence
+my_set = {1, 2, 3}
 
-# Choose based on your access patterns
+# WRONG
+first = my_set[0]   # TypeError!
+
+# RIGHT - convert to list or iterate
+first = list(my_set)[0]   # Works but order not guaranteed
+# Or better:
+for item in my_set:
+    print(item)
+    break
 ```
+
+### Mistake 4: Modifying Tuple Elements
+
+```python
+point = (3, 4)
+
+# WRONG
+point[0] = 5   # TypeError!
+
+# RIGHT - create new tuple
+new_point = (5, point[1])
+# Or convert to list and back
+temp = list(point)
+temp[0] = 5
+new_point = tuple(temp)
+```
+
+---
+
+## Comparing Collection Types
+
+### When to Use Each
+
+```python
+# LIST - Ordered, changeable, allows duplicates
+shopping = ["milk", "eggs", "milk"]  # Can have two milks
+shopping.append("bread")              # Can add items
+
+# TUPLE - Ordered, unchangeable, allows duplicates
+coordinates = (40.7128, -74.0060)    # Fixed coordinates
+color_rgb = (255, 128, 0)             # Fixed color
+
+# SET - Unordered, changeable, unique only
+unique_visitors = {"alice", "bob", "alice"}  # Only one "alice"
+unique_visitors.add("charlie")              # Can add
+
+# DICT - Key-value pairs, ordered, changeable
+student = {"name": "Alice", "grade": "A"}
+student["age"] = 20                  # Can add new keys
+```
+
+### Performance Comparison
+
+```python
+# Membership testing (checking if item exists)
+large_list = list(range(10000))
+large_set = set(range(10000))
+
+# Set is MUCH faster for checking if item exists
+9999 in large_list   # Slow - checks each item one by one
+9999 in large_set    # Fast - uses hash table
+
+# But lists are better for ordered access
+large_list[5000]     # Fast - direct index access
+# large_set[5000]    # Error! Sets don't support indexing
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Find Missing Numbers
+Find which numbers from 1 to N are missing from a list.
+
+```python
+def find_missing(numbers, n):
+    """Return set of missing numbers from 1 to n."""
+    # Your code here
+    pass
+
+# Test
+print(find_missing([1, 2, 4, 6], 6))
+# Should return: {3, 5}
+```
+
+### Exercise 2: Anagram Checker
+Check if two words are anagrams (contain same letters).
+
+```python
+def is_anagram(word1, word2):
+    """Return True if word1 and word2 are anagrams."""
+    # Your code here
+    pass
+
+# Test
+print(is_anagram("listen", "silent"))   # True
+print(is_anagram("hello", "world"))      # False
+```
+
+### Exercise 3: Stock Portfolio
+Track stock purchases and calculate average cost.
+
+```python
+def add_purchase(portfolio, stock, price, shares):
+    """Add stock purchase to portfolio."""
+    # Your code here
+    pass
+
+def get_average_cost(portfolio, stock):
+    """Calculate average cost per share for a stock."""
+    # Your code here
+    pass
+
+# Test
+portfolio = {}
+add_purchase(portfolio, "AAPL", 150.00, 10)
+add_purchase(portfolio, "AAPL", 155.00, 5)
+add_purchase(portfolio, "GOOGL", 2800.00, 2)
+
+print(get_average_cost(portfolio, "AAPL"))   # Should be ~151.67
+```
+
+### Exercise 4: Tuple Sorting
+Sort a list of tuples by second element.
+
+```python
+def sort_by_second(items):
+    """Sort list of tuples by second element."""
+    # Your code here
+    pass
+
+# Test
+data = [(1, 5), (2, 3), (3, 8), (4, 1)]
+result = sort_by_second(data)
+# Should return: [(4, 1), (2, 3), (1, 5), (3, 8)]
+```
+
+---
 
 ## Key Takeaways
 
-1. **Tuples are immutable sequences** - use for fixed data that shouldn't change
-2. **Sets contain unique elements** - perfect for membership testing and removing duplicates
-3. **Named tuples** provide readable access to tuple elements
-4. **Frozen sets** are immutable sets that can be used as dictionary keys
-5. **Choose collections** based on mutability, ordering, and performance needs
-6. **Set operations** enable mathematical operations on collections
+1. **Tuples are immutable** - Use when data shouldn't change
+2. **Sets are for unique items** - Automatically removes duplicates
+3. **Sets are unordered** - Can't rely on position or order
+4. **Sets are fast** - O(1) membership testing vs O(n) for lists
+5. **Use `set()` not `{}`** - Empty brackets make a dictionary!
+6. **Tuple comma matters** - `(x,)` is a tuple, `(x)` is not
+
+## Quick Reference Card
+
+| Operation | Tuple | Set |
+|-----------|-------|-----|
+| Create | `(1, 2, 3)` or `tuple()` | `{1, 2, 3}` or `set()` |
+| Empty | `()` | `set()` (not `{}`) |
+| Access | `t[0]` | Can't access by index |
+| Check membership | `x in t` | `x in s` (faster!) |
+| Add element | Can't (immutable) | `s.add(x)` |
+| Remove | Can't | `s.remove(x)` or `s.discard(x)` |
+| Length | `len(t)` | `len(s)` |
+| Unique elements | N/A (can have duplicates) | Automatic |
+| Union | N/A | `s1 \| s2` or `s1.union(s2)` |
+| Intersection | N/A | `s1 & s2` or `s1.intersection(s2)` |
+| Difference | N/A | `s1 - s2` or `s1.difference(s2)` |
+
+---
 
 ## Further Reading
-- Python collections documentation
-- collections module (namedtuple, defaultdict, Counter, deque)
-- Set theory and mathematical operations
-- Performance characteristics of different data structures
-- Memory optimization techniques
+
+- **Next Lesson**: Function Definition - Creating reusable code blocks
+- **Practice**: Complete all exercises above
+- **Challenge**: Build a simple spell checker using a set of valid words
+- **Explore**: Try `frozenset` - an immutable version of set that can be dictionary keys

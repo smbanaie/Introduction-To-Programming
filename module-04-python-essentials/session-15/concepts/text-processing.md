@@ -1,216 +1,259 @@
-# Text Processing: Analyzing and Manipulating Strings
+# Text Processing: Analyzing and Manipulating Text
 
-## Text Analysis Fundamentals
+## What is Text Processing?
 
-Text processing involves analyzing, transforming, and extracting information from strings. Python provides powerful tools for working with text data.
+**Text processing** is all about working with strings to extract information, transform data, and analyze content. Think of it like being a detective with text - searching for clues, organizing information, and finding patterns.
 
-## String Searching and Finding
+### Real-World Examples
 
-### Basic Search Methods
+- Counting words in an essay
+- Finding all email addresses in a document
+- Cleaning up messy user input
+- Analyzing social media posts
+- Extracting data from CSV files
+- Checking if passwords meet requirements
+
+---
+
+## Searching in Strings
+
+### Finding Substrings
+
 ```python
-text = "Python is a powerful programming language. Python is easy to learn."
+text = "Python is a powerful programming language. Python is fun!"
 
-# Find first occurrence (returns index)
-print(text.find("Python"))        # 0
-print(text.find("Java"))          # -1 (not found)
+# Find first occurrence (returns position or -1)
+position = text.find("Python")      # 0 (starts at position 0)
+not_found = text.find("Java")        # -1 (not in string)
 
-# Find from specific position
-print(text.find("Python", 10))    # 43 (second occurrence)
+# Find starting from position 10 (finds second "Python")
+second = text.find("Python", 10)    # 45
 
-# Check if substring exists
-print("Python" in text)           # True
-print("powerful" in text)         # True
-
-# Count occurrences
-print(text.count("Python"))       # 2
-print(text.count("is"))           # 2
+# Find using rfind (searches from the right/end)
+last = text.rfind("is")              # 47
 ```
 
-### Advanced Search with Regular Expressions
+**Important**: `find()` returns -1 if not found, while `index()` raises an error. Use `find()` when you're not sure if the text exists.
+
+### Checking Membership (the `in` operator)
+
 ```python
-import re
+text = "Learning Python programming"
 
-text = "Contact us at support@example.com or call 555-123-4567"
+# Check if substring exists (returns True or False)
+"Python" in text      # True
+"Java" in text        # False
 
-# Find email addresses
-email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-emails = re.findall(email_pattern, text)
-print(emails)  # ['support@example.com']
+# Check if NOT in string
+"Java" not in text    # True
+"Python" not in text  # False
 
-# Find phone numbers
-phone_pattern = r'\d{3}-\d{3}-\d{4}'
-phones = re.findall(phone_pattern, text)
-print(phones)  # ['555-123-4567']
-
-# Search with groups
-date_text = "Meeting on 2024-01-15 and 2023-12-25"
-date_pattern = r'(\d{4})-(\d{2})-(\d{2})'
-matches = re.findall(date_pattern, date_text)
-print(matches)  # [('2024', '01', '15'), ('2023', '12', '25')]
+# Case-insensitive check (convert to same case first)
+python_mentioned = "python" in text.lower()  # True
 ```
 
-### Start and End Checking
+### Counting Occurrences
+
 ```python
-filenames = ["report.pdf", "data.csv", "script.py", "image.png"]
+text = "The quick brown fox jumps over the lazy dog"
 
-# Find PDF files
-pdf_files = [f for f in filenames if f.endswith(".pdf")]
-print(pdf_files)  # ['report.pdf']
+# Count how many times a substring appears
+t_count = text.count("t")           # 2 (lowercase t)
+total_t = text.lower().count("t")   # 3 (counting all t's)
 
-# Find files starting with specific prefix
-data_files = [f for f in filenames if f.startswith("data")]
-print(data_files)  # ['data.csv']
-
-# Check file extensions
-for filename in filenames:
-    if filename.endswith((".pdf", ".doc", ".docx")):
-        print(f"{filename} is a document")
-    elif filename.endswith((".csv", ".xlsx")):
-        print(f"{filename} is a spreadsheet")
-    elif filename.endswith((".py", ".js", ".java")):
-        print(f"{filename} is a script")
+# Count specific words
+the_count = text.count("the")       # 2
 ```
 
-## String Splitting and Joining
+### Checking Start and End
 
-### Splitting Strings
+```python
+filename = "document.pdf"
+url = "https://example.com"
+
+# Check beginning
+filename.startswith("doc")          # True
+url.startswith("https://")          # True
+
+# Check ending
+filename.endswith(".pdf")           # True
+url.endswith(".com")                # True
+
+# Check multiple options
+filename.endswith((".pdf", ".doc", ".txt"))  # True (any of these)
+```
+
+---
+
+## Splitting and Joining Strings
+
+### Splitting: Breaking Text Apart
+
 ```python
 # Split on whitespace (default)
-text = "Hello world, how are you?"
-words = text.split()
-print(words)  # ['Hello', 'world,', 'how', 'are', 'you?']
+sentence = "Hello world how are you"
+words = sentence.split()
+# Result: ['Hello', 'world', 'how', 'are', 'you']
 
 # Split on specific character
 csv_line = "Alice,25,Engineer,New York"
-fields = csv_line.split(',')
-print(fields)  # ['Alice', '25', 'Engineer', 'New York']
+fields = csv_line.split(",")
+# Result: ['Alice', '25', 'Engineer', 'New York']
 
-# Split with max splits
+# Split only first N occurrences
 sentence = "one:two:three:four:five"
-parts = sentence.split(':', 2)  # Split only first 2 occurrences
-print(parts)  # ['one', 'two', 'three:four:five']
+parts = sentence.split(":", 2)
+# Result: ['one', 'two', 'three:four:five']
 
 # Split lines
 multiline = "Line 1\nLine 2\nLine 3"
-lines = multiline.split('\n')
-print(lines)  # ['Line 1', 'Line 2', 'Line 3']
+lines = multiline.split("\n")
+# Result: ['Line 1', 'Line 2', 'Line 3']
 
-# Splitlines method (handles different line endings)
-text_with_crlf = "Line 1\r\nLine 2\r\nLine 3"
-lines = text_with_crlf.splitlines()
-print(lines)  # ['Line 1', 'Line 2', 'Line 3']
+# Split lines (better - handles different line endings)
+lines = multiline.splitlines()
 ```
 
-### Joining Strings
+### Joining: Putting Text Together
+
 ```python
 # Join list into string
-words = ['Hello', 'world', 'how', 'are', 'you']
+words = ['Hello', 'world']
 sentence = ' '.join(words)
-print(sentence)  # "Hello world how are you"
+# Result: "Hello world"
 
 # Join with different separators
-path_parts = ['home', 'user', 'documents', 'file.txt']
-file_path = '/'.join(path_parts)
-print(file_path)  # "home/user/documents/file.txt"
+path_parts = ['home', 'user', 'documents']
+path = '/'.join(path_parts)
+# Result: "home/user/documents"
 
-# Join CSV data
-data = ['Alice', '25', 'Engineer']
-csv_line = ','.join(data)
-print(csv_line)  # "Alice,25,Engineer"
-
-# Join with formatting
+# Join numbers (must convert to strings first!)
 numbers = [1, 2, 3, 4, 5]
-formatted = ', '.join(str(n) for n in numbers)
-print(formatted)  # "1, 2, 3, 4, 5"
+result = ', '.join(str(n) for n in numbers)
+# Result: "1, 2, 3, 4, 5"
+
+# Create CSV line
+data = ["Alice", "25", "Engineer"]
+csv = ','.join(data)
+# Result: "Alice,25,Engineer"
 ```
 
-## Text Transformation
+---
 
-### Case Conversion
+## Text Transformation and Cleaning
+
+### Changing Case
+
 ```python
 text = "Hello World"
 
-print(text.upper())        # "HELLO WORLD"
-print(text.lower())        # "hello world"
-print(text.title())        # "Hello World"
-print(text.capitalize())   # "Hello world"
-print(text.swapcase())     # "hELLO wORLD"
+upper = text.upper()          # "HELLO WORLD"
+lower = text.lower()          # "hello world"
+title = text.title()          # "Hello World"
+capital = text.capitalize()   # "Hello world"
 ```
 
-### Character Replacement
+### Removing Unwanted Characters
+
 ```python
-# Simple replacement
-text = "I like Python programming"
-new_text = text.replace("Python", "Java")
-print(new_text)  # "I like Java programming"
+text = "   Hello World   "
 
-# Replace limited occurrences
-text = "one two one two one"
-result = text.replace("one", "1", 2)  # Replace only first 2
-print(result)  # "1 two 1 two one"
+# Remove whitespace from ends
+clean = text.strip()          # "Hello World"
+left = text.lstrip()          # "Hello World   "
+right = text.rstrip()         # "   Hello World"
 
-# Remove characters
+# Remove specific characters
+messy = "xxxHelloxxx"
+clean = messy.strip('x')      # "Hello"
+
+# Remove all spaces
+no_spaces = text.replace(" ", "")
+# Result: "HelloWorld"
+```
+
+### Replacing Text
+
+```python
+text = "I like Java programming"
+
+# Replace all occurrences
+new_text = text.replace("Java", "Python")
+# Result: "I like Python programming"
+
+# Replace first N occurrences
+partial = text.replace("a", "@", 1)
+# Result: "I like J@va programming" (only first 'a')
+
+# Remove by replacing with nothing
 text = "Hello, World!"
 clean = text.replace(",", "").replace("!", "")
-print(clean)  # "Hello World"
-
-# Using translate for multiple replacements
-trans_table = str.maketrans('aeiou', '12345')
-text = "hello world"
-result = text.translate(trans_table)
-print(result)  # "h2ll4 w4rld"
+# Result: "Hello World"
 ```
 
-### Whitespace Handling
+---
+
+## Practical Text Processing Examples
+
+### Example 1: Word Counter
+
 ```python
-text = "   Hello   World   "
+def count_words(text):
+    """Count words in text."""
+    # Clean the text
+    cleaned = text.lower()
 
-print(repr(text.strip()))     # "'Hello   World'"
-print(repr(text.lstrip()))    # "'Hello   World   '"
-print(repr(text.rstrip()))    # "'   Hello   World'"
+    # Remove punctuation (simple way)
+    for char in ".,!?;:'\"()-":
+        cleaned = cleaned.replace(char, " ")
 
-# Remove all whitespace
-no_spaces = ''.join(text.split())
-print(no_spaces)  # "HelloWorld"
+    # Split into words
+    words = cleaned.split()
 
-# Normalize whitespace
-normalized = ' '.join(text.split())
-print(repr(normalized))  # "'Hello World'"
+    return len(words)
+
+# Usage
+essay = "Python is amazing. Python is powerful and fun!"
+print(f"Word count: {count_words(essay)}")  # Word count: 9
 ```
 
-## Text Validation and Cleaning
+### Example 2: Email Validator (Simple)
 
-### Input Validation
 ```python
-def validate_email(email):
-    """Basic email validation"""
-    if not email or '@' not in email:
+def is_valid_email(email):
+    """Basic email validation."""
+    # Check basic structure
+    if "@" not in email:
         return False
 
-    local, domain = email.split('@', 1)
-    if not local or not domain or '.' not in domain:
+    # Split into parts
+    parts = email.split("@")
+    if len(parts) != 2:
+        return False
+
+    local, domain = parts
+
+    # Check both parts exist
+    if not local or not domain:
+        return False
+
+    # Check domain has a dot
+    if "." not in domain:
         return False
 
     return True
 
-def validate_phone(phone):
-    """Basic phone number validation"""
-    # Remove all non-digit characters
-    digits = ''.join(c for c in phone if c.isdigit())
-
-    # Check if we have 10 or 11 digits
-    return len(digits) in (10, 11) and (len(digits) == 10 or digits[0] == '1')
-
-print(validate_email("user@example.com"))    # True
-print(validate_email("invalid-email"))       # False
-print(validate_phone("555-123-4567"))        # True
-print(validate_phone("123"))                 # False
+# Test
+print(is_valid_email("user@example.com"))     # True
+print(is_valid_email("invalid-email"))        # False
+print(is_valid_email("@example.com"))          # False
 ```
 
-### Text Cleaning Functions
+### Example 3: Text Cleaner
+
 ```python
 def clean_text(text):
-    """Clean and normalize text"""
+    """Clean and normalize text."""
     if not text:
         return ""
 
@@ -220,264 +263,301 @@ def clean_text(text):
     # Remove extra whitespace
     text = ' '.join(text.split())
 
-    # Remove punctuation
-    import string
-    text = text.translate(str.maketrans('', '', string.punctuation))
+    # Remove common punctuation
+    punctuation = ".,!?;:'\"()-"
+    for char in punctuation:
+        text = text.replace(char, "")
 
     return text
 
-def extract_words(text):
-    """Extract alphanumeric words from text"""
-    import re
-    words = re.findall(r'\b\w+\b', text.lower())
-    return words
+# Usage
+messy = "  Hello, World!   HOW are you??  "
+clean = clean_text(messy)
+print(clean)  # "hello world how are you"
+```
+
+### Example 4: Password Strength Checker
+
+```python
+def check_password_strength(password):
+    """Check if password is strong."""
+    checks = {
+        "length": len(password) >= 8,
+        "has_upper": any(c.isupper() for c in password),
+        "has_lower": any(c.islower() for c in password),
+        "has_digit": any(c.isdigit() for c in password),
+    }
+
+    score = sum(checks.values())
+
+    if score == 4:
+        return "Strong"
+    elif score >= 2:
+        return "Medium"
+    else:
+        return "Weak"
+
+# Test
+print(check_password_strength("Hello123"))    # Strong
+print(check_password_strength("hello"))       # Weak
+print(check_password_strength("HELLO"))       # Weak
+```
+
+### Example 5: Simple CSV Parser
+
+```python
+def parse_csv_line(line):
+    """Parse a CSV line into fields."""
+    # Strip whitespace and split
+    fields = [field.strip() for field in line.split(",")]
+    return fields
+
+def parse_csv_data(data_lines):
+    """Parse multiple CSV lines."""
+    result = []
+    for line in data_lines:
+        if line.strip():  # Skip empty lines
+            result.append(parse_csv_line(line))
+    return result
 
 # Usage
-dirty_text = "  Hello, World!   How are you??  "
-print(repr(clean_text(dirty_text)))     # "'hello world how are you'"
-print(extract_words(dirty_text))         # ['hello', 'world', 'how', 'are', 'you']
+csv_data = [
+    "Alice,25,Engineer",
+    "Bob,30,Designer",
+    "Charlie,35,Manager"
+]
+
+parsed = parse_csv_data(csv_data)
+for row in parsed:
+    print(f"Name: {row[0]}, Age: {row[1]}, Job: {row[2]}")
 ```
 
-## String Comparison and Sorting
+---
 
-### Natural String Comparison
-```python
-# ASCII comparison
-print("apple" < "banana")     # True ('a' < 'b')
-print("Apple" < "apple")      # True (uppercase before lowercase)
-print("apple" < "Apple")      # False
+## Text Analysis
 
-# Case-insensitive comparison
-text1, text2 = "Hello", "hello"
-print(text1.lower() == text2.lower())  # True
+### Finding the Most Common Words
 
-# Using casefold for better Unicode support
-print(text1.casefold() == text2.casefold())  # True
-```
-
-### String Sorting
-```python
-fruits = ["banana", "Apple", "cherry", "date"]
-
-# Default sort (ASCII order)
-sorted_fruits = sorted(fruits)
-print(sorted_fruits)  # ['Apple', 'banana', 'cherry', 'date']
-
-# Case-insensitive sort
-sorted_fruits = sorted(fruits, key=str.lower)
-print(sorted_fruits)  # ['Apple', 'banana', 'cherry', 'date']
-
-# Sort by length
-sorted_fruits = sorted(fruits, key=len)
-print(sorted_fruits)  # ['date', 'Apple', 'banana', 'cherry']
-
-# Reverse sort
-sorted_fruits = sorted(fruits, key=str.lower, reverse=True)
-print(sorted_fruits)  # ['date', 'cherry', 'banana', 'Apple']
-```
-
-## Text Statistics and Analysis
-
-### Word Frequency Analysis
 ```python
 def word_frequency(text):
-    """Count word frequencies in text"""
-    words = extract_words(text)
-    frequency = {}
+    """Count how often each word appears."""
+    # Clean and split
+    cleaned = text.lower()
+    for char in ".,!?;:'\"()-":
+        cleaned = cleaned.replace(char, " ")
 
+    words = cleaned.split()
+
+    # Count frequencies
+    frequency = {}
     for word in words:
-        frequency[word] = frequency.get(word, 0) + 1
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
 
     return frequency
 
-def most_common_words(text, n=5):
-    """Find most common words"""
-    freq = word_frequency(text)
-    # Sort by frequency (descending), then by word (ascending)
-    sorted_words = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
-    return sorted_words[:n]
-
-text = """
-Python is a programming language. Python is easy to learn.
-Java is also a programming language. Java is widely used.
-"""
-
+# Usage
+text = "the quick brown fox jumps over the lazy dog"
 freq = word_frequency(text)
-print(freq)
-# {'python': 2, 'is': 4, 'a': 2, 'programming': 2, 'language': 2, 'easy': 1, 'to': 1, 'learn': 1, 'java': 2, 'also': 1, 'widely': 1, 'used': 1}
 
-common = most_common_words(text, 3)
-print(common)  # [('is', 4), ('a', 2), ('language', 2)]
+# Find most common
+most_common = max(freq.items(), key=lambda x: x[1])
+print(f"Most common word: '{most_common[0]}' appears {most_common[1]} times")
 ```
 
 ### Text Statistics
+
 ```python
-def text_stats(text):
-    """Calculate various text statistics"""
-    words = extract_words(text)
-    sentences = [s.strip() for s in text.split('.') if s.strip()]
+def text_statistics(text):
+    """Calculate various text statistics."""
+    # Basic counts
+    char_count = len(text)
+    char_count_no_spaces = len(text.replace(" ", ""))
 
-    stats = {
-        'characters': len(text),
-        'words': len(words),
-        'sentences': len(sentences),
-        'avg_word_length': sum(len(word) for word in words) / len(words) if words else 0,
-        'avg_sentence_length': len(words) / len(sentences) if sentences else 0
-    }
+    # Word count
+    words = text.split()
+    word_count = len(words)
 
-    return stats
+    # Line count
+    lines = text.splitlines()
+    line_count = len(lines)
 
-text = "Python is great. It is easy to learn. Many people love Python."
-stats = text_stats(text)
-for key, value in stats.items():
-    if isinstance(value, float):
-        print(f"{key}: {value:.1f}")
+    # Average word length
+    if words:
+        avg_word_length = sum(len(word) for word in words) / len(words)
     else:
-        print(f"{key}: {value}")
-```
+        avg_word_length = 0
 
-## Advanced Text Processing
-
-### Text Tokenization
-```python
-import re
-
-def tokenize(text):
-    """Split text into meaningful tokens"""
-    # Split on whitespace and punctuation
-    pattern = r'\w+|[^\w\s]'
-    tokens = re.findall(pattern, text)
-    return tokens
-
-def sentence_tokenize(text):
-    """Split text into sentences"""
-    # Simple sentence splitter
-    sentences = re.split(r'[.!?]+', text)
-    return [s.strip() for s in sentences if s.strip()]
-
-text = "Hello, world! How are you? I'm fine."
-print(tokenize(text))
-# ['Hello', ',', 'world', '!', 'How', 'are', 'you', '?', 'I', "'m", 'fine', '.']
-
-print(sentence_tokenize(text))
-# ['Hello, world', 'How are you', "I'm fine"]
-```
-
-### Text Normalization
-```python
-def normalize_text(text):
-    """Normalize text for consistent processing"""
-    # Convert to lowercase
-    text = text.lower()
-
-    # Normalize whitespace
-    text = ' '.join(text.split())
-
-    # Handle contractions
-    contractions = {
-        "can't": "cannot",
-        "won't": "will not",
-        "i'm": "i am",
-        "'re": " are",
-        "'s": " is",
-        "'ve": " have"
+    return {
+        "characters": char_count,
+        "characters_no_spaces": char_count_no_spaces,
+        "words": word_count,
+        "lines": line_count,
+        "average_word_length": round(avg_word_length, 1)
     }
 
-    for contraction, expansion in contractions.items():
-        text = text.replace(contraction, expansion)
+# Usage
+text = """Hello world.
+This is a test.
+Python programming is fun!"""
 
-    # Remove extra punctuation
-    text = re.sub(r'[^\w\s]', '', text)
-
-    return text.strip()
-
-text = "I can't believe it's working! I'm so excited :)"
-normalized = normalize_text(text)
-print(normalized)  # "i cannot believe it is working i am so excited"
+stats = text_statistics(text)
+for key, value in stats.items():
+    print(f"{key}: {value}")
 ```
 
-### Keyword Extraction
+---
+
+## Common Beginner Mistakes
+
+### Mistake 1: Modifying String While Iterating
+
 ```python
-def extract_keywords(text, min_length=4, max_words=10):
-    """Extract important keywords from text"""
-    words = extract_words(text)
+# WRONG - this can skip items!
+data = ["1", "2", "3", "a", "4", "b"]
+for item in data:
+    if not item.isdigit():
+        data.remove(item)  # Dangerous!
 
-    # Filter by length
-    keywords = [word for word in words if len(word) >= min_length]
-
-    # Count frequencies
-    freq = {}
-    for word in keywords:
-        freq[word] = freq.get(word, 0) + 1
-
-    # Sort by frequency and return top keywords
-    sorted_keywords = sorted(freq.items(), key=lambda x: x[1], reverse=True)
-    return [word for word, count in sorted_keywords[:max_words]]
-
-text = """
-Machine learning is a subset of artificial intelligence.
-Machine learning algorithms learn from data.
-Deep learning is part of machine learning.
-"""
-
-keywords = extract_keywords(text)
-print(keywords)  # ['machine', 'learning', 'data', 'deep', 'part', 'algorithms', 'from', 'artificial', 'intelligence', 'subset']
+# RIGHT - create a new list
+data = ["1", "2", "3", "a", "4", "b"]
+cleaned = [item for item in data if item.isdigit()]
+# Result: ['1', '2', '3', '4']
 ```
 
-## Performance Considerations
+### Mistake 2: Forgetting to Convert Numbers to Strings
 
-### Efficient String Operations
 ```python
-# Avoid repeated string concatenation in loops
-# Bad: O(n²) performance
-result = ""
-for word in words:
-    result += word + " "  # Creates new string each time
+numbers = [1, 2, 3, 4, 5]
 
-# Good: O(n) performance
-result = " ".join(words)
+# WRONG
+result = ", ".join(numbers)   # Error!
 
-# Use list comprehension for filtering
-# Good
-long_words = [word for word in words if len(word) > 5]
-
-# Avoid
-long_words = []
-for word in words:
-    if len(word) > 5:
-        long_words.append(word)
+# RIGHT
+result = ", ".join(str(n) for n in numbers)
+# Result: "1, 2, 3, 4, 5"
 ```
 
-### Memory Usage with Large Texts
+### Mistake 3: Case-Sensitive Comparison
+
 ```python
-# Process large files line by line
-def process_large_file(filename):
-    word_count = 0
-    with open(filename, 'r') as file:
-        for line in file:
-            words = extract_words(line)
-            word_count += len(words)
-    return word_count
+text = "Python Programming"
 
-# Use generators for memory efficiency
-def find_lines_with_word(filename, search_word):
-    with open(filename, 'r') as file:
-        for line_num, line in enumerate(file, 1):
-            if search_word.lower() in line.lower():
-                yield line_num, line.strip()
+# WRONG - case sensitive
+if "python" in text:   # False!
+    print("Found!")
+
+# RIGHT - make case consistent
+if "python" in text.lower():   # True!
+    print("Found!")
 ```
+
+### Mistake 4: Not Handling Empty Strings
+
+```python
+def get_first_char(text):
+    # WRONG - crashes on empty string
+    return text[0]
+
+# RIGHT - check first
+def get_first_char(text):
+    if not text:
+        return None
+    return text[0]
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Sentence Reverser
+Write a function that reverses the order of words in a sentence.
+
+```python
+def reverse_words(sentence):
+    # Your code here
+    pass
+
+# Test
+print(reverse_words("Hello world"))   # Should print: "world Hello"
+print(reverse_words("The quick brown fox"))  # Should print: "fox brown quick The"
+```
+
+### Exercise 2: Palindrome Checker
+Write a function that checks if a word/phrase is a palindrome (reads the same forwards and backwards).
+
+```python
+def is_palindrome(text):
+    # Your code here (ignore spaces and case)
+    pass
+
+# Test
+print(is_palindrome("radar"))     # Should print: True
+print(is_palindrome("A man a plan a canal Panama"))  # Should print: True
+print(is_palindrome("hello"))     # Should print: False
+```
+
+### Exercise 3: Extract Hashtags
+Write a function that extracts all hashtags from a social media post.
+
+```python
+def extract_hashtags(text):
+    # Your code here
+    pass
+
+# Test
+post = "Learning #Python is fun! #coding #programming #learn"
+print(extract_hashtags(post))
+# Should print: ['#Python', '#coding', '#programming', '#learn']
+```
+
+### Exercise 4: Phone Number Formatter
+Write a function that formats a 10-digit number as (XXX) XXX-XXXX.
+
+```python
+def format_phone(number):
+    # Your code here
+    pass
+
+# Test
+print(format_phone("5551234567"))   # Should print: (555) 123-4567
+print(format_phone("555-123-4567")) # Should print: (555) 123-4567
+```
+
+---
 
 ## Key Takeaways
 
-1. **Regular expressions** enable powerful pattern matching and text analysis
-2. **String methods** provide efficient text manipulation operations
-3. **Splitting and joining** are fundamental for text processing
-4. **Text normalization** ensures consistent processing
-5. **Performance matters** when processing large amounts of text
-6. **Combine multiple techniques** for comprehensive text analysis
+1. **Searching**: Use `find()` for safe searching (returns -1 if not found), `in` for simple True/False checks
+2. **Splitting/Joining**: `split()` breaks strings apart, `join()` puts them back together
+3. **Case matters**: Remember that "Python" and "python" are different - use `.lower()` for case-insensitive work
+4. **Clean data first**: Always strip whitespace and normalize case before processing user input
+5. **Lists vs strings**: Remember that `join()` works on lists but requires strings, not numbers
+6. **Strings are immutable**: Methods return new strings; the original doesn't change
+
+## Quick Reference
+
+| Task | How to Do It | Example |
+|------|-------------|---------|
+| Find substring | `text.find("sub")` | `"abc".find("b")` → 1 |
+| Check if contains | `"sub" in text` | `"b" in "abc"` → True |
+| Count occurrences | `text.count("sub")` | `"aa".count("a")` → 2 |
+| Starts with? | `text.startswith("pre")` | `"abc".startswith("a")` → True |
+| Ends with? | `text.endswith("suf")` | `"abc".endswith("c")` → True |
+| Split string | `text.split(sep)` | `"a,b".split(",")` → ['a','b'] |
+| Join strings | `sep.join(list)` | `"-".join(['a','b'])` → 'a-b' |
+| Strip whitespace | `text.strip()` | `" hi ".strip()` → 'hi' |
+| Replace | `text.replace(old, new)` | `"a,b".replace(",", "-")` → 'a-b' |
+| Upper case | `text.upper()` | `"hi".upper()` → 'HI' |
+| Lower case | `text.lower()` | `"HI".lower()` → 'hi' |
+
+---
 
 ## Further Reading
-- Natural Language Processing (NLP) libraries
-- Regular expression advanced patterns
-- Unicode text processing
-- Text mining and information extraction techniques
+
+- **Next Lesson**: Python Lists - Ordered collections of data
+- **Practice**: Complete all exercises above
+- **Challenge**: Write a simple text adventure game that processes user commands
+- **Explore**: Try reading and analyzing a real text file

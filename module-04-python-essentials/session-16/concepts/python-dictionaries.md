@@ -1,81 +1,133 @@
-# Python Dictionaries: Key-Value Data Structures
+# Python Dictionaries: Key-Value Pairs
 
-## Introduction to Dictionaries
+## What is a Dictionary?
 
-Dictionaries are mutable, unordered collections of key-value pairs. They provide fast lookups and are one of Python's most powerful data structures for organizing and accessing data.
+A **dictionary** is like a real dictionary or a phone book - it stores information as pairs of keys and values. You look up information using a **key** (like a word) and get back a **value** (like the definition).
 
-## Creating Dictionaries
-
-### Basic Dictionary Creation
 ```python
-# Empty dictionary
-empty_dict = {}
-empty_dict = dict()
-
-# Dictionary with initial values
+# Simple dictionary
 person = {
     "name": "Alice",
     "age": 25,
     "city": "New York"
 }
 
-# Using dict() constructor
+# Access by key, not by position!
+print(person["name"])   # "Alice"
+print(person["age"])    # 25
+```
+
+### Why Dictionaries Matter
+
+Dictionaries are incredibly useful:
+- **Fast lookups** - Find information instantly by key
+- **Meaningful data** - Keys tell you what the data means
+- **Flexible** - Store any type of data
+- **Real-world modeling** - Perfect for representing objects
+
+### Dictionary vs List
+
+| Feature | List | Dictionary |
+|---------|------|------------|
+| Access by | Position (0, 1, 2...) | Key ("name", "age") |
+| Order | Maintained | Maintained (Python 3.7+) |
+| Lookups | Slow (search through list) | Fast (direct access) |
+| Use case | Ordered sequences | Labelled data |
+
+---
+
+## Creating Dictionaries
+
+### Basic Creation
+
+```python
+# Empty dictionary
+empty = {}
+empty = dict()   # Alternative
+
+# With initial values
+person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+
+# Using dict() with keyword arguments
 person = dict(name="Alice", age=25, city="New York")
 
 # From list of pairs
-pairs = [("name", "Alice"), ("age", 25), ("city", "New York")]
+pairs = [("name", "Alice"), ("age", 25)]
 person = dict(pairs)
 
-# From keyword arguments
-person = dict(name="Alice", age=25, city="New York")
+# From two lists using zip()
+keys = ["name", "age", "city"]
+values = ["Alice", 25, "NYC"]
+person = dict(zip(keys, values))
 ```
 
-### Dictionary Comprehensions
+### Nested Dictionaries
+
 ```python
-# Basic comprehension
-squares = {x: x**2 for x in range(1, 6)}
-print(squares)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+# Dictionaries can contain other dictionaries!
+student = {
+    "name": "Alice",
+    "age": 20,
+    "grades": {
+        "math": 95,
+        "science": 88,
+        "history": 92
+    },
+    "contact": {
+        "email": "alice@example.com",
+        "phone": "555-1234"
+    }
+}
 
-# With condition
-even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
-print(even_squares)  # {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
-
-# Transform existing dictionary
-original = {"a": 1, "b": 2, "c": 3}
-doubled = {key: value * 2 for key, value in original.items()}
-print(doubled)  # {'a': 2, 'b': 4, 'c': 6}
-
-# Swap keys and values
-swapped = {value: key for key, value in original.items()}
-print(swapped)  # {1: 'a', 2: 'b', 3: 'c'}
+# Access nested data
+math_grade = student["grades"]["math"]      # 95
+email = student["contact"]["email"]         # "alice@example.com"
 ```
 
-## Accessing Dictionary Elements
+---
 
-### Key Access
-```python
-person = {"name": "Alice", "age": 25, "city": "New York"}
+## Accessing Dictionary Values
 
-# Direct access
-print(person["name"])   # "Alice"
-print(person["age"])    # 25
+### Direct Access (Careful!)
 
-# Using get() method (safer)
-print(person.get("name"))        # "Alice"
-print(person.get("salary"))      # None (key doesn't exist)
-print(person.get("salary", 0))   # 0 (default value)
-```
-
-### Checking Keys
 ```python
 person = {"name": "Alice", "age": 25}
 
-# Check if key exists
-print("name" in person)     # True
-print("salary" in person)   # False
+# Direct access with []
+name = person["name"]    # "Alice"
 
-# Check if key doesn't exist
-print("salary" not in person)  # True
+# Trying to access missing key raises error!
+# salary = person["salary"]  # KeyError!
+```
+
+### Safe Access with get()
+
+```python
+person = {"name": "Alice", "age": 25}
+
+# get() returns None if key not found
+salary = person.get("salary")       # None (no error!)
+
+# Provide default value
+salary = person.get("salary", 0)    # 0 (default)
+city = person.get("city", "Unknown") # "Unknown"
+
+# Still works for existing keys
+name = person.get("name")            # "Alice"
+```
+
+### Checking if Key Exists
+
+```python
+person = {"name": "Alice", "age": 25}
+
+# Using in operator
+has_name = "name" in person      # True
+has_salary = "salary" in person  # False
 
 # Safe access pattern
 if "age" in person:
@@ -85,99 +137,101 @@ else:
     print("Age not specified")
 ```
 
-### Handling Missing Keys
+### Using setdefault()
+
 ```python
 person = {"name": "Alice"}
 
-# Method 1: Check then access
-if "age" in person:
-    age = person["age"]
-else:
-    age = 18  # default
-
-# Method 2: Use get()
-age = person.get("age", 18)
-
-# Method 3: setdefault() - get and set default
-age = person.setdefault("age", 18)
+# If key exists, return value
+age = person.setdefault("age", 18)   # Sets age=18, returns 18
 print(person)  # {"name": "Alice", "age": 18}
+
+# If key exists, return existing value (doesn't change)
+age = person.setdefault("age", 99)   # Still 18, returns 18
 ```
+
+---
 
 ## Modifying Dictionaries
 
 ### Adding and Updating
+
 ```python
 person = {"name": "Alice", "age": 25}
 
 # Add new key-value pair
 person["city"] = "New York"
-print(person)  # {'name': 'Alice', 'age': 25, 'city': 'New York'}
+# Now: {"name": "Alice", "age": 25, "city": "New York"}
 
 # Update existing value
 person["age"] = 26
-print(person)  # {'name': 'Alice', 'age': 26, 'city': 'New York'}
+# Now: {"name": "Alice", "age": 26, "city": "New York"}
 
-# Update multiple values
-person.update({"age": 27, "job": "Engineer"})
-print(person)  # {'name': 'Alice', 'age': 27, 'city': 'New York', 'job': 'Engineer'}
-
-# Merge dictionaries
-additional_info = {"hobby": "reading", "city": "Boston"}  # Overwrites city
-person.update(additional_info)
-print(person)  # {'name': 'Alice', 'age': 27, 'city': 'Boston', 'job': 'Engineer', 'hobby': 'reading'}
+# Update multiple values at once
+person.update({"age": 27, "job": "Engineer", "city": "Boston"})
+# Now includes job, age updated, city changed
 ```
 
-### Removing Elements
+### Removing Items
+
 ```python
-person = {"name": "Alice", "age": 27, "city": "Boston", "job": "Engineer"}
+person = {
+    "name": "Alice",
+    "age": 27,
+    "city": "Boston",
+    "job": "Engineer"
+}
 
-# Remove by key (returns value)
-removed_city = person.pop("city")
-print(removed_city)  # "Boston"
-print(person)        # {'name': 'Alice', 'age': 27, 'job': 'Engineer'}
+# pop() - removes and returns value
+removed_city = person.pop("city")    # Returns "Boston"
+# Now: {"name": "Alice", "age": 27, "job": "Engineer"}
 
-# Remove with default (if key doesn't exist)
-removed_hobby = person.pop("hobby", "Not specified")
-print(removed_hobby)  # "Not specified"
+# pop() with default (safe)
+removed_hobby = person.pop("hobby", "No hobby")  # Returns "No hobby"
 
-# Remove last item (arbitrary in Python 3.7+)
-last_item = person.popitem()
-print(last_item)     # ('job', 'Engineer')
-print(person)        # {'name': 'Alice', 'age': 27}
+# popitem() - removes and returns last item (Python 3.7+)
+last_item = person.popitem()    # Returns ("job", "Engineer")
 
-# Clear all items
+# del - removes but doesn't return
+del person["age"]
+# Now: {"name": "Alice"}
+
+# clear() - removes everything
 person.clear()
-print(person)        # {}
+# Now: {}
 ```
 
-## Dictionary Views and Iteration
+---
 
-### Keys, Values, and Items
+## Working with Dictionary Views
+
+### Getting Keys, Values, and Items
+
 ```python
-person = {"name": "Alice", "age": 27, "city": "Boston"}
+person = {"name": "Alice", "age": 25, "city": "NYC"}
 
 # Get all keys
 keys = person.keys()
-print(keys)          # dict_keys(['name', 'age', 'city'])
-print(list(keys))    # ['name', 'age', 'city']
+print(keys)        # dict_keys(['name', 'age', 'city'])
+print(list(keys))  # ['name', 'age', 'city']
 
 # Get all values
 values = person.values()
-print(values)        # dict_values(['Alice', 27, 'Boston'])
+print(values)      # dict_values(['Alice', 25, 'NYC'])
 
 # Get all key-value pairs
 items = person.items()
-print(items)         # dict_items([('name', 'Alice'), ('age', 27), ('city', 'Boston')])
+print(items)       # dict_items([('name', 'Alice'), ('age', 25), ('city', 'NYC')])
 
-# Convert to lists
-key_list = list(person.keys())
-value_list = list(person.values())
-item_list = list(person.items())
+# Convert to list of tuples
+pairs = list(person.items())
+# [('name', 'Alice'), ('age', 25), ('city', 'NYC')]
 ```
 
 ### Iterating Over Dictionaries
+
 ```python
-person = {"name": "Alice", "age": 27, "city": "Boston"}
+person = {"name": "Alice", "age": 25, "city": "NYC"}
 
 # Iterate over keys (default)
 for key in person:
@@ -185,290 +239,475 @@ for key in person:
 
 # Iterate over keys explicitly
 for key in person.keys():
-    print(f"{key}: {person[key]}")
+    print(key)
 
 # Iterate over values
 for value in person.values():
-    print(f"Value: {value}")
+    print(value)
 
-# Iterate over key-value pairs
+# Iterate over key-value pairs (most common!)
 for key, value in person.items():
-    print(f"{key}: {value}")
+    print(f"{key} = {value}")
 
-# Unpacking in loop
-for key, value in person.items():
-    print(f"Key: {key}, Value: {value}")
+# Output:
+# name = Alice
+# age = 25
+# city = NYC
 ```
+
+---
 
 ## Dictionary Methods and Operations
 
 ### Copying Dictionaries
+
 ```python
 original = {"a": 1, "b": [2, 3]}
 
 # Shallow copy
 shallow = original.copy()
-shallow = dict(original)  # Alternative
+shallow = dict(original)   # Alternative
 
-# Modify shallow copy
-shallow["c"] = 4
-print(original)  # {'a': 1, 'b': [2, 3]} (unchanged)
-print(shallow)   # {'a': 1, 'b': [2, 3], 'c': 4}
-
-# But nested objects are shared!
+# Modify copy - nested objects are shared!
 shallow["b"].append(4)
-print(original)  # {'a': 1, 'b': [2, 3, 4]} (nested list changed!)
-print(shallow)   # {'a': 1, 'b': [2, 3, 4], 'c': 4}
+print(original)   # {"a": 1, "b": [2, 3, 4]} - nested list changed!
 
-# Deep copy for nested structures
+# Deep copy (completely independent)
 import copy
 deep = copy.deepcopy(original)
 deep["b"].append(5)
-print(original)  # {'a': 1, 'b': [2, 3, 4]} (unchanged)
-print(deep)      # {'a': 1, 'b': [2, 3, 4, 5]}
+print(original)   # {"a": 1, "b": [2, 3, 4]} - unchanged!
 ```
 
-### Dictionary Size and Information
-```python
-person = {"name": "Alice", "age": 27, "city": "Boston"}
+### Dictionary Size
 
-# Get number of items
-print(len(person))  # 3
+```python
+person = {"name": "Alice", "age": 25, "city": "NYC"}
+
+# Count items
+size = len(person)   # 3
 
 # Check if empty
-print(bool(person))     # True
-print(len(person) == 0) # False
+if not person:       # True if empty
+    print("Dictionary is empty")
 
-# Get value or set default
-age = person.setdefault("age", 18)  # Returns existing value
-print(age)  # 27
-
-hobby = person.setdefault("hobby", "reading")  # Sets and returns default
-print(hobby)  # "reading"
-print(person)  # {'name': 'Alice', 'age': 27, 'city': 'Boston', 'hobby': 'reading'}
+if len(person) == 0:  # Same thing
+    print("Dictionary is empty")
 ```
 
-## Advanced Dictionary Techniques
+### Merging Dictionaries (Python 3.9+)
 
-### Dictionary Merging (Python 3.9+)
 ```python
 dict1 = {"a": 1, "b": 2}
-dict2 = {"b": 3, "c": 4}
+dict2 = {"b": 3, "c": 4}  # Note: b exists in both
 
-# Merge with | operator
+# Merge with | operator (dict2 values win conflicts)
 merged = dict1 | dict2
-print(merged)  # {'a': 1, 'b': 3, 'c': 4}
+# Result: {"a": 1, "b": 3, "c": 4}
 
 # Update in place with |=
 dict1 |= dict2
-print(dict1)   # {'a': 1, 'b': 3, 'c': 4}
+# dict1 is now: {"a": 1, "b": 3, "c": 4}
 ```
 
-### Default Dictionaries
+---
+
+## Dictionary Comprehensions
+
+Just like list comprehensions, but for dictionaries!
+
+### Basic Syntax
+
 ```python
-from collections import defaultdict
+# Regular way
+squares = {}
+for x in range(1, 6):
+    squares[x] = x ** 2
 
-# Regular dictionary
-word_counts = {}
-words = ["apple", "banana", "apple", "cherry", "banana"]
-
-for word in words:
-    if word in word_counts:
-        word_counts[word] += 1
-    else:
-        word_counts[word] = 1
-
-print(word_counts)  # {'apple': 2, 'banana': 2, 'cherry': 1}
-
-# Default dictionary
-word_counts = defaultdict(int)  # Default value is 0
-for word in words:
-    word_counts[word] += 1  # No need to check if key exists
-
-print(dict(word_counts))  # {'apple': 2, 'banana': 2, 'cherry': 1}
-
-# Other default types
-list_dict = defaultdict(list)
-list_dict["fruits"].append("apple")
-list_dict["fruits"].append("banana")
-print(dict(list_dict))  # {'fruits': ['apple', 'banana']}
+# Dictionary comprehension
+squares = {x: x ** 2 for x in range(1, 6)}
+# Result: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
 ```
 
-### Ordered Dictionaries
+### With Conditions
+
 ```python
-from collections import OrderedDict
+# Only even numbers
+even_squares = {x: x ** 2 for x in range(1, 11) if x % 2 == 0}
+# Result: {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
 
-# Regular dict maintains insertion order in Python 3.7+
-regular = {"c": 3, "a": 1, "b": 2}
-print(list(regular.keys()))  # ['c', 'a', 'b'] (insertion order)
+# Transform existing dictionary
+original = {"a": 1, "b": 2, "c": 3}
+doubled = {k: v * 2 for k, v in original.items()}
+# Result: {"a": 2, "b": 4, "c": 6}
 
-# OrderedDict (for older Python versions or explicit ordering)
-ordered = OrderedDict([("c", 3), ("a", 1), ("b", 2)])
-print(list(ordered.keys()))  # ['c', 'a', 'b']
-
-# Move item to end
-ordered.move_to_end("a")
-print(list(ordered.keys()))  # ['c', 'b', 'a']
+# Swap keys and values
+swapped = {v: k for k, v in original.items()}
+# Result: {1: "a", 2: "b", 3: "c"}
 ```
 
-## Dictionary Use Cases and Patterns
+---
 
-### Grouping Data
+## Practical Examples
+
+### Example 1: Word Frequency Counter
+
 ```python
-# Group by category
-data = [
-    {"name": "Alice", "department": "Engineering"},
-    {"name": "Bob", "department": "Sales"},
-    {"name": "Charlie", "department": "Engineering"},
-    {"name": "David", "department": "Sales"}
-]
+def count_words(text):
+    """Count how many times each word appears."""
+    words = text.lower().split()
+    frequency = {}
 
-# Manual grouping
-groups = {}
-for item in data:
-    dept = item["department"]
-    if dept not in groups:
-        groups[dept] = []
-    groups[dept].append(item["name"])
+    for word in words:
+        # Remove punctuation (simple way)
+        word = word.strip(".,!?;:'\"")
 
-print(groups)
-# {'Engineering': ['Alice', 'Charlie'], 'Sales': ['Bob', 'David']}
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
 
-# Using defaultdict
-from collections import defaultdict
-groups = defaultdict(list)
-for item in data:
-    groups[item["department"]].append(item["name"])
+    return frequency
 
-print(dict(groups))  # Same result
+# Usage
+text = "the quick brown fox jumps over the lazy dog"
+freq = count_words(text)
+
+# Find most common word
+most_common = max(freq.items(), key=lambda x: x[1])
+print(f"Most common: '{most_common[0]}' ({most_common[1]} times)")
+
+# Print all frequencies sorted
+for word, count in sorted(freq.items(), key=lambda x: -x[1]):
+    print(f"{word}: {count}")
 ```
 
-### Counting Frequencies
+### Example 2: Simple Phone Book
+
 ```python
-words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+def phone_book_app():
+    contacts = {}
 
-# Count manually
-counts = {}
-for word in words:
-    counts[word] = counts.get(word, 0) + 1
+    while True:
+        print("\nPhone Book:")
+        for name, number in contacts.items():
+            print(f"  {name}: {number}")
 
-# Using Counter (better)
-from collections import Counter
-counts = Counter(words)
+        print("\nOptions: (a)dd, (l)ookup, (d)elete, (q)uit")
+        choice = input("Choice: ").lower()
 
-print(counts)           # Counter({'apple': 3, 'banana': 2, 'cherry': 1})
-print(counts.most_common(2))  # [('apple', 3), ('banana', 2)]
+        if choice == 'a':
+            name = input("Name: ")
+            number = input("Number: ")
+            contacts[name] = number
+            print(f"Added {name}")
+
+        elif choice == 'l':
+            name = input("Name to look up: ")
+            number = contacts.get(name)
+            if number:
+                print(f"{name}: {number}")
+            else:
+                print(f"{name} not found")
+
+        elif choice == 'd':
+            name = input("Name to delete: ")
+            if name in contacts:
+                del contacts[name]
+                print(f"Deleted {name}")
+            else:
+                print(f"{name} not found")
+
+        elif choice == 'q':
+            print("Goodbye!")
+            break
+
+# Uncomment to run:
+# phone_book_app()
 ```
 
-### Caching/Memoization
+### Example 3: Student Grade Manager
+
 ```python
-# Simple cache
-cache = {}
-
-def fibonacci(n):
-    if n in cache:
-        return cache[n]
-
-    if n <= 1:
-        result = n
-    else:
-        result = fibonacci(n-1) + fibonacci(n-2)
-
-    cache[n] = result
-    return result
-
-print(fibonacci(10))  # 55
-print(cache)          # {0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13, 8: 21, 9: 34, 10: 55}
-```
-
-### Configuration Management
-```python
-# Application configuration
-config = {
-    "database": {
-        "host": "localhost",
-        "port": 5432,
-        "name": "myapp"
-    },
-    "api": {
-        "base_url": "https://api.example.com",
-        "timeout": 30,
-        "retries": 3
-    },
-    "logging": {
-        "level": "INFO",
-        "file": "app.log"
+def create_student(name, grades):
+    """Create a student dictionary with grades."""
+    return {
+        "name": name,
+        "grades": grades,
+        "average": sum(grades) / len(grades) if grades else 0
     }
-}
 
-# Access nested configuration
-db_host = config["database"]["host"]
-api_timeout = config["api"]["timeout"]
+def add_grade(student, subject, grade):
+    """Add a grade for a subject."""
+    if "grades_by_subject" not in student:
+        student["grades_by_subject"] = {}
 
-# Update configuration
-config["api"]["timeout"] = 60
+    student["grades_by_subject"][subject] = grade
+
+    # Update all grades list and average
+    student["grades"] = list(student["grades_by_subject"].values())
+    student["average"] = sum(student["grades"]) / len(student["grades"])
+
+def get_report(student):
+    """Generate a formatted report."""
+    report = f"\nReport for {student['name']}\n"
+    report += "=" * 30 + "\n"
+
+    if "grades_by_subject" in student:
+        for subject, grade in student["grades_by_subject"].items():
+            report += f"{subject:12}: {grade:3}\n"
+
+    report += "-" * 30 + "\n"
+    report += f"{'Average':12}: {student['average']:.1f}\n"
+
+    return report
+
+# Usage
+alice = create_student("Alice Johnson", [])
+add_grade(alice, "Math", 95)
+add_grade(alice, "Science", 88)
+add_grade(alice, "History", 92)
+
+print(get_report(alice))
 ```
 
-## Dictionary Performance
+### Example 4: Configuration Manager
 
-### Time Complexity
 ```python
-# O(1) operations - average case
-person = {"name": "Alice", "age": 25}
-person["city"] = "New York"  # Add/update
-value = person["name"]       # Access
-"name" in person             # Membership test
-del person["age"]            # Delete
+def create_default_config():
+    """Create default application configuration."""
+    return {
+        "app": {
+            "name": "MyApp",
+            "version": "1.0.0",
+            "debug": False
+        },
+        "database": {
+            "host": "localhost",
+            "port": 5432,
+            "name": "myapp_db"
+        },
+        "features": {
+            "notifications": True,
+            "dark_mode": False,
+            "auto_save": True
+        }
+    }
 
-# O(n) operations
-len(person)                   # Size
-list(person.keys())          # Convert to list
-person.items()               # Get items view
+def get_config_value(config, path, default=None):
+    """Safely get nested config value using dot notation."""
+    keys = path.split(".")
+    current = config
+
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return default
+
+    return current
+
+def set_config_value(config, path, value):
+    """Set nested config value using dot notation."""
+    keys = path.split(".")
+    current = config
+
+    for key in keys[:-1]:
+        if key not in current:
+            current[key] = {}
+        current = current[key]
+
+    current[keys[-1]] = value
+
+# Usage
+config = create_default_config()
+
+# Get values
+app_name = get_config_value(config, "app.name")        # "MyApp"
+db_port = get_config_value(config, "database.port")    # 5432
+missing = get_config_value(config, "cache.enabled", False)  # False (default)
+
+# Set values
+set_config_value(config, "app.debug", True)
+set_config_value(config, "cache.enabled", True)
 ```
 
-### Hashable Keys
+---
+
+## Common Beginner Mistakes
+
+### Mistake 1: Using Lists as Dictionary Keys
+
 ```python
-# Valid keys (immutable/hashable)
-valid_dict = {
-    "string": "value",
-    42: "number",
-    (1, 2): "tuple",
-    frozenset([1, 2]): "frozenset",
-    True: "boolean"
-}
+# WRONG - lists cannot be keys (they're mutable)
+my_dict = {["a", "b"]: "value"}  # TypeError!
 
-# Invalid keys (mutable/unhashable)
-# invalid_dict = {
-#     [1, 2]: "list",        # TypeError: unhashable type: 'list'
-#     {"a": 1}: "dict",      # TypeError: unhashable type: 'dict'
-# }
+# RIGHT - use tuples (immutable)
+my_dict = {("a", "b"): "value"}  # Works!
+
+# Lists can be values though
+my_dict = {"items": ["a", "b", "c"]}  # This is fine!
 ```
 
-### Memory Considerations
+### Mistake 2: Modifying Dictionary While Iterating
+
 ```python
-# Dictionaries have memory overhead
-# Empty dict: ~240 bytes
-# Dict with 1 item: ~360 bytes
-# Dict with 10 items: ~1,200 bytes
+# WRONG - can't change size while iterating
+prices = {"apple": 1.00, "banana": 0.50, "cherry": 2.00}
+for fruit in prices:
+    if prices[fruit] < 1.00:
+        del prices[fruit]  # RuntimeError!
 
-# Use appropriate data structures
-# Dict for key lookups: O(1)
-# List for ordered access: O(n) lookup
-# Set for membership testing: O(1)
+# RIGHT - create list of keys first
+for fruit in list(prices.keys()):
+    if prices[fruit] < 1.00:
+        del prices[fruit]
+
+# Or use dictionary comprehension
+prices = {k: v for k, v in prices.items() if v >= 1.00}
 ```
+
+### Mistake 3: Assuming Key Exists
+
+```python
+person = {"name": "Alice"}
+
+# WRONG - KeyError if key doesn't exist
+age = person["age"]   # KeyError!
+
+# RIGHT - use get()
+age = person.get("age", 0)  # Returns 0
+
+# Or check first
+if "age" in person:
+    age = person["age"]
+else:
+    age = 0
+```
+
+### Mistake 4: Not Understanding Shallow Copy
+
+```python
+original = {"data": [1, 2, 3]}
+
+# WRONG - both reference same nested list
+copy = original.copy()
+copy["data"].append(4)
+print(original["data"])   # [1, 2, 3, 4] - original changed!
+
+# RIGHT - deep copy for nested structures
+import copy
+copy = copy.deepcopy(original)
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Character Counter
+Count how many times each character appears in a string.
+
+```python
+def count_characters(text):
+    # Your code here
+    pass
+
+# Test
+result = count_characters("hello")
+# Should return: {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+```
+
+### Exercise 2: Inventory Manager
+Create functions to manage a store inventory.
+
+```python
+def add_item(inventory, item, quantity):
+    """Add quantity to item in inventory."""
+    # Your code here
+    pass
+
+def remove_item(inventory, item, quantity):
+    """Remove quantity from item."""
+    # Your code here
+    pass
+
+def get_inventory_report(inventory):
+    """Print formatted inventory report."""
+    # Your code here
+    pass
+
+# Test
+inv = {}
+add_item(inv, "apple", 50)
+add_item(inv, "banana", 30)
+remove_item(inv, "apple", 10)
+get_inventory_report(inv)
+```
+
+### Exercise 3: Group by Length
+Group words by their length.
+
+```python
+def group_by_length(words):
+    """Return dictionary with lengths as keys, lists of words as values."""
+    # Your code here
+    pass
+
+# Test
+words = ["cat", "dog", "elephant", "bird", "fish"]
+result = group_by_length(words)
+# Should return something like: {3: ['cat', 'dog'], 8: ['elephant'], 4: ['bird', 'fish']}
+```
+
+### Exercise 4: Merge Dictionaries
+Merge two dictionaries, with values from dict2 taking priority.
+
+```python
+def merge_dicts(dict1, dict2):
+    """Merge dict2 into dict1, dict2 values win conflicts."""
+    # Your code here
+    pass
+
+# Test
+d1 = {"a": 1, "b": 2}
+d2 = {"b": 3, "c": 4}
+result = merge_dicts(d1, d2)
+# Should return: {"a": 1, "b": 3, "c": 4}
+```
+
+---
 
 ## Key Takeaways
 
-1. **Dictionaries store key-value pairs** with fast O(1) lookups
-2. **Keys must be immutable/hashable** (strings, numbers, tuples)
-3. **Use get() and setdefault()** for safe key access
-4. **Dictionary comprehensions** create dicts concisely
-5. **Views (keys, values, items)** provide dynamic access to contents
-6. **Choose dictionaries** when you need fast key-based access
+1. **Dictionaries store key-value pairs** - like a real dictionary or phone book
+2. **Keys must be unique and immutable** - strings, numbers, or tuples
+3. **Values can be anything** - any type, including other dictionaries
+4. **Use `get()` for safe access** - avoids KeyError for missing keys
+5. **Check with `in`** - `if "key" in dict:` before accessing
+6. **Iterate with `.items()`** - `for key, value in dict.items():`
+
+## Quick Reference Card
+
+| Operation | How To Do It | Example |
+|-----------|--------------|---------|
+| Create empty | `{}` or `dict()` | `d = {}` |
+| Add/Update | `d[key] = value` | `d["x"] = 10` |
+| Access | `d[key]` or `d.get(key)` | `d["x"]` → 10 |
+| Safe access | `d.get(key, default)` | `d.get("y", 0)` → 0 |
+| Check key | `key in d` | `"x" in d` → True |
+| Remove | `d.pop(key)` | `d.pop("x")` → 10 |
+| Get keys | `d.keys()` | All keys |
+| Get values | `d.values()` | All values |
+| Get items | `d.items()` | All (key, value) pairs |
+| Merge | `d1 \| d2` or `d1.update(d2)` | Combine dictionaries |
+| Copy | `d.copy()` | Shallow copy |
+| Clear | `d.clear()` | Remove all items |
+
+---
 
 ## Further Reading
-- Python dict documentation
-- Hash table implementation details
-- collections module (OrderedDict, defaultdict, Counter)
-- Dictionary vs other data structures
-- Memory optimization techniques
+
+- **Next Lesson**: Sets and Tuples - Other useful collection types
+- **Practice**: Complete all exercises above
+- **Challenge**: Build a simple database using nested dictionaries
+- **Explore**: Try using `collections.defaultdict` for automatic default values

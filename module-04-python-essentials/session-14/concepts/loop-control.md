@@ -1,513 +1,576 @@
-# Loop Control: break, continue, and else
+# Loop Control: Break, Continue, and Else
 
 ## What You'll Learn
-- How to stop a loop early with `break`
-- How to skip an iteration with `continue`
-- How to use `else` with loops
-- When to use `pass` as a placeholder
-- Common beginner mistakes
+- How to exit loops early with `break`
+- How to skip iterations with `continue`
+- How to use the `else` clause with loops
+- Common patterns for loop control
+- Practical examples of controlled loops
 
 ---
 
-## Controlling Loop Flow
+## Main Concept: Controlling Your Loops
 
-Sometimes you need to change how a loop behaves:
-- Stop a loop early when you find what you're looking for
-- Skip over some items that don't match
-- Run code when a loop finishes normally (not broken)
+Sometimes you need to change the normal flow of a loop:
+- **Stop early** when you find what you're looking for (`break`)
+- **Skip items** that don't meet certain conditions (`continue`)
+- **Do something special** when a loop completes normally (`else`)
+
+**Analogy: Searching a Library**
+- `break`: When you find the book, stop looking
+- `continue`: Skip the damaged books and check the next one
+- `else`: If you search the whole library and don't find it, order it online
 
 ---
 
-## break: Stop the Loop Immediately
+## The `break` Statement: Exit Immediately
 
-`break` exits the loop right away, skipping any remaining iterations.
+`break` immediately stops the current loop and continues with the code after the loop.
 
-### Real-Life Analogy: Exit the Building
-
-```
-You're searching room by room for a key.
-Found it in room 3! 🎉
-No need to check rooms 4, 5, 6...
-Exit the building immediately!
-```
-
-### Using break in a For Loop
+### Finding an Item and Stopping
 
 ```python
-# Find the first even number and stop
-numbers = [1, 3, 5, 8, 9, 10, 12]
+fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+target = "cherry"
 
+for fruit in fruits:
+    print(f"Checking: {fruit}")
+    
+    if fruit == target:
+        print(f"Found it!")
+        break  # Stop immediately
+
+print("Search ended")
+
+# Output:
+# Checking: apple
+# Checking: banana
+# Checking: cherry
+# Found it!
+# Search ended
+```
+
+### Search with User Confirmation
+
+```python
+items = ["pen", "pencil", "eraser", "ruler", "marker"]
+
+while True:
+    search = input("What are you looking for? (or 'quit'): ")
+    
+    if search == "quit":
+        break
+    
+    found = False
+    for item in items:
+        if item == search:
+            print(f"Found: {item}")
+            found = True
+            break  # Stop searching
+    
+    if not found:
+        print("Not in stock")
+```
+
+### Finding First Match
+
+```python
+numbers = [4, 2, 7, 1, 9, 5]
+
+# Find first number greater than 5
 for num in numbers:
-    if num % 2 == 0:  # If even
-        print(f"Found even number: {num}")
-        break  # Stop immediately!
-
-print("Done searching.")
-```
-
-**Output:**
-```
-Found even number: 8
-Done searching.
-```
-
-Notice it didn't check 10 or 12 - it stopped at the first match!
-
-### Using break in a While Loop
-
-```python
-# Keep guessing until correct
-secret = 7
-
-while True:  # Loop forever...
-    guess = int(input("Guess the number (1-10): "))
-    
-    if guess == secret:
-        print("Correct! 🎉")
-        break  # Exit the loop
-    
-    print("Try again!")
-
-print("Thanks for playing!")
+    if num > 5:
+        print(f"First number > 5: {num}")
+        break
+else:
+    print("No number found greater than 5")
 ```
 
 ---
 
-## continue: Skip to the Next Iteration
+## The `continue` Statement: Skip and Continue
 
 `continue` skips the rest of the current iteration and moves to the next one.
 
-### Real-Life Analogy: Skip a Step in Assembly Line
-
-```
-You're checking apples on a conveyor belt.
-Good apple → Package it
-Bad apple → Skip it (continue)
-Move to next apple
-```
-
-### Using continue in a Loop
+### Skip Even Numbers
 
 ```python
-# Print only even numbers, skip odd ones
-for num in range(1, 11):
-    if num % 2 != 0:  # If odd
-        continue  # Skip this one
-    
-    print(f"Even number: {num}")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-print("Done!")
+print("Odd numbers only:")
+for num in numbers:
+    if num % 2 == 0:  # If even
+        continue  # Skip even numbers
+    print(num)
+
+# Output: 1, 3, 5, 7, 9
 ```
 
-**Output:**
-```
-Even number: 2
-Even number: 4
-Even number: 6
-Even number: 8
-Even number: 10
-Done!
-```
-
-### Another Example: Skip Invalid Input
+### Skip Empty or Invalid Input
 
 ```python
-# Process valid scores only
-scores = [85, -5, 92, 0, 78, -3, 95]
+lines = [
+    "Hello world",
+    "",
+    "   ",
+    "Python is fun",
+    "",
+    "Continue learning"
+]
 
-for score in scores:
-    if score < 0:
-        print(f"Skipping invalid score: {score}")
+print("Valid lines only:")
+for line in lines:
+    if line.strip() == "":  # Skip empty lines
+        continue
+    print(f"→ {line}")
+
+# Output:
+# → Hello world
+# → Python is fun
+# → Continue learning
+```
+
+### Process Valid Data Only
+
+```python
+data = [10, "x", 20, "y", 30, "z"]
+
+total = 0
+for item in data:
+    if not isinstance(item, int):
+        print(f"Skipping non-number: {item}")
         continue
     
-    print(f"Valid score: {score}")
+    total += item
+    print(f"Added {item}, total now: {total}")
 
-print("All scores processed.")
-```
-
-**Output:**
-```
-Valid score: 85
-Skipping invalid score: -5
-Valid score: 92
-Valid score: 0
-Valid score: 78
-Skipping invalid score: -3
-Valid score: 95
-All scores processed.
+print(f"Final total: {total}")
 ```
 
 ---
 
-## ASCII Diagram: How break and continue Work
+## The `else` Clause with Loops
 
-```
-Normal Loop Flow:
-┌─────────────┐
-│   Start     │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│   Check     │
-│  Condition  │
-└──────┬──────┘
-       │
-   ┌───┴───┐
-   │ True  │ False
-   │       ├────────► Done
-   ▼       │
-┌─────────────┐
-│ Loop Body   │
-│   (work)    │
-└──────┬──────┘
-       │
-       └──────────► Back to Check
+The `else` runs when a loop completes **normally** (not by `break`).
 
-With break:
-Loop Body
-   │
-   ├───► if condition ──► break ────► Exit immediately!
-   │         │
-   │         │ False
-   │         ▼
-   └───► Continue work
-
-With continue:
-Loop Body
-   │
-   ├───► if condition ──► continue ──► Skip to next iteration
-   │         │
-   │         │ False
-   │         ▼
-   └───► Continue work
-```
-
----
-
-## else with Loops: Run When Loop Finishes Normally
-
-The `else` block runs when the loop completes normally - meaning it didn't encounter a `break`.
-
-### When else Runs vs When it Doesn't
+### Using `else` for "Not Found"
 
 ```python
-# Example 1: else runs because loop completed
-for i in range(3):
-    print(i)
-else:
-    print("Loop completed normally! ✅")
+fruits = ["apple", "banana", "cherry"]
+search = "date"
 
-# Output:
-# 0
-# 1
-# 2
-# Loop completed normally! ✅
-```
-
-```python
-# Example 2: else doesn't run because we broke
-for i in range(3):
-    print(i)
-    if i == 1:
+for fruit in fruits:
+    if fruit == search:
+        print(f"Found: {fruit}")
         break
 else:
-    print("Loop completed normally! ✅")
+    # This runs only if loop didn't hit break
+    print(f"{search} not found in the list!")
 
-# Output:
-# 0
-# 1
-# (else block never runs!)
+# Output: date not found in the list!
 ```
 
-### Real-Life Analogy: Treasure Hunt
+### Validating Prime Numbers
 
 ```python
-rooms = ["kitchen", "bedroom", "library"]
-treasure_room = "library"
+def is_prime(n):
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    
+    for i in range(2, n):
+        if n % i == 0:
+            print(f"{n} = {i} × {n//i}")
+            return False
+    
+    return True
 
-for room in rooms:
-    print(f"Searching {room}...")
-    if room == treasure_room:
-        print(f"🏆 Found treasure in {room}!")
-        break
-else:
-    # This only runs if we didn't find treasure!
-    print("😢 No treasure found anywhere.")
-```
-
-**Output:**
-```
-Searching kitchen...
-Searching bedroom...
-Searching library...
-🏆 Found treasure in library!
-```
-
-The `else` doesn't run because we found the treasure!
-
-### Practical Use: Search with Not-Found Message
-
-```python
-# Search for a name in a list
-names = ["Alice", "Bob", "Charlie"]
-search_name = "David"
-
-for name in names:
-    if name == search_name:
-        print(f"Found {name}!")
-        break
-else:
-    print(f"{search_name} is not in the list.")
-
-# Output: David is not in the list.
-```
-
----
-
-## pass: A Placeholder That Does Nothing
-
-`pass` is a placeholder when you need to write code but don't want to do anything yet.
-
-### When to Use pass
-
-```python
-# You're planning a function but haven't written it yet
-def future_function():
-    pass  # TODO: Implement this later
-
-# In a loop where you might add code later
-for item in items:
-    if item.is_special():
-        pass  # TODO: Handle special items
+# Test
+for num in [7, 10, 13, 15]:
+    if is_prime(num):
+        print(f"{num} is prime")
     else:
-        print(item)
+        print(f"{num} is not prime")
 ```
 
-`pass` literally does nothing - it's just there so Python doesn't complain about empty blocks.
+### Password Validation
+
+```python
+password = input("Enter password: ")
+attempts = 3
+
+for attempt in range(attempts):
+    if password == "secret":
+        print("Access granted!")
+        break
+    
+    remaining = attempts - attempt - 1
+    if remaining > 0:
+        password = input(f"Wrong! {remaining} tries left: ")
+    else:
+        password = ""
+else:
+    # Loop completed without breaking
+    print("Access denied - too many failed attempts")
+```
+
+---
+
+## Common Patterns
+
+### Pattern 1: Find and Process First Match
+
+```python
+def find_and_process(items, condition, process):
+    """Find first item matching condition and process it."""
+    for item in items:
+        if condition(item):
+            process(item)
+            return True  # Found and processed
+    return False  # Not found
+
+# Example: Find first expensive item and apply discount
+products = [
+    {"name": "Pen", "price": 2},
+    {"name": "Book", "price": 15},
+    {"name": "Laptop", "price": 1000},
+]
+
+def is_expensive(p): return p["price"] > 100
+def apply_discount(p): 
+    p["price"] *= 0.9
+    print(f"Applied discount to {p['name']}: ${p['price']:.2f}")
+
+found = find_and_process(products, is_expensive, apply_discount)
+if not found:
+    print("No expensive items found")
+```
+
+### Pattern 2: Skip Invalid Items
+
+```python
+def process_valid_items(data, validator, processor):
+    """Process only valid items, skip invalid ones."""
+    results = []
+    
+    for item in data:
+        if not validator(item):
+            print(f"Skipping invalid: {item}")
+            continue
+        
+        result = processor(item)
+        results.append(result)
+    
+    return results
+
+# Example: Process only positive numbers
+def is_positive(x): return x > 0
+def double(x): return x * 2
+
+numbers = [5, -3, 8, -1, 10]
+results = process_valid_items(numbers, is_positive, double)
+print(f"Results: {results}")  # [10, 16, 20]
+```
+
+### Pattern 3: Menu with Loop Control
+
+```python
+def show_menu():
+    print("\n=== Menu ===")
+    print("1. Add item")
+    print("2. View items")
+    print("3. Exit")
+
+items = []
+
+while True:
+    show_menu()
+    choice = input("Choose: ")
+    
+    if choice == "3":
+        print("Goodbye!")
+        break
+    
+    if choice == "1":
+        item = input("Enter item: ")
+        if item.strip() == "":
+            print("Cannot add empty item!")
+            continue
+        items.append(item)
+        print(f"Added: {item}")
+    
+    elif choice == "2":
+        if not items:
+            print("No items yet!")
+            continue
+        print("Items:")
+        for i, item in enumerate(items, 1):
+            print(f"  {i}. {item}")
+    
+    else:
+        print("Invalid choice!")
+```
 
 ---
 
 ## Common Beginner Mistakes
 
-### Mistake 1: Using break Instead of continue
+### Mistake 1: Using `continue` or `break` Outside a Loop
 
 ```python
-# ❌ Wrong - stops entirely instead of just skipping
-for num in range(10):
-    if num == 5:
-        break  # Stops the whole loop!
-    print(num)
-# Only prints: 0, 1, 2, 3, 4
+# ❌ Wrong - SyntaxError
+def helper():
+    if x < 0:
+        continue  # 'continue' not properly in loop
 
-# ✅ Correct - skips just this number
-for num in range(10):
-    if num == 5:
-        continue  # Just skips 5
-    print(num)
-# Prints: 0, 1, 2, 3, 4, 6, 7, 8, 9
+# ✅ Correct
+def helper():
+    for x in items:
+        if x < 0:
+            continue
 ```
 
-### Mistake 2: Forgetting break in While True
+### Mistake 2: Forgetting That `break` Exits Only the Innermost Loop
 
 ```python
-# ❌ Wrong - infinite loop!
-while True:
-    answer = input("Continue? (yes/no): ")
-    if answer == "no":
-        print("Goodbye!")
-        # Forgot break! Loop runs forever!
+# ❌ Wrong - only breaks inner loop
+found = False
+for row in matrix:
+    for cell in row:
+        if cell == target:
+            found = True
+            break
+    # Still in outer loop!
 
-# ✅ Correct - always break out
-while True:
-    answer = input("Continue? (yes/no): ")
-    if answer == "no":
-        print("Goodbye!")
-        break  # Exit the loop
+# ✅ Correct - use flag to exit both
+found = False
+for row in matrix:
+    if found:
+        break
+    for cell in row:
+        if cell == target:
+            found = True
+            break
 ```
 
-### Mistake 3: else Always Running After break
+### Mistake 3: Confusing Loop `else` with `if-else`
 
 ```python
 # ❌ Wrong understanding
-for i in range(5):
-    if i == 3:
-        break
-else:
-    print("Finished!")  # ❌ This won't print!
+for x in items:
+    if x > 10:
+        print("Big!")
+    else:  # This runs EVERY iteration!
+        print("Not big")
 
-# ✅ The else only runs if loop completed without break
+# ✅ Correct - use for-else for search
+for x in items:
+    if x == target:
+        print("Found!")
+        break
+else:  # This runs only if loop completed without break
+    print("Not found")
 ```
 
-### Mistake 4: continue at the End of a Loop
+### Mistake 4: Using `continue` to Skip the Last Iteration
 
 ```python
-# ❌ Pointless - nothing comes after anyway
-for i in range(5):
-    print(i)
-    continue  # Redundant - loop continues anyway!
-
-# ✅ Only use continue to skip remaining code
+# ❌ Wrong - using continue when we should just loop differently
 for i in range(10):
-    if i % 2 == 0:
-        continue  # Skip even numbers
-    print(i)  # Only prints odd numbers
+    if i == 9:
+        continue  # Skip last iteration
+    print(i)
+
+# ✅ Correct - just loop to 9
+for i in range(9):
+    print(i)
 ```
 
-### Mistake 5: Confusing break in Nested Loops
+### Mistake 5: Thinking `break` Returns from Function
 
 ```python
-# ⚠️ break only exits the innermost loop!
-for i in range(3):
-    for j in range(3):
-        if j == 1:
-            break  # Only exits inner loop!
-        print(f"i={i}, j={j}")
+# ❌ Wrong - function returns None
+def find_first_positive(numbers):
+    for n in numbers:
+        if n > 0:
+            break  # Exits loop, not function!
 
-# Output:
-# i=0, j=0
-# i=1, j=0
-# i=2, j=0
-```
+# ✅ Correct
+result = find_first_positive([-5, -3, 2, 8])
+print(result)  # None! (not 2)
 
----
-
-## Practical Examples
-
-### Example 1: Password with Maximum Attempts
-
-```python
-password = "secret123"
-max_attempts = 3
-
-for attempt in range(1, max_attempts + 1):
-    guess = input(f"Attempt {attempt}/{max_attempts}: Enter password: ")
-    
-    if guess == password:
-        print("✅ Access granted!")
-        break
-else:
-    print("❌ Too many failed attempts. Account locked.")
-```
-
-### Example 2: Processing Data with Validation
-
-```python
-data = [10, 25, -5, 30, "invalid", 15, -3, 40]
-valid_sum = 0
-count = 0
-
-for item in data:
-    if not isinstance(item, int):  # Skip non-integers
-        print(f"Skipping non-numeric: {item}")
-        continue
-    
-    if item < 0:  # Skip negative numbers
-        print(f"Skipping negative: {item}")
-        continue
-    
-    valid_sum += item
-    count += 1
-
-print(f"Sum of {count} valid items: {valid_sum}")
-```
-
-### Example 3: Menu System with break
-
-```python
-while True:
-    print("\n=== MENU ===")
-    print("1. Add item")
-    print("2. View items")
-    print("3. Exit")
-    
-    choice = input("Choose (1-3): ")
-    
-    if choice == "1":
-        print("Adding item...")
-    elif choice == "2":
-        print("Viewing items...")
-    elif choice == "3":
-        print("Goodbye!")
-        break
-    else:
-        print("Invalid choice. Try again.")
+# ✅ Correct version
+def find_first_positive(numbers):
+    for n in numbers:
+        if n > 0:
+            return n  # Exit function with value
+    return None  # Not found
 ```
 
 ---
 
 ## Try It Yourself: Exercises
 
-### Exercise 1: Find First Divisible
+### Exercise 1: Find and Stop
 
-Find the first number divisible by both 3 and 5 between 1 and 50.
-
-```python
-for num in range(1, 51):
-    if num % 3 == 0 and num % 5 == 0:
-        print(f"Found it: {num}")
-        break
-```
-
-### Exercise 2: Sum with Skip
-
-Sum all numbers from 1 to 10, but skip multiples of 3.
+Find the first number divisible by both 3 and 5:
 
 ```python
-total = 0
-for num in range(1, 11):
-    if num % 3 == 0:
-        continue
-    total += num
+numbers = [4, 7, 10, 12, 15, 18, 20, 25]
 
-print(f"Sum (skipping multiples of 3): {total}")  # Should be 37
-```
-
-### Exercise 3: Search with else
-
-Search for a number in a list. If not found, print a message.
-
-```python
-numbers = [10, 20, 30, 40, 50]
-target = 25
-
-# Write your code here
 for num in numbers:
-    if num == target:
-        print(f"Found {target}!")
+    if num % 3 == 0 and num % 5 == 0:
+        print(f"First divisible by both: {num}")
         break
 else:
-    print(f"{target} not found in the list.")
+    print("No number found divisible by both 3 and 5")
 ```
+
+### Exercise 2: Process Valid Only
+
+Skip invalid email addresses:
+
+```python
+emails = [
+    "user@example.com",
+    "invalid-email",
+    "another@domain.org",
+    "not-an-email",
+    "test@site.net"
+]
+
+valid = []
+for email in emails:
+    if "@" not in email or "." not in email:
+        print(f"Invalid: {email}")
+        continue
+    valid.append(email)
+
+print(f"Valid emails: {valid}")
+```
+
+### Exercise 3: Login with Limited Attempts
+
+```python
+correct = "secret123"
+max_attempts = 3
+
+for attempt in range(max_attempts):
+    password = input(f"Attempt {attempt + 1}/{max_attempts}: ")
+    
+    if password == correct:
+        print("Welcome!")
+        break
+else:
+    print("Account locked!")
+```
+
+### Exercise 4: Fix the Bugs
+
+```python
+# Buggy program
+def find_first_even(numbers):
+    for n in numbers:
+        if n % 2 == 0:
+            print(f"Found: {n}")
+            break
+    else:
+        return None
+    return n
+
+def process_data(data):
+    total = 0
+    for item in data:
+        if item < 0:
+            print("Skipping negative")
+            continue
+        total = total + item
+    return total
+
+# Test
+result = find_first_even([1, 3, 5])
+print(result)
+```
+
+<details>
+<summary>Click to see the answer</summary>
+
+```python
+# Fixed program
+def find_first_even(numbers):
+    for n in numbers:
+        if n % 2 == 0:
+            print(f"Found: {n}")
+            return n  # Return the found value
+    return None  # Return None if not found
+
+def process_data(data):
+    total = 0
+    for item in data:
+        if item < 0:
+            print("Skipping negative")
+            continue
+        total = total + item
+    return total
+
+# Test
+result = find_first_even([1, 3, 5, 8, 10])
+print(result)  # 8
+
+result = find_first_even([1, 3, 5])
+print(result)  # None
+```
+</details>
 
 ---
 
 ## Quick Reference
 
+### Loop Control Statements
+
 | Statement | What It Does | When to Use |
 |-----------|--------------|-------------|
-| `break` | Exits loop immediately | Found what you need, stop searching |
-| `continue` | Skips to next iteration | Skip this item, continue with rest |
-| `else` | Runs if loop finished normally (no break) | Do something if search failed |
-| `pass` | Does nothing | Placeholder for future code |
+| `break` | Exit loop immediately | Found what you're looking for |
+| `continue` | Skip to next iteration | Current item doesn't qualify |
+| `else` (with loop) | Run if no `break` happened | Search/validation didn't find match |
+
+### Common Patterns
+
+| Pattern | Code Example |
+|---------|--------------|
+| Find first match | `for x in items:`<br>`  if match(x):`<br>`    process(x)`<br>`    break` |
+| Skip invalid | `for x in items:`<br>`  if not valid(x):`<br>`    continue`<br>`  process(x)` |
+| Search with else | `for x in items:`<br>`  if x == target:`<br>`    found = True`<br>`    break`<br>`else:`<br>`  print("Not found")` |
+| Menu loop | `while True:`<br>`  show_menu()`<br>`  if quit: break` |
+
+### Break vs Continue vs Else
+
+| Scenario | break | continue | else |
+|----------|-------|----------|------|
+| Exit loop early | ✓ | ✗ | ✗ |
+| Skip to next item | ✗ | ✓ | ✗ |
+| Run after normal completion | ✗ | ✗ | ✓ |
+| Works in for loops | ✓ | ✓ | ✓ |
+| Works in while loops | ✓ | ✓ | ✓ |
 
 ---
 
 ## Key Takeaways
 
-1. **`break`** - Stops the entire loop immediately
-2. **`continue`** - Skips rest of current iteration, goes to next
-3. **`else`** - Runs only if loop completed without breaking
-4. **`pass`** - Does nothing, just a placeholder
-5. Use `break` when you **found what you're looking for**
-6. Use `continue` when you want to **skip certain items**
-7. Use `else` to detect **when a search didn't find anything**
+1. **`break`** exits the entire loop immediately
+2. **`continue`** skips the rest of the current iteration and moves to the next
+3. **Loop `else`** runs only if the loop completed normally (no `break`)
+4. **`break` exits only the innermost loop** - use flags to exit nested loops
+5. **`continue` and `break`** only work inside loops, not in functions
+6. **Use `else` with loops** for "not found" or "no match" scenarios
+7. **Use flags** (boolean variables) when you need to communicate between nested loops
 
 ---
 
 ## What's Next?
 
-Now you know how to control loops! Next, we'll learn about:
-- List comprehensions (making lists with loops)
-- Nested loops (loops inside loops)
-- More complex loop patterns
+Now that you can control loops with break, continue, and else:
+- You'll write more efficient search algorithms
+- You'll handle edge cases and invalid data gracefully
+- You'll build interactive programs with proper flow control
+- You'll move on to more advanced data structures (lists, dictionaries)
