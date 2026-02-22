@@ -6,9 +6,9 @@ Welcome to hands-on programming! After building strong foundations, this session
 
 | Topic | Description |
 |-------|-------------|
-| **🐍 Python Interpreter** | How Python reads and executes your code |
-| **💻 Python Development Environment** | Setting up and using Python development tools |
-| **📝 Basic Python Syntax** | Your first Python code - variables, output, and simple operations |
+| **🐍 [Python Interpreter](concepts/python-interpreter.md)** | How Python reads and executes your code |
+| **💻 [Python Development Environment](concepts/python-development-environment.md)** | Setting up and using Python development tools |
+| **📝 [Basic Python Syntax](concepts/basic-python-syntax.md)** | Your first Python code - variables, output, and simple operations |
 
 ## 📖 Detailed Concepts
 

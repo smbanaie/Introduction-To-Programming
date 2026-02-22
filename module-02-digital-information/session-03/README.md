@@ -6,10 +6,10 @@ Dive into the atomic units of digital information. This session reveals how all 
 
 | Topic | Description |
 |-------|-------------|
-| **🔢 Bits Bytes Fundamentals** | Understanding the basic units of digital information |
-| **💾 Data Storage Units** | How bits combine into bytes, kilobytes, and beyond |
-| **🌊 Digital vs Analog** | The difference between continuous and discrete data representation |
-| **📊 Data Representation** | How different types of information are encoded as binary patterns |
+| **🔢 [Bits Bytes Fundamentals](concepts/bits-bytes-fundamentals.md)** | Understanding the basic units of digital information |
+| **💾 [Data Storage Units](concepts/data-storage-units.md)** | How bits combine into bytes, kilobytes, and beyond |
+| **🌊 [Digital vs Analog](concepts/digital-vs-analog.md)** | The difference between continuous and discrete data representation |
+| **📊 [Data Representation](concepts/data-representation.md)** | How different types of information are encoded as binary patterns |
 
 ## 📖 Detailed Concepts
 
