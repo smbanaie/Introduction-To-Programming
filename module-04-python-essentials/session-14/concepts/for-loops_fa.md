@@ -1,432 +1,437 @@
-# حلقه‌های for: تکرار روی مجموعه‌ها
+# حلقه‌های for: تکرار کد به آسانی
 
-## مقدمه حلقه‌های for
+## چه چیزهایی یاد خواهید گرفت
+- چگونه با حلقه‌های for کد را چند بار تکرار کنید
+- حلقه زدن روی لیست‌ها، رشته‌ها و محدوده‌ها
+- استفاده از `range()` برای شمردن
+- الگوهای رایج حلقه
+- اشتباهات رایج برای اجتناب
 
-حلقه‌های for در پایتون روی دنباله‌ها (مانند لیست‌ها، رشته‌ها، تاپل‌ها) یا سایر اشیای iterable تکرار می‌کنند. آنها به طور خودکار فرآیند تکرار را مدیریت می‌کنند که آنها را ایمن‌تر و راحت‌تر از ایندکس‌گذاری دستی می‌کند.
+---
 
-## نحو پایه حلقه for
+## مفهوم اصلی: دوباره انجام بده (و دوباره)
 
-### تکرار روی لیست‌ها
+یک **حلقه for** به شما اجازه می‌دهد یک بلوک کد را برای هر آیتم در یک دنباله تکرار کنید. به جای نوشتن یک کد ۱۰ بار، یک بار می‌نویسید و به پایتون می‌گویید ۱۰ بار اجرایش کنید.
+
+**مثال: یک دستور آشپزی**
+- «برای هر تخم‌مرغ در کارتن، آن را در کاسه بشکن»
+- نمی‌گویید: «تخم‌مرغ ۱ را بشکن، تخم‌مرغ ۲ را بشکن، تخم‌مرغ ۳ را بشکن...»
+- حلقه خودش تکرار را مدیریت می‌کند!
+
+---
+
+## سینتکس پایه حلقه for
+
+### حلقه زدن روی لیست
+
 ```python
-# حلقه for پایه
-fruits = ["apple", "banana", "cherry"]
-for fruit in fruits:
-    print(f"I like {fruit}")
+میوه‌ها = ["سیب", "موز", "گیلاس", "خرما"]
 
-# Output:
-# I like apple
-# I like banana
-# I like cherry
+for میوه in میوه‌ها:
+    print(f"من {میوه} را دوست دارم")
+
+# خروجی:
+# من سیب را دوست دارم
+# من موز را دوست دارم
+# من گیلاس را دوست دارم
+# من خرما را دوست دارم
 ```
 
-### تکرار روی رشته‌ها
-```python
-# رشته‌ها دنباله‌ای از کاراکترها هستند
-message = "Hello"
-for char in message:
-    print(char)
+**نحوه کار:**
+۱. حلقه اولین آیتم (`"سیب"`) را می‌گیرد و در `میوه` ذخیره می‌کند
+۲. کد تورفتگی را اجرا می‌کند (پیام را چاپ می‌کند)
+۳. آیتم بعدی (`"موز"`) را می‌گیرد و تکرار می‌کند
+۴. تا پردازش همه آیتم‌ها ادامه می‌دهد
 
-# Output:
-# H
-# e
-# l
-# l
-# o
+### حلقه زدن روی رشته
+
+```python
+پیام = "سلام"
+
+for حرف in پیام:
+    print(حرف)
+
+# خروجی:
+# س
+# ل
+# ا
+# م
 ```
 
-### تکرار روی محدوده‌ها
+---
+
+## تابع range()
+
+### شمردن با range()
+
 ```python
-# استفاده از range() برای اعداد
-for i in range(5):  # 0, 1, 2, 3, 4
-    print(f"Count: {i}")
+# شمردن از ۰ تا ۴ (قبل از ۵ متوقف می‌شود)
+for i in range(5):
+    print(f"شمارش: {i}")
 
-# محدوده با شروع و پایان
-for num in range(2, 6):  # 2, 3, 4, 5
-    print(num)
-
-# محدوده با step
-for even in range(0, 10, 2):  # 0, 2, 4, 6, 8
-    print(f"Even: {even}")
+# خروجی:
+# شمارش: 0
+# شمارش: 1
+# شمارش: 2
+# شمارش: 3
+# شمارش: 4
 ```
 
-## کار با ایندکس‌ها
+### شروع از عدد دیگر
 
-### استفاده از enumerate()
 ```python
-# هم ایندکس و هم مقدار را دریافت کن
-fruits = ["apple", "banana", "cherry"]
-for index, fruit in enumerate(fruits):
-    print(f"{index}: {fruit}")
+# شمردن از ۱ تا ۵
+for i in range(1, 6):
+    print(f"عدد: {i}")
 
-# Output:
-# 0: apple
-# 1: banana
-# 2: cherry
-
-# شمارش را از 1 شروع کن
-for index, fruit in enumerate(fruits, start=1):
-    print(f"{index}. {fruit}")
-
-# Output:
-# 1. apple
-# 2. banana
-# 3. cherry
+# خروجی:
+# عدد: 1
+# عدد: 2
+# عدد: 3
+# عدد: 4
+# عدد: 5
 ```
 
-### ایندکس‌گذاری دستی (توصیه نمی‌شود)
-```python
-# کمتر Pythonic، اما ممکن
-fruits = ["apple", "banana", "cherry"]
-for i in range(len(fruits)):
-    print(f"{i}: {fruits[i]}")
+### شمردن با گام
 
-# همان output مثال enumerate
+```python
+# اعداد زوج از ۲ تا ۱۰
+for i in range(2, 11, 2):
+    print(f"زوج: {i}")
+
+# خروجی:
+# زوج: 2
+# زوج: 4
+# زوج: 6
+# زوج: 8
+# زوج: 10
 ```
 
-## تکرار روی دیکشنری‌ها
+### شمردن معکوس
 
-### فقط کلیدها
 ```python
-person = {"name": "Alice", "age": 25, "city": "New York"}
+# شمردن معکوس از ۵ تا ۱
+for i in range(5, 0, -1):
+    print(f"شمارش معکوس: {i}")
 
-for key in person:
-    print(f"Key: {key}")
-
-# Output:
-# Key: name
-# Key: age
-# Key: city
+print("پرتاب!")
 ```
 
-### کلیدها و مقادیر
-```python
-for key, value in person.items():
-    print(f"{key}: {value}")
+---
 
-# Output:
-# name: Alice
-# age: 25
-# city: New York
+## الگوهای عملی حلقه
+
+### الگوی ۱: تجمیع (جمع کردن چیزها)
+
+```python
+# محاسبه مجموع اعداد
+اعداد = [10, 20, 30, 40, 50]
+مجموع = 0
+
+for عدد in اعداد:
+    مجموع = مجموع + عدد
+    # یا: مجموع += عدد
+
+print(f"مجموع: {مجموع}")  # 150
 ```
 
-### فقط مقادیر
-```python
-for value in person.values():
-    print(f"Value: {value}")
+### الگوی ۲: شمارنده (شمردن تطابق‌ها)
 
-# Output:
-# Value: Alice
-# Value: 25
-# Value: New York
+```python
+# شمردن چند آیتم از یک آزمون عبور می‌کنند
+نمرات = [85, 92, 78, 95, 88, 70]
+تعداد_قبول = 0
+
+for نمره in نمرات:
+    if نمره >= 70:
+        تعداد_قبول += 1
+
+print(f"دانشجویان قبول: {تعداد_قبول}")
 ```
 
-## حلقه‌های for تو در تو
+### الگوی ۳: پیدا کردن بیشترین/کمترین
 
-### تو در تو پایه
 ```python
-# جدول ضرب
-for i in range(1, 4):  # 1, 2, 3
-    for j in range(1, 4):  # 1, 2, 3
-        print(f"{i} * {j} = {i * j}")
-    print()  # خط خالی بعد از هر ردیف
+# پیدا کردن بالاترین نمره
+نمرات = [85, 92, 78, 95, 88, 70]
+بالاترین = نمرات[0]  # شروع با اولین نمره
 
-# Output:
-# 1 * 1 = 1
-# 1 * 2 = 2
-# 1 * 3 = 3
-#
-# 2 * 1 = 2
-# etc.
+for نمره in نمرات[1:]:  # بررسی بقیه
+    if نمره > بالاترین:
+        بالاترین = نمره
+
+print(f"بالاترین نمره: {بالاترین}")
 ```
 
-### تکرار روی لیست‌های 2D
+### الگوی ۴: ساخت لیست جدید
+
 ```python
-# ماتریس (لیستی از لیست‌ها)
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
+# ایجاد لیست جدید از یک لیست موجود
+نام‌ها = ["علی", "رضا", "محمد"]
+نام‌های_بزرگ = []
 
-for row in matrix:
-    for element in row:
-        print(element, end=" ")
-    print()  # خط جدید بعد از هر ردیف
+for نام in نام‌ها:
+    نام‌های_بزرگ.append(نام.upper())
 
-# Output:
-# 1 2 3
-# 4 5 6
-# 7 8 9
+print(نام‌های_بزرگ)  # ['ALI', 'REZA', 'MOHAMMAD']
 ```
 
-## فهم لیست
+---
 
-### فهم پایه
+## استفاده از enumerate() برای ایندکس
+
+### گرفتن هم ایندکس و هم مقدار
+
 ```python
-# رویکرد سنتی
-numbers = [1, 2, 3, 4, 5]
-squares = []
-for num in numbers:
-    squares.append(num ** 2)
+میوه‌ها = ["سیب", "موز", "گیلاس"]
 
-print(squares)  # [1, 4, 9, 16, 25]
+for ایندکس, میوه in enumerate(میوه‌ها):
+    print(f"{ایندکس}: {میوه}")
 
-# فهم لیست
-squares = [num ** 2 for num in numbers]
-print(squares)  # همان نتیجه
+# خروجی:
+# 0: سیب
+# 1: موز
+# 2: گیلاس
 ```
 
-### فهم با شرایط
-```python
-# فیلتر اعداد زوج
-numbers = [1, 2, 3, 4, 5, 6]
-evens = [num for num in numbers if num % 2 == 0]
-print(evens)  # [2, 4, 6]
+### شروع از ۱ به جای ۰
 
-# تبدیل با شرط
-result = [num * 2 if num > 3 else num for num in numbers]
-print(result)  # [1, 2, 3, 8, 10, 12]
+```python
+# برای لیست‌های شماره‌دار (مثل رتبه‌بندی)
+for رتبه, میوه in enumerate(میوه‌ها, start=1):
+    print(f"{رتبه}. {میوه}")
+
+# خروجی:
+# 1. سیب
+# 2. موز
+# 3. گیلاس
 ```
 
-### فهم‌های تو در تو
-```python
-# ماتریس را flatten کن
-matrix = [[1, 2], [3, 4], [5, 6]]
-flattened = [num for row in matrix for num in row]
-print(flattened)  # [1, 2, 3, 4, 5, 6]
+---
 
-# جدول ضرب ایجاد کن
-table = [[i * j for j in range(1, 4)] for i in range(1, 4)]
-print(table)  # [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+## اشتباهات رایج مبتدی‌ها
+
+### اشتباه ۱: تغییر لیست در حین حلقه زدن روی آن
+
+```python
+# ❌ اشتباه - این کار را نکنید!
+اعداد = [1, 2, 3, 4, 5]
+for عدد in اعداد:
+    if عدد % 2 == 0:  # اگر زوج باشد
+        اعداد.remove(عدد)  # بعضی آیتم‌ها را رد می‌کند!
+
+print(اعداد)  # [1, 3, 5] - اما 4 رد شد!
+
+# ✅ درست - لیست جدید بسازید
+زوج‌ها = []
+for عدد in اعداد:
+    if عدد % 2 == 0:
+        زوج‌ها.append(عدد)
 ```
 
-## تکرار روی فایل‌ها
+### اشتباه ۲: فراموش کردن دو نقطه
 
-### خواندن خط‌ها
 ```python
-# همه خط‌ها را بخوان
-with open("data.txt", "r") as file:
-    for line in file:
-        print(line.strip())  # کاراکترهای newline را حذف کن
+# ❌ اشتباه
+for i in range(5)
+    print(i)
 
-# خط به خط با شماره خط پردازش کن
-with open("data.txt", "r") as file:
-    for line_num, line in enumerate(file, start=1):
-        print(f"Line {line_num}: {line.strip()}")
+# ✅ درست
+for i in range(5):
+    print(i)
 ```
 
-### پردازش داده‌های CSV-like
-```python
-# پردازش CSV ساده
-data = [
-    "Alice,25,Engineer",
-    "Bob,30,Designer",
-    "Charlie,35,Manager"
-]
+### اشتباه ۳: خطای تورفتگی
 
-for row in data:
-    name, age, job = row.split(",")
-    print(f"{name} is {age} years old and works as {job}")
+```python
+# ❌ اشتباه
+for i in range(5):
+print(i)  # تورفتگی ندارد!
+
+# ✅ درست
+for i in range(5):
+    print(i)  # تورفتگی صحیح
 ```
 
-## الگوهای تکرار پیشرفته
+### اشتباه ۴: پارامترهای اشتباه range
 
-### تکرار با zip()
 ```python
-# تکرار موازی
-names = ["Alice", "Bob", "Charlie"]
-ages = [25, 30, 35]
-cities = ["NYC", "LA", "Chicago"]
+# ❌ گیج‌کننده
+# range(end) - از ۰ شروع، قبل از end متوقف می‌شود
+for i in range(5):  # ۰، ۱، ۲، ۳، ۴ (نه ۵!)
+    print(i)
 
-for name, age, city in zip(names, ages, cities):
-    print(f"{name} ({age}) lives in {city}")
-
-# Output:
-# Alice (25) lives in NYC
-# Bob (30) lives in LA
-# Charlie (35) lives in Chicago
+# range(start, end) - از start شروع، قبل از end متوقف می‌شود
+for i in range(1, 5):  # ۱، ۲، ۳، ۴ (نه ۵!)
+    print(i)
 ```
 
-### تکرار معکوس
+### اشتباه ۵: استفاده مجدد از متغیر حلقه
+
 ```python
-# تکرار معکوس
-fruits = ["apple", "banana", "cherry"]
-for fruit in reversed(fruits):
-    print(fruit)
+# ❌ رفتار غیرمنتظره
+for i in range(5):
+    print(i)
 
-# Output:
-# cherry
-# banana
-# apple
-
-# معکوس با ایندکس‌ها
-for i in reversed(range(len(fruits))):
-    print(f"{i}: {fruits[i]}")
+# i هنوز بعد از حلقه وجود دارد!
+print(f"مقدار نهایی i: {i}")  # چاپ می‌کند ۴
 ```
 
-### تکرار با step
+---
+
+## خودتان امتحان کنید: تمرین‌ها
+
+### تمرین ۱: جدول ضرب
+
+جدول ضرب برای یک عدد چاپ کنید:
+
 ```python
-# هر عنصر دیگر
-numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+عدد = int(input("یک عدد وارد کن: "))
 
-# استفاده از نماد برش
-for num in numbers[::2]:  # Start:0, End:len, Step:2
-    print(num, end=" ")  # 0 2 4 6 8
-
-print()
-
-# استفاده از range
-for i in range(0, len(numbers), 2):
-    print(numbers[i], end=" ")  # همان نتیجه
+print(f"جدول ضرب برای {عدد}:")
+for i in range(1, 11):
+    نتیجه = عدد * i
+    print(f"{عدد} × {i} = {نتیجه}")
 ```
 
-## ملاحظات عملکرد
+### تمرین ۲: مجموع خرید
 
-### از تغییر لیست‌ها در طول تکرار اجتناب کن
+مجموع لیست خرید را محاسبه کنید:
+
 ```python
-# مشکل‌دار - تغییر در طول تکرار
-numbers = [1, 2, 3, 4, 5]
-for num in numbers:
-    if num % 2 == 0:
-        numbers.remove(num)  # تغییر لیست در طول تکرار
+قیمت‌ها = [2.50, 3.75, 1.25, 8.99, 4.50]
+مجموع = 0
 
-print(numbers)  # [1, 3, 5] - 4 رد شد!
+print("لیست خرید شما:")
+for i, قیمت in enumerate(قیمت‌ها, 1):
+    print(f"  کالای {i}: ${قیمت:.2f}")
+    مجموع += قیمت
 
-# بهتر - لیست جدید ایجاد کن
-numbers = [1, 2, 3, 4, 5]
-odds = [num for num in numbers if num % 2 != 0]
-print(odds)  # [1, 3, 5]
+print(f"\nمجموع: ${مجموع:.2f}")
+
+# اضافه کردن مالیات
+مالیات = مجموع * 0.08
+نهایی = مجموع + مالیات
+print(f"مالیات (۸٪): ${مالیات:.2f}")
+print(f"نهایی: ${نهایی:.2f}")
 ```
 
-### از ساختارهای داده مناسب استفاده کن
-```python
-# برای تست عضویت، از مجموعه‌ها استفاده کن
-lookup_items = {"apple", "banana", "cherry"}  # مجموعه برای lookup O(1)
-fruits = ["apple", "grape", "banana", "orange", "cherry"]
+### تمرین ۳: بررسی قدرت رمز عبور
 
-for fruit in fruits:
-    if fruit in lookup_items:  # lookup سریع
-        print(f"Found: {fruit}")
+بررسی هر حرف در یک رمز عبور:
+
+```python
+رمز = input("رمز عبور وارد کن: ")
+
+عدد_دارد = False
+حرف_بزرگ_دارد = False
+حرف_کوچک_دارد = False
+
+for حرف in رمز:
+    if حرف.isdigit():
+        عدد_دارد = True
+    elif حرف.isupper():
+        حرف_بزرگ_دارد = True
+    elif حرف.islower():
+        حرف_کوچک_دارد = True
+
+# بررسی نتایج
+if len(رمز) >= 8 and عدد_دارد and حرف_بزرگ_دارد and حرف_کوچک_دارد:
+    print("✅ رمز عبور قوی!")
+else:
+    print("❌ رمز عبور ضعیف!")
+    if len(رمز) < 8:
+        print("  - خیلی کوتاه (۸+ کاراکتر لازم است)")
+    if not عدد_دارد:
+        print("  - یک عدد اضافه کنید")
+    if not حرف_بزرگ_دارد:
+        print("  - یک حرف بزرگ اضافه کنید")
+    if not حرف_کوچک_دارد:
+        print("  - یک حرف کوچک اضافه کنید")
 ```
 
-## الگوهای رایج حلقه for
+### تمرین ۴: رفع اشکالات
 
-### الگوی accumulator
 ```python
-# جمع همه اعداد
-numbers = [1, 2, 3, 4, 5]
-total = 0
-for num in numbers:
-    total += num
-print(f"Sum: {total}")  # 15
+# برنامه با اشکال
+اعداد = [1, 2, 3, 4, 5]
+for عدد in range(اعداد):
+    print(اعداد)
 
-# شمارش رخدادها
-text = "hello world"
-letter_counts = {}
-for char in text:
-    if char != " ":  # فاصله‌ها را رد کن
-        letter_counts[char] = letter_counts.get(char, 0) + 1
-
-print(letter_counts)  # {'h': 1, 'e': 1, 'l': 3, 'o': 2, 'w': 1, 'r': 1, 'd': 1}
+مجموع = 0
+for i in range(1, 10)
+    مجموع = مجموع + i
+print(f"جمع ۱ تا ۱۰: {مجموع}")
 ```
 
-### الگوی find
+<details>
+<summary>برای دیدن پاسخ کلیک کنید</summary>
+
 ```python
-# حداکثر را پیدا کن
-numbers = [3, 7, 2, 9, 5]
-maximum = numbers[0] if numbers else None
+# برنامه رفع شده
+اعداد = [1, 2, 3, 4, 5]
+for عدد in اعداد:  # روی لیست حلقه بزنید، نه range(list)
+    print(عدد)  # عدد را چاپ کنید، نه اعداد
 
-for num in numbers[1:]:
-    if num > maximum:
-        maximum = num
+مجموع = 0
+for i in range(1, 11):  # : لازم است و range تا عدد پایانی می‌رود
+    مجموع = مجموع + i
+print(f"جمع ۱ تا ۱۰: {مجموع}")
+```
+</details>
 
-print(f"Maximum: {maximum}")  # 9
+---
 
-# اولین تطابق را پیدا کن
-fruits = ["apple", "banana", "cherry", "date"]
-target = "cherry"
-found_index = None
+## مرجع سریع
 
-for i, fruit in enumerate(fruits):
-    if fruit == target:
-        found_index = i
-        break  # بعد از اولین تطابق جستجو را متوقف کن
+### حلقه for پایه
 
-print(f"Found {target} at index {found_index}")
+```python
+# حلقه روی لیست
+for آیتم in لیست:
+    # کد
+
+# حلقه با range
+for i in range(5):      # 0، 1، 2، 3، 4
+for i in range(1, 6):  # 1، 2، 3، 4، 5
+for i in range(0, 10, 2):  # 0، 2، 4، 6، 8
 ```
 
-### الگوی transform
-```python
-# به حروف بزرگ تبدیل کن
-words = ["hello", "world", "python"]
-upper_words = []
+### تابع range()
 
-for word in words:
-    upper_words.append(word.upper())
+| سینتکس | تولید می‌کند |
+|--------|-------------|
+| `range(5)` | 0، 1، 2، 3، 4 |
+| `range(2, 5)` | 2، 3، 4 |
+| `range(0, 10, 2)` | 0، 2، 4، 6، 8 |
+| `range(5, 0, -1)` | 5، 4، 3، 2، 1 |
 
-print(upper_words)  # ['HELLO', 'WORLD', 'PYTHON']
+### الگوهای رایج
 
-# یا با استفاده از فهم لیست
-upper_words = [word.upper() for word in words]
-print(upper_words)  # همان نتیجه
-```
+| الگو | کد |
+|------|-----|
+| جمع آیتم‌ها | `مجموع = 0`<br>`for x in items: مجموع += x` |
+| شمردن تطابق‌ها | `شمارنده = 0`<br>`for x in items:`<br>`  if شرط: شمارنده += 1` |
+| پیدا کردن بیشترین | `بیشترین = items[0]`<br>`for x in items[1:]:`<br>`  if x > بیشترین: بیشترین = x` |
+| ساخت لیست جدید | `جدید = []`<br>`for x in قدیمی: جدید.append(تبدیل(x))` |
 
-## iterables در برابر iterators
-
-### درک iterables
-```python
-# لیست‌ها iterable هستند
-fruits = ["apple", "banana", "cherry"]
-fruit_iter = iter(fruits)  # iterator ایجاد کن
-
-print(next(fruit_iter))  # "apple"
-print(next(fruit_iter))  # "banana"
-print(next(fruit_iter))  # "cherry"
-# print(next(fruit_iter))  # استثنا StopIteration
-
-# حلقه‌های for این را به طور خودکار مدیریت می‌کنند
-for fruit in fruits:  # هر بار iterator جدید ایجاد می‌کند
-    print(fruit)
-```
-
-### ایجاد iterables سفارشی
-```python
-class Countdown:
-    def __init__(self, start):
-        self.start = start
-
-    def __iter__(self):
-        return CountdownIterator(self.start)
-
-class CountdownIterator:
-    def __init__(self, start):
-        self.current = start
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.current <= 0:
-            raise StopIteration
-        self.current -= 1
-        return self.current + 1
-
-# استفاده
-for num in Countdown(5):
-    print(num, end=" ")  # 5 4 3 2 1
-```
+---
 
 ## نکات کلیدی
 
-۱. **حلقه‌های for روی دنباله‌ها تکرار می‌کنند** و فرآیند تکرار را به طور خودکار مدیریت می‌کنند
-۲. **از enumerate() استفاده کن** برای دسترسی به هر دو ایندکس و مقادیر
-۳. **فهم لیست** روش‌های concise برای ایجاد لیست‌های جدید فراهم می‌کند
-۴. **حلقه‌های تو در تو** با داده‌های چندبعدی کار می‌کنند
-۵. **مراقب تغییر مجموعه‌ها باش** در طول تکرار
-۶. **الگوی تکرار مناسب را انتخاب کن** برای مورد استفاده خود
+۱. **حلقه‌های for** کد را برای هر آیتم در یک دنباله تکرار می‌کنند
+۲. **`range(n)`** اعداد ۰ تا n-1 تولید می‌کند
+۳. **`range(start, end)`** اعداد start تا end-1 تولید می‌کند
+۴. **`enumerate()`** هم ایندکس و هم مقدار را می‌دهد
+۵. **لیست را تغییر ندهید** در حین حلقه زدن روی آن
+۶. **دو نقطه را فراموش نکنید** `:` در انتهای خط for
+۷. **تورفتگی مهم است**—کد تورفتگی در هر تکرار اجرا می‌شود
 
-## مطالعه بیشتر
-- پروتکل iterator پایتون و generators
-- الگوهای تکرار پیشرفته
-- بهینه‌سازی عملکرد برای حلقه‌ها
-- جایگزین‌های برنامه‌نویسی تابعی (map، filter، reduce)
+---
+
+## گام بعدی
+
+حالا که حلقه‌های for را می‌شناسید:
+- درباره حلقه‌های while یاد می‌گیرید (حلقه‌هایی که در حالی که یک شرط درست است اجرا می‌شوند)
+- یاد می‌گیرید حلقه‌ها را با `break` و `continue` کنترل کنید
+- حلقه‌ها را با شرایط ترکیب می‌کنید برای برنامه‌های قدرتمند

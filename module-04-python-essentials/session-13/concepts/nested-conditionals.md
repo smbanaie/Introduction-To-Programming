@@ -2,419 +2,422 @@
 
 ## What You'll Learn
 - How to put if statements inside other if statements
-- When to use nested conditions vs. simple conditions
-- How to avoid getting confused with many levels
-- Common beginner mistakes
+- When to use nested conditionals vs. logical operators
+- How to avoid getting lost in "indentation hell"
+- Common patterns for nested decisions
+- Practical examples
 
 ---
 
-## What Are Nested Conditionals?
+## Main Concept: Questions Lead to More Questions
 
-Nested conditionals are when you put an `if` statement **inside** another `if` statement. It's like having decisions within decisions.
+Sometimes one decision leads to another. You check one condition, and if it's true, you need to check another condition. This is called **nesting**.
 
-### Real-Life Analogy: Going to a Movie
+**Analogy: A Choose Your Own Adventure Book**
+- Turn to page 5 if you want to enter the cave
+- On page 5: Turn to page 10 if you have a torch, or page 15 if you don't
+- Each choice leads to more choices!
 
-```
-Decision 1: Do you want to see a movie?
-    ↓ YES
-Decision 2: Is the movie age-appropriate?
-    ↓ YES
-Decision 3: Do you have enough money?
-    ↓ YES
-Action: Buy ticket and enjoy!
-```
+---
 
-### Simple Example
+## Basic Nesting: If Inside If
+
+### Simple Two-Level Nesting
 
 ```python
 age = 20
-has_money = True
+has_id = True
 
 if age >= 18:
-    print("You can enter the club.")
-    if has_money:
-        print("You can buy a drink!")
-    else:
-        print("Sorry, no money = no drink.")
-else:
-    print("You're too young to enter.")
-```
-
-**Output:**
-```
-You can enter the club.
-You can buy a drink!
-```
-
----
-
-## ASCII Diagram: How Nesting Works
-
-```
-                    START
-                      │
-                      ▼
-            ┌───────────────────┐
-            │  age >= 18?       │
-            │  (Check age)      │
-            └─────────┬─────────┘
-                      │
-          ┌───────────┴───────────┐
-       NO │                       │ YES
-          ▼                       ▼
-┌─────────────────┐    ┌───────────────────┐
-│ "Too young"     │    │  has_money?       │
-│ Skip club       │    │  (Check money)    │
-└─────────────────┘    └─────────┬─────────┘
-                                 │
-                    ┌────────────┴────────────┐
-                 NO │                         │ YES
-                    ▼                         ▼
-          ┌──────────────────┐    ┌──────────────────┐
-          │ "No money =      │    │ "Enjoy your      │
-          │  no drink"       │    │  drink!"         │
-          └──────────────────┘    └──────────────────┘
-```
-
----
-
-## When to Use Nested Conditions
-
-### Use Case 1: Checking Multiple Requirements Step by Step
-
-```python
-# Check if someone can rent a car
-age = 25
-has_license = True
-has_credit_card = True
-
-if age >= 21:  # First requirement
-    print("✓ Age requirement met")
+    print("You are an adult.")
     
-    if has_license:  # Second requirement (only if age passed)
-        print("✓ License requirement met")
-        
-        if has_credit_card:  # Third requirement
-            print("✓ Can rent a car!")
-        else:
-            print("✗ Need credit card")
+    if has_id:
+        print("You can enter the club!")
     else:
-        print("✗ Need driver's license")
+        print("You need ID to enter.")
+        
 else:
-    print(f"✗ Must be 21+ (you need {21 - age} more years)")
+    print("You are too young to enter.")
 ```
 
-### Use Case 2: Different Actions Based on Multiple Factors
+**What happens:**
+1. Check if age >= 18 → Yes
+2. Print "You are an adult"
+3. Check if has_id → Yes
+4. Print "You can enter the club!"
+
+### Three Levels of Nesting
 
 ```python
-# Weather-based clothing advice
 temperature = 75
-is_raining = False
-is_windy = True
+weather = "sunny"
+is_weekend = True
 
 if temperature > 70:
-    if is_raining:
-        print("☀️🌧️ Warm but raining - bring umbrella, wear light clothes")
-    elif is_windy:
-        print("☀️💨 Warm and windy - light jacket recommended")
+    print("It's warm outside.")
+    
+    if weather == "sunny":
+        print("Perfect weather!")
+        
+        if is_weekend:
+            print("Go to the beach!")
+        else:
+            print("Have a nice day at work.")
+            
     else:
-        print("☀️ Perfect weather - enjoy!")
+        print("Warm but cloudy.")
+        
 else:
-    if is_raining:
-        print("❄️🌧️ Cold and raining - wear warm waterproof jacket")
-    else:
-        print("❄️ Just cold - wear warm clothes")
+    print("It's cool outside.")
 ```
 
 ---
 
-## Avoiding Too Many Levels
+## When to Use Nesting vs. Logical Operators
 
-### The Problem: Too Deep
+### Use Logical Operators for Simple AND Conditions
 
 ```python
-# ❌ Hard to read and understand (too many levels)
-if user:
-    if user.is_active:
-        if user.age >= 18:
-            if user.has_permission:
-                print("Access granted!")
-            else:
-                print("No permission")
-        else:
-            print("Too young")
-    else:
-        print("Inactive user")
+# ✅ Good - simple condition
+if age >= 18 and has_id:
+    print("You can enter!")
 else:
-    print("No user")
+    print("Cannot enter.")
 ```
 
-### Solution: Flatten with Early Returns
+### Use Nesting for Different Messages
 
 ```python
-# ✅ Better - easier to read
-if not user:
-    print("No user")
+# ✅ Good - different messages for different failures
+if age >= 18:
+    if has_id:
+        print("Welcome to the club!")
+    else:
+        print("Sorry, you need ID to enter.")
+else:
+    print("Sorry, you must be 18 or older.")
+    print(f"Come back in {18 - age} years!")
+```
+
+---
+
+## Common Patterns
+
+### Pattern 1: Check Prerequisites First
+
+```python
+# Check if user exists before checking other things
+username = "alice"
+password = "secret123"
+account_active = True
+
+# Simulated database
+database = {
+    "alice": {"password": "secret123", "active": True}
+}
+
+if username in database:
+    user = database[username]
+    
+    if password == user["password"]:
+        
+        if user["active"]:
+            print("Login successful!")
+        else:
+            print("Account is deactivated.")
+            
+    else:
+        print("Wrong password.")
+        
+else:
+    print("Username not found.")
+```
+
+### Pattern 2: Categorize Then Decide
+
+```python
+score = 85
+attendance = 90
+
+# First categorize by score
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "D or F"
+
+# Then check attendance
+if attendance >= 90:
+    attendance_bonus = "+"
+else:
+    attendance_bonus = ""
+
+print(f"Final grade: {grade}{attendance_bonus}")
+```
+
+### Pattern 3: Menu System
+
+```python
+print("=== Food Ordering System ===")
+print("1. Pizza")
+print("2. Burger")
+print("3. Salad")
+
+choice = input("Choose (1-3): ")
+
+if choice == "1":
+    print("Pizza options:")
+    print("  a. Pepperoni")
+    print("  b. Cheese")
+    print("  c. Veggie")
+    
+    topping = input("Choose topping (a-c): ")
+    
+    if topping == "a":
+        print("You ordered pepperoni pizza!")
+    elif topping == "b":
+        print("You ordered cheese pizza!")
+    elif topping == "c":
+        print("You ordered veggie pizza!")
+    else:
+        print("Invalid topping choice.")
+        
+elif choice == "2":
+    print("You ordered a burger!")
+    
+elif choice == "3":
+    print("You ordered a salad!")
+    
+else:
+    print("Invalid choice.")
+```
+
+---
+
+## Avoiding "Indentation Hell"
+
+### Too Many Levels = Hard to Read
+
+```python
+# ❌ Hard to follow (the "arrow" pattern)
+if user_exists:
+    if user.is_active:
+        if user.has_permission:
+            if user.quota > 0:
+                if not user.is_banned:
+                    do_something()
+                else:
+                    print("User is banned")
+            else:
+                print("No quota left")
+        else:
+            print("No permission")
+    else:
+        print("User inactive")
+else:
+    print("User not found")
+```
+
+### Better: Flatten with Return or Logical Operators
+
+```python
+# ✅ Better - check negatives first and return early
+if not user_exists:
+    print("User not found")
 elif not user.is_active:
-    print("Inactive user")
-elif user.age < 18:
-    print("Too young")
+    print("User inactive")
 elif not user.has_permission:
     print("No permission")
+elif user.quota <= 0:
+    print("No quota left")
+elif user.is_banned:
+    print("User is banned")
 else:
-    print("Access granted!")
-```
-
-Or using functions:
-
-```python
-# ✅ Even better with guard clauses
-def check_access(user):
-    if not user:
-        return "No user"
-    if not user.is_active:
-        return "Inactive user"
-    if user.age < 18:
-        return "Too young"
-    if not user.has_permission:
-        return "No permission"
-    return "Access granted!"
-
-result = check_access(user)
-print(result)
-```
-
----
-
-## Comparing Nested vs. Flat Conditions
-
-### Nested Version
-
-```python
-# Nested - more visual, but harder to follow
-if age >= 18:
-    if has_license:
-        if not is_suspended:
-            print("Can drive")
-        else:
-            print("License suspended")
-    else:
-        print("Need license")
-else:
-    print("Too young")
-```
-
-### Flat Version (Using and)
-
-```python
-# Flat - easier to read, same logic
-if age >= 18 and has_license and not is_suspended:
-    print("Can drive")
-elif age < 18:
-    print("Too young")
-elif not has_license:
-    print("Need license")
-else:
-    print("License suspended")
+    do_something()
 ```
 
 ---
 
 ## Common Beginner Mistakes
 
-### Mistake 1: Wrong Indentation
+### Mistake 1: Wrong Indentation Level
 
 ```python
-# ❌ Wrong - second if not indented
+# ❌ Wrong - else doesn't match the right if
 if age >= 18:
-if has_money:  # ERROR - needs to be indented!
-    print("Can buy")
-
-# ✅ Correct
-if age >= 18:
-    if has_money:
-        print("Can buy")
-```
-
-### Mistake 2: Forgetting the else Matches the Closest if
-
-```python
-# ❌ Confusing - which if does the else match?
-if age >= 18:
-    if has_money:
-        print("Can buy")
-    else:  # This matches has_money check
-        print("No money")
-        
-# What about when age < 18? Need another else!
-
-# ✅ Clear with proper structure
-if age >= 18:
-    if has_money:
-        print("Can buy")
-    else:
-        print("No money")
-else:
+    if has_id:
+        print("Can enter")
+    else:  # This matches the inner if!
+        print("Need ID")
+else:  # This matches the outer if
     print("Too young")
 ```
 
-### Mistake 3: Checking the Same Thing Twice
+### Mistake 2: Forgetting the Outer Condition
 
 ```python
-# ❌ Redundant
+# ❌ Wrong - this runs even if age < 18!
 if age >= 18:
     print("Adult")
-    if age >= 21:  # We already know age >= 18!
-        print("Can drink")
-
-# ✅ Better
-if age >= 21:
-    print("Adult, can drink")
-elif age >= 18:
-    print("Adult, can't drink")
-else:
-    print("Minor")
+if has_id:  # This is NOT inside the age check!
+    print("Can enter")
 ```
 
-### Mistake 4: Nested When Flat is Simpler
+### Mistake 3: Over-Nesting Simple Logic
 
 ```python
-# ❌ Nested when flat would be clearer
-if temperature > 80:
-    if is_humid:
-        print("Hot and humid")
-    else:
-        print("Just hot")
-else:
-    if is_humid:
-        print("Not hot but humid")
-    else:
-        print("Nice weather")
-
-# ✅ Flat version
-if temperature > 80 and is_humid:
-    print("Hot and humid")
-elif temperature > 80:
-    print("Just hot")
-elif is_humid:
-    print("Not hot but humid")
-else:
-    print("Nice weather")
-```
-
----
-
-## Practical Example: Login System
-
-```python
-username = input("Username: ")
-password = input("Password: ")
-
-# Step-by-step validation
-if username:  # Check if username is not empty
-    if password:  # Check if password is not empty
-        if username == "admin" and password == "secret":
-            print("✅ Login successful!")
-            
-            # Nested check for admin features
-            is_premium = True
-            if is_premium:
-                print("⭐ Premium features enabled")
-            else:
-                print("📋 Standard features only")
+# ❌ Overly complex
+if temperature > 70:
+    if weather == "sunny":
+        if is_weekend:
+            print("Go out!")
         else:
-            print("❌ Wrong username or password")
+            print("Work day")
     else:
-        print("❌ Password required")
+        print("Cloudy")
 else:
-    print("❌ Username required")
+    print("Cold")
+
+# ✅ Simpler with logical operators
+if temperature > 70 and weather == "sunny" and is_weekend:
+    print("Go out!")
+elif temperature > 70 and weather == "sunny":
+    print("Work day")
+elif temperature > 70:
+    print("Cloudy")
+else:
+    print("Cold")
+```
+
+### Mistake 4: Not Handling All Cases
+
+```python
+# ❌ Missing cases
+if choice == "1":
+    if subchoice == "a":
+        print("Option 1a")
+    elif subchoice == "b":
+        print("Option 1b")
+    # What if subchoice is neither a nor b?
 ```
 
 ---
 
 ## Try It Yourself: Exercises
 
-### Exercise 1: Club Entry with Multiple Checks
+### Exercise 1: Club Entry System
 
-Create a club entry system that checks age, ID, and dress code.
+Create a system that checks age, ID, and dress code:
 
 ```python
-age = int(input("Age: "))
-has_id = input("Have ID? (yes/no): ").lower() == "yes"
-is_dressed_well = input("Dress code OK? (yes/no): ").lower() == "yes"
+age = int(input("Enter your age: "))
+has_id = input("Do you have ID? (yes/no): ").lower() == "yes"
 
 if age >= 21:
-    print("✓ Age check passed")
     if has_id:
-        print("✓ ID check passed")
-        if is_dressed_well:
-            print("🎉 Welcome to the club!")
+        dress_code = input("Are you wearing nice clothes? (yes/no): ").lower()
+        if dress_code == "yes":
+            print("Welcome to the VIP club!")
         else:
-            print("✗ Dress code violation")
+            print("Sorry, dress code required.")
     else:
-        print("✗ ID required")
+        print("ID is required for entry.")
+elif age >= 18:
+    print("You can enter the regular area.")
 else:
-    print(f"✗ Must be 21+ (need {21 - age} more years)")
+    print("You are too young to enter.")
 ```
 
-### Exercise 2: Restaurant Recommendation
+### Exercise 2: Quiz Grading System
 
-Recommend a restaurant based on budget and cuisine preference.
+Grade a quiz based on multiple factors:
 
 ```python
-budget = int(input("Your budget ($): "))
-wants_fast_food = input("Want fast food? (yes/no): ").lower() == "yes"
+score = int(input("Enter score (0-100): "))
+attempts = int(input("How many attempts? "))
 
-if budget < 10:
-    if wants_fast_food:
-        print("🍔 Try the burger joint")
+if score >= 70:
+    if attempts == 1:
+        print("Excellent! Passed on first try!")
     else:
-        print("🥪 Try the deli")
-elif budget < 30:
-    if wants_fast_food:
-        print("🍕 Try the pizza place")
-    else:
-        print("🍝 Try the Italian restaurant")
+        print(f"Passed after {attempts} attempts.")
 else:
-    print("🥂 Fancy dining - try the steakhouse!")
+    if score >= 50:
+        print("Close! Need more practice.")
+    else:
+        print("Failed. Please review the material.")
 ```
 
-### Exercise 3: Fix the Structure
+### Exercise 3: ATM Simulation
 
-This code is too deeply nested. Flatten it:
+Simple ATM with balance check and withdrawal:
 
 ```python
-# Too nested - fix this!
-if is_logged_in:
-    if is_verified:
-        if not is_banned:
-            if has_credits:
-                print("Can post")
-            else:
-                print("Need credits")
+balance = 1000
+pin = "1234"
+
+entered_pin = input("Enter PIN: ")
+
+if entered_pin == pin:
+    print("Access granted.")
+    print(f"Your balance: ${balance}")
+    
+    action = input("Withdraw or Deposit? (w/d): ").lower()
+    
+    if action == "w":
+        amount = int(input("Amount to withdraw: $"))
+        if amount <= balance:
+            balance = balance - amount
+            print(f"Withdrew ${amount}. New balance: ${balance}")
         else:
-            print("Banned")
+            print("Insufficient funds!")
+    elif action == "d":
+        amount = int(input("Amount to deposit: $"))
+        balance = balance + amount
+        print(f"Deposited ${amount}. New balance: ${balance}")
     else:
-        print("Not verified")
+        print("Invalid action.")
+        
 else:
-    print("Not logged in")
+    print("Incorrect PIN.")
+```
+
+### Exercise 4: Fix the Bugs
+
+```python
+# Buggy program
+age = int(input("Age: "))
+has_ticket = input("Has ticket? ") == "yes"
+
+if age >= 18:
+    print("Adult")
+if has_ticket:
+    print("Can enter")
+else:
+    print("Need ticket")
+else:
+    print("Minor")
 ```
 
 <details>
-<summary>Click to see answer</summary>
+<summary>Click to see the answer</summary>
 
 ```python
-# Flattened version
-if not is_logged_in:
-    print("Not logged in")
-elif not is_verified:
-    print("Not verified")
-elif is_banned:
-    print("Banned")
-elif not has_credits:
-    print("Need credits")
+# Fixed program
+age = int(input("Age: "))
+has_ticket = input("Has ticket? ").lower() == "yes"
+
+if age >= 18:
+    print("Adult")
+    if has_ticket:  # This must be INSIDE the age check
+        print("Can enter")
+    else:
+        print("Need ticket")
 else:
-    print("Can post")
+    print("Minor")
 ```
 </details>
 
@@ -422,29 +425,61 @@ else:
 
 ## Quick Reference
 
+### Nesting Structure
+
+```python
+if condition1:
+    # Code for condition1
+    if condition2:
+        # Code for both conditions
+    else:
+        # Condition1 true, condition2 false
+else:
+    # Condition1 false
+```
+
+### When to Use What
+
 | Situation | Use |
 |-----------|-----|
-| Check requirements in order | Nested ifs |
-| Different outcomes based on combinations | elif chain with `and`/`or` |
-| Multiple independent conditions | Separate ifs |
-| Too many levels (3+) | Flatten with early returns |
+| Simple AND check | `if a and b:` |
+| Different messages per check | Nested ifs |
+| Multiple independent checks | Separate ifs (not nested) |
+| Complex decision tree | Nested ifs with elif |
+
+### Indentation Levels
+
+```python
+# Level 1: Outer if
+if age >= 18:
+    # Level 2: Inside first if
+    if has_id:
+        # Level 3: Inside second if
+        print("Enter")
+    else:
+        # Level 3: Inside second if's else
+        print("Need ID")
+else:
+    # Level 2: Inside first if's else
+    print("Too young")
+```
 
 ---
 
 ## Key Takeaways
 
-1. **Nested conditions** are if statements inside other if statements
-2. **Use nesting** when you need to check requirements step-by-step
-3. **Avoid too many levels** (3+ is usually too many)
-4. **Flatten with elif** when possible for cleaner code
-5. **Indentation shows** which code belongs to which condition
-6. **Early returns** (using functions) can make code clearer
+1. **Nesting** means putting if statements inside other if statements
+2. **Use nesting** when you need different messages for different checks
+3. **Use logical operators** (`and`, `or`) for simple combined conditions
+4. **Avoid too many levels**—it gets hard to read and debug
+5. **Indentation is crucial**—it shows which code belongs to which if
+6. **Flatten when possible**—check negative cases first and use `elif`
 
 ---
 
 ## What's Next?
 
-Now you know how to handle complex decisions! Next, we'll learn:
-- How to repeat code with loops (for and while)
-- How to handle multiple items with loops
-- How to stop and skip iterations
+Now that you understand nested conditionals:
+- You'll learn about loops (repeating code)
+- You'll combine conditionals with loops
+- You'll write more interactive programs
