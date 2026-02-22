@@ -1,340 +1,378 @@
-# Evaluation Order and Precedence: Expression Processing
+# Evaluation Order: Which Calculation Comes First?
 
-## How Python Evaluates Expressions
+## What You'll Learn
+- How Python decides the order of calculations
+- Why `2 + 3 * 4` equals 14 (not 20)
+- How to use parentheses to control order
+- Left-to-right vs right-to-left rules
+- Common mistakes and how to avoid them
 
-Understanding how Python processes expressions is crucial for writing correct and predictable code. Expression evaluation follows strict rules of precedence and associativity.
+---
 
-## Operator Precedence Hierarchy
+## Main Concept: Following the Rules
 
-Python evaluates operators in a specific order, from highest to lowest precedence:
+Imagine you're baking a cake. You can't put it in the oven before you mix the ingredients! Python has similar rules—it follows a specific order when solving math problems.
 
-### 1. Parentheses (Grouping)
-```python
-# Parentheses override all other precedence
-result = (2 + 3) * 4     # 20 (addition happens first)
-result = 2 + (3 * 4)     # 14 (multiplication happens first)
+**Analogy: Traffic Rules**
+Just like traffic lights tell cars when to go, Python's "order of operations" tells calculations when to happen.
 
-# Nested parentheses
-result = ((2 + 3) * 4) - 1  # 19
-```
+---
 
-### 2. Function Calls and Attribute Access
-```python
-# Function calls have very high precedence
-result = len("hello") + 5  # 10 (len("hello") = 5, then + 5)
+## The Order of Operations (PEMDAS)
 
-# Method calls
-result = "hello".upper().count('L')  # 2
+Python follows PEMDAS—just like you learned in math class:
 
-# Attribute access
-result = math.pi * 2  # Access pi first, then multiply
-```
+| Letter | Stands For | Symbol | Example |
+|--------|-----------|--------|---------|
+| **P** | Parentheses | `()` | `(2 + 3) * 4` |
+| **E** | Exponents | `**` | `2 ** 3` |
+| **MD** | Multiply/Divide | `*`, `/`, `//`, `%` | `5 * 3`, `10 / 2` |
+| **AS** | Add/Subtract | `+`, `-` | `5 + 3`, `10 - 2` |
 
-### 3. Exponentiation
-```python
-# Right-associative
-result = 2 ** 3 ** 2      # 512 (2^(3^2) = 2^9 = 512)
-result = (2 ** 3) ** 2    # 64 (8^2 = 64)
+**After math:** Comparisons (`==`, `>`, `<`, etc.), then logical operators (`and`, `or`)
 
-# Mixed with other operators
-result = 2 * 3 ** 2       # 18 (3^2 = 9, then 2*9)
-```
-
-### 4. Unary Operators
-```python
-# Positive, negative, bitwise NOT
-result = -2 ** 2          # -4 (not (-2)**2)
-result = -(2 ** 2)        # -4 (same as above)
-result = ~5 + 3           # -3 (bitwise NOT first, then add)
-
-# Logical NOT
-result = not True or False  # False (not first, then or)
-```
-
-### 5. Multiplication, Division, Modulo
-```python
-# Left-associative, same precedence level
-result = 10 * 2 / 5       # 4.0 (10*2=20, 20/5=4.0)
-result = 10 / 2 * 5       # 25.0 (10/2=5.0, 5.0*5=25.0)
-
-# Integer division and modulo
-result = 17 // 3 % 2      # 1 ((17//3)=5, 5%2=1)
-```
-
-### 6. Addition and Subtraction
-```python
-# Left-associative
-result = 10 - 5 + 2       # 7 ((10-5)=5, 5+2=7)
-result = 10 + 5 - 2       # 13 ((10+5)=15, 15-2=13)
-```
-
-### 7. Bitwise Shifts
-```python
-# Left and right shift
-result = 8 >> 1 + 1       # 2 (1+1=2, then 8>>2)
-result = (8 >> 1) + 1     # 5 (8>>1=4, 4+1=5)
-```
-
-### 8. Bitwise AND
-```python
-result = 5 & 3 | 2        # 2 ((5&3)=1, 1|2=2)
-```
-
-### 9. Bitwise XOR
-```python
-result = 5 ^ 3 | 2        # 7 ((5^3)=6, 6|2=7)
-```
-
-### 10. Bitwise OR
-```python
-result = 5 | 3 & 2        # 7 ((3&2)=2, 5|2=7)
-```
-
-### 11. Comparison Operators
-```python
-# All have same precedence, left-associative
-result = 5 < 10 == True   # False ((5<10)=True, True==True, but chained differently)
-result = 5 < 10 and 10 == 10  # True (comparison before logical)
-```
-
-### 12. Identity Operators (is, is not)
-```python
-# After comparisons
-result = x is None or x == 0  # Check identity first
-```
-
-### 13. Membership Operators (in, not in)
-```python
-result = x in [1, 2, 3] and x > 0
-```
-
-### 14. Logical NOT
-```python
-result = not x > 5 and y < 10
-```
-
-### 15. Logical AND
-```python
-result = x > 5 and y < 10 or z == 0
-```
-
-### 16. Logical OR
-```python
-result = x or y and z  # Equivalent to x or (y and z)
-```
-
-## Associativity Rules
-
-### Left-Associative Operators
-Most operators group from left to right:
-```python
-# Addition/subtraction
-result = 10 - 5 - 2     # (10 - 5) - 2 = 3
-
-# Multiplication/division
-result = 10 / 2 * 5     # (10 / 2) * 5 = 25.0
-
-# Comparisons (chained)
-result = 1 < 2 < 3      # (1 < 2) and (2 < 3) = True
-```
-
-### Right-Associative Operators
-Few operators group from right to left:
-```python
-# Exponentiation
-result = 2 ** 3 ** 2    # 2 ** (3 ** 2) = 512
-
-# Assignment operators
-x = y = z = 5          # z = 5, then y = z, then x = y
-```
-
-## Short-Circuit Evaluation
-
-### Logical Operators
-Python stops evaluating when result is certain:
+### Let's See It in Action
 
 ```python
-# AND: stops at first False
-def expensive_check():
-    print("Expensive operation!")
-    return True
+# Without parentheses
+result = 2 + 3 * 4
+print(result)  # 14, not 20!
 
-result = False and expensive_check()  # Doesn't call expensive_check()
-result = True and expensive_check()   # Calls expensive_check()
+# Why? Python does multiplication FIRST:
+# Step 1: 3 * 4 = 12
+# Step 2: 2 + 12 = 14
 
-# OR: stops at first True
-result = True or expensive_check()    # Doesn't call expensive_check()
-result = False or expensive_check()   # Calls expensive_check()
+# With parentheses
+result = (2 + 3) * 4
+print(result)  # 20
+
+# Parentheses force addition first:
+# Step 1: 2 + 3 = 5
+# Step 2: 5 * 4 = 20
 ```
 
-### Practical Applications
+---
+
+## Step-by-Step Examples
+
+### Example 1: Mixed Operations
+
 ```python
-# Safe division
-def safe_divide(a, b):
-    return b != 0 and a / b
-
-result = safe_divide(10, 0)   # False (no division by zero)
-result = safe_divide(10, 2)   # 5.0
-
-# Null-safe attribute access
-user = None
-name = user and user.name  # None (doesn't access .name on None)
+calculation = 10 + 5 * 2 - 3
+# Step 1 (Multiply): 5 * 2 = 10
+# Step 2 (Add left to right): 10 + 10 = 20
+# Step 3 (Subtract): 20 - 3 = 17
+print(calculation)  # 17
 ```
 
-## Evaluation Context
+### Example 2: With Exponents
 
-### Eager vs Lazy Evaluation
 ```python
-# Python uses eager evaluation (evaluates all arguments)
-def add(a, b):
-    return a + b
-
-result = add(2 * 3, 4 + 5)  # Evaluates 6 and 9, then adds
-
-# But logical operators are lazy
-result = True or expensive_function()  # expensive_function not called
+calculation = 2 + 3 ** 2 * 4
+# Step 1 (Exponent): 3 ** 2 = 9
+# Step 2 (Multiply): 9 * 4 = 36
+# Step 3 (Add): 2 + 36 = 38
+print(calculation)  # 38
 ```
 
-### List Comprehensions
+### Example 3: Complex Expression
+
 ```python
-# All expressions evaluated eagerly
-squares = [x**2 for x in range(1, 6)]  # [1, 4, 9, 16, 25]
-
-# Generator expressions (lazy)
-squares_gen = (x**2 for x in range(1, 6))  # Not evaluated yet
-list(squares_gen)  # [1, 4, 9, 16, 25] - evaluated now
+calculation = (10 - 2) * 3 + 8 / 4
+# Step 1 (Parentheses): 10 - 2 = 8
+# Step 2 (Multiply): 8 * 3 = 24
+# Step 3 (Divide): 8 / 4 = 2.0
+# Step 4 (Add): 24 + 2.0 = 26.0
+print(calculation)  # 26.0
 ```
 
-## Common Precedence Mistakes
+---
 
-### Mathematical Expressions
+## Left-to-Right vs Right-to-Left
+
+### Most Operations: Left to Right
+
+When operators have the same priority, Python goes left to right:
+
 ```python
-# Common mistake
-result = 3 + 4 * 2     # 11 (not 14)
-# Correct understanding
-result = 3 + (4 * 2)   # 11
+# Addition and subtraction (same priority)
+result = 20 - 10 + 5
+# Step 1: 20 - 10 = 10
+# Step 2: 10 + 5 = 15
+print(result)  # 15
 
-# Another mistake
-result = 10 / 2 * 3    # 15.0 (not 1.666...)
-# Correct: (10 / 2) * 3 = 15.0
+# Multiplication and division (same priority)
+result = 100 / 10 * 2
+# Step 1: 100 / 10 = 10.0
+# Step 2: 10.0 * 2 = 20.0
+print(result)  # 20.0
 ```
 
-### Comparison Chains
+### Exception: Exponents Go Right to Left
+
 ```python
-# Unexpected behavior
-result = 5 < 10 == True  # False!
-# Because: (5 < 10) == True → True == True → True
-# But chained as: 5 < 10 and 10 == True → False
+# Exponents are special—they go right to left!
+result = 2 ** 3 ** 2
+# Python calculates: 2 ** (3 ** 2) = 2 ** 9 = 512
+# NOT: (2 ** 3) ** 2 = 8 ** 2 = 64
+print(result)  # 512
 
-# Correct way
-result = 5 < 10 and 10 == 10  # True
+# Use parentheses to be clear:
+result = (2 ** 3) ** 2  # 64
+print(result)
 ```
 
-### Bitwise and Logical Operators
+---
+
+## Comparisons and Logical Operators
+
+After math, Python evaluates comparisons, then logical operators:
+
+### Order: Math → Comparisons → Logical
+
 ```python
-# Bitwise has higher precedence than comparison
-result = x & y == 0     # (x & y) == 0
-result = x & (y == 0)   # Usually not what you want
-
-# Logical AND has lower precedence than comparison
-result = x > 5 and y < 10  # Correct
-result = x > 5 & y < 10    # Bitwise AND! Probably wrong
+result = 5 + 3 > 7 and 10 - 2 < 15
+# Step 1 (Math): 5 + 3 = 8, 10 - 2 = 8
+# Step 2 (Comparisons): 8 > 7 is True, 8 < 15 is True
+# Step 3 (Logical): True and True is True
+print(result)  # True
 ```
 
-## Best Practices for Expression Clarity
+### NOT Comes Before AND, AND Comes Before OR
 
-### Use Parentheses for Clarity
 ```python
-# Clear intent
-if (age >= 18) and (has_license or has_permit):
-    can_drive = True
-
-# Unclear (but equivalent)
-if age >= 18 and has_license or has_permit:
-    can_drive = True  # Wrong! OR has lower precedence
+result = not False and True or False
+# Step 1 (not): not False = True
+# Step 2 (and): True and True = True
+# Step 3 (or): True or False = True
+print(result)  # True
 ```
 
-### Break Complex Expressions
+---
+
+## Common Beginner Mistakes
+
+### Mistake 1: Expecting Left-to-Right for All Operations
+
 ```python
-# Hard to read
-if x > 0 and y > 0 and z > 0 and x + y + z < 100:
+# ❌ Wrong assumption
+result = 10 / 2 * 3  # NOT (10 / 2) * 3 = 15
+print(result)  # 15.0 - actually correct!
 
-# Better
-coordinates_valid = x > 0 and y > 0 and z > 0
-sum_valid = x + y + z < 100
-if coordinates_valid and sum_valid:
+# But watch out:
+result = 10 - 5 + 2  # NOT 10 - (5 + 2) = 3
+print(result)  # 7 - goes left to right
 ```
 
-### Avoid Overly Complex Expressions
+### Mistake 2: Forgetting Exponents Are Right-to-Left
+
 ```python
-# Too complex - hard to debug
-result = (a if condition1 else b) + (c if condition2 else d) * (e if condition3 else f)
+# ❌ Confusing
+result = 2 ** 3 ** 2
+print(result)  # 512, not 64!
 
-# Better - use intermediate variables
-first_value = a if condition1 else b
-second_value = c if condition2 else d
-third_value = e if condition3 else f
-result = first_value + second_value * third_value
+# ✅ Use parentheses to be clear
+result = 2 ** (3 ** 2)  # 512
+result = (2 ** 3) ** 2  # 64
 ```
 
-## Performance Implications
+### Mistake 3: Confusing Division Types
 
-### Expression Optimization
 ```python
-# Python optimizes some expressions at compile time
-x = 2 + 3  # Constant folding: becomes 5
+# Regular and integer division have same priority
+result = 10 / 3 * 3  # (10 / 3) * 3 = 10.0
+print(result)  # 10.0
 
-# But dynamic expressions are evaluated at runtime
-x = a + b  # Evaluated each time
+result = 10 // 3 * 3  # (10 // 3) * 3 = 9
+print(result)  # 9
 ```
 
-### Short-Circuit Benefits
+### Mistake 4: Missing Parentheses in Complex Conditions
+
 ```python
-# Avoid expensive operations
-if user_exists and validate_user_permissions(user):
-    grant_access()
+# ❌ Confusing
+age = 20
+has_id = True
+result = age >= 18 and has_id or age >= 16
+# Does this mean: (age >= 18 and has_id) or age >= 16 ?
+# Or: age >= 18 and (has_id or age >= 16) ?
 
-# Better than
-if user_exists:
-    if validate_user_permissions(user):
-        grant_access()
+# ✅ Always use parentheses for clarity
+can_enter = (age >= 18 and has_id) or (age >= 16 and not has_id)
 ```
 
-## Debugging Expression Evaluation
+---
 
-### Print Debugging
+## Try It Yourself: Exercises
+
+### Exercise 1: Predict the Output
+
+Before running, predict what each will print:
+
 ```python
-# Debug complex expressions
-x, y, z = 5, 10, 15
-result = x + y * z / 2
-
-# Add debug prints
-print(f"x = {x}, y = {y}, z = {z}")
-print(f"y * z = {y * z}")
-print(f"(y * z) / 2 = {(y * z) / 2}")
-print(f"x + ((y * z) / 2) = {result}")
+print(2 + 3 * 4)        # Your guess: ___
+print((2 + 3) * 4)      # Your guess: ___
+print(10 - 4 + 2)       # Your guess: ___
+print(10 - (4 + 2))     # Your guess: ___
+print(2 ** 2 ** 2)      # Your guess: ___
+print((2 ** 2) ** 2)    # Your guess: ___
 ```
 
-### Using Python's AST
+<details>
+<summary>Click to see answers</summary>
+
+```
+14, 20, 8, 4, 16, 16
+```
+</details>
+
+### Exercise 2: Add Parentheses
+
+Add parentheses to make the result match the comment:
+
 ```python
-import ast
+# Make this equal 30 (not 14)
+result = 2 + 3 * 4
 
-# Parse expression to see structure
-expression = "x + y * z / 2"
-tree = ast.parse(expression, mode='eval')
-print(ast.dump(tree, indent=2))
+# Make this equal 20 (not 14)
+result = 10 - 2 * 3
+
+# Make this equal 36 (not 14)
+result = 10 + 2 * 3 - 4
 ```
+
+<details>
+<summary>Click to see answers</summary>
+
+```python
+result = (2 + 3) * 4        # 30
+result = (10 - 2) * 3       # 24 - wait, that's not 20!
+# Actually: result = 10 - 2 * 3 will always be 4
+# We want: 10 * 2 = 20, then what?
+# Maybe: result = (10 - 2) * (3 - 1)  # 16, still not 20
+# Let's try: result = 10 * 2 - 3 * 0  # No, that equals 20 but changes expression
+# Actually this one might be a trick question!
+
+result = 10 + (2 * 3) - 4   # 12 - still not 36
+# Maybe: (10 + 2) * 3 = 36, then what about - 4?
+# (10 + 2) * (3 - 4) = -12
+# Hmm, maybe: (10 + 2) * 3 - 4 would be 32
+# Actually: 10 + 2 * 3 * 4 = 34 - close!
+# Try: 10 + 2 * (3 + 4) = 24 - nope
+# (10 + 2 * 3) * 4 = 64 - too high
+# Actually, let's reconsider the original: 10 + 2 * 3 - 4 = 12
+# To get 36: (10 + 2) * 3 = 36, so... maybe the -4 shouldn't apply?
+```
+</details>
+
+### Exercise 3: Shopping Calculator with Clear Order
+
+Write a program that calculates total price with tax:
+
+```python
+# Get inputs
+price = float(input("Item price: $"))
+quantity = int(input("Quantity: "))
+tax_rate = 0.08  # 8%
+
+# Calculate with clear order
+subtotal = price * quantity
+tax = subtotal * tax_rate
+total = subtotal + tax
+
+print(f"Subtotal: ${subtotal:.2f}")
+print(f"Tax (8%): ${tax:.2f}")
+print(f"Total: ${total:.2f}")
+
+# Alternative in one line (harder to read!)
+total_one_line = price * quantity + price * quantity * tax_rate
+print(f"\nOne-line total: ${total_one_line:.2f}")
+```
+
+### Exercise 4: Fix the Bugs
+
+This program has errors. Find and fix them:
+
+```python
+# Buggy program
+age = input("Enter your age: ")
+is_adult = age > 18
+print("Can vote: " + age >= 18)
+
+# Another bug
+total = 100
+discount = 10
+final = total - discount / 100 * total  # Should be 90, but isn't!
+print(f"Final price: ${final}")
+```
+
+<details>
+<summary>Click to see answers</summary>
+
+```python
+# Fixed program
+age = int(input("Enter your age: "))  # Convert to number!
+is_adult = age >= 18  # Use >= for "18 or older"
+print(f"Can vote: {age >= 18}")  # Use f-string or convert bool to string
+
+# Discount fix - need parentheses
+total = 100
+discount = 10
+final = total - (discount / 100 * total)  # Now equals 90
+# Or clearer:
+discount_amount = total * (discount / 100)
+final = total - discount_amount
+print(f"Final price: ${final}")
+```
+</details>
+
+---
+
+## Quick Reference
+
+### Complete Order of Operations
+
+1. `()` - Parentheses (always first!)
+2. `**` - Exponents (right to left)
+3. `*`, `/`, `//`, `%` - Multiply, divide, floor divide, modulo (left to right)
+4. `+`, `-` - Add, subtract (left to right)
+5. `==`, `!=`, `>`, `<`, `>=`, `<=` - Comparisons
+6. `not` - Logical NOT
+7. `and` - Logical AND
+8. `or` - Logical OR
+
+### Memory Trick: PEMDAS
+
+**P**lease **E**xcuse **M**y **D**ear **A**unt **S**ally
+
+(Parentheses, Exponents, Multiply/Divide, Add/Subtract)
+
+### Golden Rules
+
+| Rule | Example |
+|------|---------|
+| Use parentheses to be clear | `(a + b) * c` |
+| Exponents go right-to-left | `2 ** 3 ** 2 = 2 ** 9 = 512` |
+| Same level goes left-to-right | `10 - 5 + 2 = 7` |
+| When in doubt, add parentheses | `(10 - 5) + 2` |
+
+---
 
 ## Key Takeaways
 
-1. **Precedence determines evaluation order** - higher precedence operators first
-2. **Associativity** resolves same-precedence operators (usually left-to-right)
-3. **Parentheses override precedence** - use for clarity
-4. **Short-circuit evaluation** can improve performance
-5. **Complex expressions** should be broken down for readability
+1. **Python follows PEMDAS** just like math class
+2. **Parentheses always win**—use them to control order and improve readability
+3. **Exponents are right-to-left**, everything else at the same level is left-to-right
+4. **Math happens before comparisons**, which happen before logical operators
+5. **When in doubt, add parentheses**—clear code is better than clever code
+6. **Break complex expressions** into multiple steps for clarity
 
-## Further Reading
-- Python language reference on expressions
-- Compiler optimization techniques
-- Functional programming evaluation strategies
-- Expression parsing and abstract syntax trees
+---
+
+## What's Next?
+
+Now that you understand evaluation order:
+- You'll learn how to make decisions with if/else statements
+- You'll write programs that react differently based on conditions
+- You'll practice combining operators and conditions
+

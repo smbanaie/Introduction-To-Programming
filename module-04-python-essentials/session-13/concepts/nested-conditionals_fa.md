@@ -1,473 +1,450 @@
-# شرط‌های تو در تو: درختان تصمیم پیچیده
+# دستورات شرطی تودرتو: تصمیم‌ها داخل تصمیم‌ها
 
-## مقدمه شرط‌های تو در تو
+## چه چیزهایی یاد خواهید گرفت
+- چگونه دستورات if را داخل دستورات if دیگر بگذاریم
+- کی از شرایط تودرتو و کی از شرایط ساده استفاده کنیم
+- چگونه با سطوح زیاد گیج نشویم
+- اشتباهات رایج مبتدی‌ها
 
-شرط‌های تو در تو وقتی اتفاق می‌افتند که یک دستور شرطی داخل دیگری قرار گیرد. آنها درختان تصمیم ایجاد می‌کنند که منطق پیچیده را با ارزیابی شرایط متعدد به ترتیب مدیریت می‌کنند.
+---
 
-## ساختارهای تو در تو پایه
+## دستورات شرطی تودرتو چیستند؟
 
-### تو در تو ساده
+دستورات شرطی تودرتو وقتی است که شما یک دستور `if` را **داخل** دستور `if` دیگر می‌گذارید. مثل داشتن تصمیم‌ها درون تصمیم‌ها است.
+
+### تشبیه زندگی واقعی: رفتن به سینما
+
+```
+تصمیم ۱: آیا می‌خواهی فیلم ببینی؟
+    ↓ بله
+تصمیم ۲: آیا فیلم مناسب سن است؟
+    ↓ بله
+تصمیم ۳: آیا پول کافی داری؟
+    ↓ بله
+اقدام: بلیط بخر و لذت ببر!
+```
+
+### مثال ساده
+
 ```python
-age = 25
-has_license = True
+age = 20
+has_money = True
 
 if age >= 18:
-    print("You are an adult.")
-    if has_license:
-        print("You can drive.")
+    print("می‌توانی وارد کلوپ شوی.")
+    if has_money:
+        print("می‌توانی نوشیدنی بخری!")
     else:
-        print("You need a license to drive.")
+        print("متأسفانه، بدون پول = بدون نوشیدنی.")
 else:
-    print("You are a minor.")
+    print("برای ورود خیلی جوان هستی.")
 ```
 
-### سطوح متعدد
+**خروجی:**
+```
+می‌توانی وارد کلوپ شوی.
+می‌توانی نوشیدنی بخری!
+```
+
+---
+
+## نمودار ASCII: نحوه کار تودرتو
+
+```
+                    شروع
+                      │
+                      ▼
+            ┌───────────────────┐
+            │  age >= 18؟        │
+            │  (بررسی سن)       │
+            └─────────┬─────────┘
+                      │
+          ┌───────────┴───────────┐
+       خیر│                       │ بله
+          ▼                       ▼
+┌─────────────────┐    ┌───────────────────┐
+│ «خیلی جوان»     │    │  has_money؟       │
+│ رد کلوپ         │    │  (بررسی پول)      │
+└─────────────────┘    └─────────┬─────────┘
+                                 │
+                    ┌────────────┴────────────┐
+                 خیر│                         │ بله
+                    ▼                         ▼
+          ┌──────────────────┐    ┌──────────────────┐
+          │ «بدون پول =     │    │ «از نوشیدنی     │
+          │  بدون نوشیدنی»   │    │  لذت ببر!»      │
+          └──────────────────┘    └──────────────────┘
+```
+
+---
+
+## کی از شرایط تودرتو استفاده کنیم
+
+### کاربرد ۱: بررسی نیازمندی‌ها مرحله به مرحله
+
 ```python
+# بررسی اینکه آیا کسی می‌تواند ماشین کرایه کند
+age = 25
+has_license = True
+has_credit_card = True
+
+if age >= 21:  # نیازمندی اول
+    print("✓ شرط سن تأمین شد")
+    
+    if has_license:  # نیازمندی دوم (فقط اگر سن تأیید شد)
+        print("✓ شرط گواهینامه تأمین شد")
+        
+        if has_credit_card:  # نیازمندی سوم
+            print("✓ می‌توانی ماشین کرایه کنی!")
+        else:
+            print("✗ نیاز به کارت اعتباری دارد")
+    else:
+        print("✗ نیاز به گواهینامه رانندگی دارد")
+else:
+    print(f"✗ باید ۲۱+ باشی ({21 - age} سال دیگر لازم داری)")
+```
+
+### کاربرد ۲: اقدامات مختلف بر اساس چند عامل
+
+```python
+# توصیه لباس بر اساس آب و هوا
 temperature = 75
-weather = "sunny"
-is_weekend = True
+is_raining = False
+is_windy = True
 
 if temperature > 70:
-    print("It's warm outside.")
-    if weather == "sunny":
-        print("Perfect weather!")
-        if is_weekend:
-            print("Time for outdoor activities.")
-        else:
-            print("Enjoy after work.")
+    if is_raining:
+        print("☀️🌧️ گرم اما بارانی - چتر ببر، لباس سبک بپوش")
+    elif is_windy:
+        print("☀️💨 گرم و بادانی - کت سبک پیشنهاد می‌شود")
     else:
-        print("Warm but not sunny.")
+        print("☀️ هوای عالی - لذت ببر!")
 else:
-    print("It's cool outside.")
+    if is_raining:
+        print("❄️🌧️ سرد و بارانی - کت گرم ضدآب بپوش")
+    else:
+        print("❄️ فقط سرد - لباس گرم بپوش")
 ```
 
-## الگوهای رایج و anti-patternها
+---
 
-### Anti-pattern تیر
+## اجتناب از سطوح زیاد
+
+### مشکل: خیلی عمیق
+
 ```python
-# اجتناب کن - سخت برای خواندن و نگهداری
-if condition1:
-    if condition2:
-        if condition3:
-            if condition4:
-                do_something()
+# ❌ خواندن سخت و فهمیدن سخت (سطوح زیاد)
+if user:
+    if user.is_active:
+        if user.age >= 18:
+            if user.has_permission:
+                print("دسترسی مجاز!")
             else:
-                handle_case_4()
+                print("اجازه ندارد")
         else:
-            handle_case_3()
+            print("خیلی جوان")
     else:
-        handle_case_2()
+        print("کاربر غیرفعال")
 else:
-    handle_case_1()
+    print("بدون کاربر")
 ```
 
-### بندهای نگهبان (Early Returns)
+### راه‌حل: صاف کردن با early returns
+
 ```python
-# بهتر - موارد خطا را اول مدیریت کن
-def process_user(user):
-    if user is None:
-        return "No user provided"
+# ✅ بهتر - خواندن آسان‌تر
+if not user:
+    print("بدون کاربر")
+elif not user.is_active:
+    print("کاربر غیرفعال")
+elif user.age < 18:
+    print("خیلی جوان")
+elif not user.has_permission:
+    print("اجازه ندارد")
+else:
+    print("دسترسی مجاز!")
+```
 
+یا با استفاده از توابع:
+
+```python
+# ✅ حتی بهتر با guard clauses
+def check_access(user):
+    if not user:
+        return "بدون کاربر"
     if not user.is_active:
-        return "User is inactive"
+        return "کاربر غیرفعال"
+    if user.age < 18:
+        return "خیلی جوان"
+    if not user.has_permission:
+        return "اجازه ندارد"
+    return "دسترسی مجاز!"
 
-    if not user.is_verified:
-        return "User not verified"
-
-    # منطق اصلی اینجا
-    return f"Welcome, {user.name}!"
-
-# استفاده
-result = process_user(user)
+result = check_access(user)
 print(result)
 ```
 
-### الگوی Return Early
+---
+
+## مقایسه شرایط تودرتو و صاف
+
+### نسخه تودرتو
+
 ```python
-def validate_age(age):
-    if age < 0:
-        return False, "Age cannot be negative"
-
-    if age > 150:
-        return False, "Age seems unrealistic"
-
-    if not isinstance(age, int):
-        return False, "Age must be a whole number"
-
-    return True, "Age is valid"
-
-is_valid, message = validate_age(25)
-print(f"Valid: {is_valid}, Message: {message}")
+# تودرتو - بصری‌تر، اما پیگیری سخت‌تر
+if age >= 18:
+    if has_license:
+        if not is_suspended:
+            print("می‌تواند رانندگی کند")
+        else:
+            print("گواهینامه تعلیق شده")
+    else:
+        print("نیاز به گواهینامه دارد")
+else:
+    print("خیلی جوان")
 ```
 
-## درختان تصمیم پیچیده
+### نسخه صاف (استفاده از and)
 
-### کنترل دسترسی کاربر
 ```python
-def check_access(user, resource, action):
-    # سطح ۱: احراز هویت
-    if not user.is_authenticated:
-        return False, "User not authenticated"
-
-    # سطح ۲: وضعیت حساب
-    if not user.is_active:
-        return False, "Account is inactive"
-
-    # سطح ۳: مجوزهای منبع
-    if resource.owner_id == user.id:
-        return True, "Access granted (owner)"
-
-    # سطح ۴: مجوزهای مبتنی بر نقش
-    if user.role == "admin":
-        return True, "Access granted (admin)"
-    elif user.role == "moderator":
-        if action in ["read", "edit"]:
-            return True, "Access granted (moderator)"
-        else:
-            return False, "Moderators cannot delete"
-    elif user.role == "user":
-        if action == "read":
-            return True, "Access granted (read-only)"
-        else:
-            return False, "Users have read-only access"
-
-    return False, "Access denied"
-
-# سناریوهای مختلف را تست کن
-user_admin = type('User', (), {'is_authenticated': True, 'is_active': True, 'role': 'admin', 'id': 1})()
-resource = type('Resource', (), {'owner_id': 2})()
-
-granted, message = check_access(user_admin, resource, "delete")
-print(message)  # "Access granted (admin)"
+# صاف - خواندن آسان‌تر، منطق یکسان
+if age >= 18 and has_license and not is_suspended:
+    print("می‌تواند رانندگی کند")
+elif age < 18:
+    print("خیلی جوان")
+elif not has_license:
+    print("نیاز به گواهینامه دارد")
+else:
+    print("گواهینامه تعلیق شده")
 ```
 
-### منطق قیمت‌گذاری تجارت الکترونیک
+---
+
+## اشتباهات رایج مبتدی‌ها
+
+### اشتباه ۱: تورفتگی اشتباه
+
 ```python
-def calculate_price(base_price, customer_type, quantity, promo_code=None):
-    # اعتبارسنجی قیمت پایه
-    if base_price <= 0:
-        raise ValueError("Price must be positive")
+# ❌ اشتباه - if دوم تورفتگی ندارد
+if age >= 18:
+if has_money:  # خطا - نیاز به تورفتگی دارد!
+    print("می‌تواند بخرد")
 
-    final_price = base_price * quantity
+# ✅ درست
+if age >= 18:
+    if has_money:
+        print("می‌تواند بخرد")
+```
 
-    # تخفیف‌های نوع مشتری
-    if customer_type == "premium":
-        final_price *= 0.8  # 20% تخفیف
-    elif customer_type == "regular":
-        if quantity >= 10:
-            final_price *= 0.9  # 10% تخفیف برای عمده
-    else:  # guest
-        final_price *= 1.05  # 5% هزینه اضافی
+### اشتباه ۲: فراموش کردن اینکه else به نزدیک‌ترین if تعلق دارد
 
-    # مدیریت کد تبلیغاتی
-    if promo_code:
-        if promo_code == "SAVE10":
-            if customer_type in ["premium", "regular"]:
-                final_price *= 0.9  # 10% اضافی تخفیف
+```python
+# ❌ گیج‌کننده - else به کدام if تعلق دارد؟
+if age >= 18:
+    if has_money:
+        print("می‌تواند بخرد")
+    else:  # این به بررسی has_money تعلق دارد
+        print("پول ندارد")
+        
+# وقتی age < 18 چه؟ نیاز به else دیگری داریم!
+
+# ✅ واضح با ساختار درست
+if age >= 18:
+    if has_money:
+        print("می‌تواند بخرد")
+    else:
+        print("پول ندارد")
+else:
+    print("خیلی جوان")
+```
+
+### اشتباه ۳: دو بار بررسی یک چیز
+
+```python
+# ❌ اضافی
+if age >= 18:
+    print("بزرگسال")
+    if age >= 21:  # ما از قبل می‌دانیم age >= 18!
+        print("می‌تواند بنوشد")
+
+# ✅ بهتر
+if age >= 21:
+    print("بزرگسال، می‌تواند بنوشد")
+elif age >= 18:
+    print("بزرگسال، نمی‌تواند بنوشد")
+else:
+    print("خردسال")
+```
+
+### اشتباه ۴: تودرتو وقتی صاف واضح‌تر است
+
+```python
+# ❌ تودرتو وقتی صاف واضح‌تر بود
+if temperature > 80:
+    if is_humid:
+        print("گرم و مرطوب")
+    else:
+        print("فقط گرم")
+else:
+    if is_humid:
+        print("گرم نیست اما مرطوب")
+    else:
+        print("هوای خوب")
+
+# ✅ نسخه صاف
+if temperature > 80 and is_humid:
+    print("گرم و مرطوب")
+elif temperature > 80:
+    print("فقط گرم")
+elif is_humid:
+    print("گرم نیست اما مرطوب")
+else:
+    print("هوای خوب")
+```
+
+---
+
+## مثال کاربردی: سیستم ورود
+
+```python
+username = input("نام کاربری: ")
+password = input("رمز عبور: ")
+
+# اعتبارسنجی مرحله به مرحله
+if username:  # بررسی اینکه نام کاربری خالی نیست
+    if password:  # بررسی اینکه رمز عبور خالی نیست
+        if username == "admin" and password == "secret":
+            print("✅ ورود موفق!")
+            
+            # بررسی تودرتو برای امکانات ادمین
+            is_premium = True
+            if is_premium:
+                print("⭐ امکانات ویژه فعال شد")
             else:
-                final_price *= 0.95  # 5% تخفیف برای مهمانان
-        elif promo_code == "FREESHIP":
-            # تخفیف ارسال در جای دیگر مدیریت می‌شود
-            pass
+                print("📋 فقط امکانات استاندارد")
         else:
-            raise ValueError("Invalid promo code")
-
-    return round(final_price, 2)
-
-# سناریوهای قیمت‌گذاری را تست کن
-price = calculate_price(10.0, "regular", 15, "SAVE10")
-print(f"Final price: ${price}")  # $10 * 15 * 0.9 * 0.9 = $121.50
-```
-
-## عملگرهای منطقی در برابر شرط‌های تو در تو
-
-### استفاده از عملگرهای منطقی
-```python
-# ساختار flat با عملگرهای منطقی
-def can_drive(age, has_license, has_permit, accompanied):
-    return (age >= 18 and has_license) or \
-           (age >= 16 and has_permit and accompanied)
-
-# موارد تست
-print(can_drive(20, True, False, False))   # True (بزرگسال با گواهینامه)
-print(can_drive(17, False, True, True))    # True (صغیر با مجوز و بزرگسال)
-print(can_drive(15, False, True, False))   # False (خیلی جوان، همراه نیست)
-```
-
-### ساختار تو در تو معادل
-```python
-def can_drive_nested(age, has_license, has_permit, accompanied):
-    if age >= 18:
-        if has_license:
-            return True
-        else:
-            return False
-    elif age >= 16:
-        if has_permit and accompanied:
-            return True
-        else:
-            return False
+            print("❌ نام کاربری یا رمز عبور اشتباه")
     else:
-        return False
-
-# نتایج مشابه نسخه منطقی
-print(can_drive_nested(20, True, False, False))   # True
-print(can_drive_nested(17, False, True, True))    # True
-print(can_drive_nested(15, False, True, False))   # False
+        print("❌ رمز عبور لازم است")
+else:
+    print("❌ نام کاربری لازم است")
 ```
 
-### چه زمانی از کدام رویکرد استفاده کن
-```python
-# از عملگرهای منطقی استفاده کن برای:
-# - شرایط ساده
-# - کد performance-critical (ارزیابی کوتاه‌مدت)
-# - قوانین ریاضی یا کسب‌وکار
+---
 
-# از شرط‌های تو در تو استفاده کن برای:
-# - اعتبارسنجی پیچیده با پیام‌های خطای مختلف
-# - اقدامات مختلف برای دلایل شکست مختلف
-# - فرآیندهای تصمیم‌گیری گام به گام
+## خودتان امتحان کنید: تمرین‌ها
+
+### تمرین ۱: ورود به کلوپ با چند بررسی
+
+سیستم ورود به کلوپ بسازید که سن، شناسه و کد لباس را بررسی کند.
+
+```python
+age = int(input("سن: "))
+has_id = input("شناسه داری؟ (بله/خیر): ") == "بله"
+is_dressed_well = input("کد لباس OK؟ (بله/خیر): ") == "بله"
+
+if age >= 21:
+    print("✓ بررسی سن قبول")
+    if has_id:
+        print("✓ بررسی شناسه قبول")
+        if is_dressed_well:
+            print("🎉 به کلوپ خوش آمدی!")
+        else:
+            print("✗ تخلف کد لباس")
+    else:
+        print("✗ شناسه لازم است")
+else:
+    print(f"✗ باید ۲۱+ باشی ({21 - age} سال دیگر لازم داری)")
 ```
 
-## مدیریت خطا با شرط‌های تو در تو
+### تمرین ۲: پیشنهاد رستوران
 
-### زنجیره‌های اعتبارسنجی
+بر اساس بودجه و ترجیح غذا رستوران پیشنهاد بده.
+
 ```python
-def validate_user_data(name, email, age):
-    errors = []
+budget = int(input("بودجه شما (تومان): "))
+wants_fast_food = input("فست‌فود می‌خواهی؟ (بله/خیر): ") == "بله"
 
-    # اعتبارسنجی نام
-    if not name:
-        errors.append("Name is required")
-    elif len(name.strip()) < 2:
-        errors.append("Name must be at least 2 characters")
-    elif not name.replace(" ", "").isalpha():
-        errors.append("Name can only contain letters and spaces")
-
-    # اعتبارسنجی ایمیل
-    if not email:
-        errors.append("Email is required")
-    elif "@" not in email:
-        errors.append("Email must contain @ symbol")
-    elif "." not in email.split("@")[1]:
-        errors.append("Email must have a valid domain")
-
-    # اعتبارسنجی سن
-    if age is None:
-        errors.append("Age is required")
-    elif not isinstance(age, int):
-        errors.append("Age must be a number")
-    elif age < 0:
-        errors.append("Age cannot be negative")
-    elif age > 150:
-        errors.append("Age seems unrealistic")
-
-    return len(errors) == 0, errors
-
-# اعتبارسنجی را تست کن
-valid, error_list = validate_user_data("Alice", "alice@email.com", 25)
-print(f"Valid: {valid}")  # True
-
-valid, error_list = validate_user_data("", "invalid", -5)
-print(f"Valid: {valid}, Errors: {error_list}")
-# Valid: False, Errors: ['Name is required', 'Email must have a valid domain', 'Age cannot be negative']
+if budget < 100000:
+    if wants_fast_food:
+        print("🍔 فست‌فود امتحان کن")
+    else:
+        print("🥪 ساندویچی امتحان کن")
+elif budget < 300000:
+    if wants_fast_food:
+        print("🍕 پیتزا امتحان کن")
+    else:
+        print("🍝 رستوران ایتالیایی امتحان کن")
+else:
+    print("🥂 رستوران لوکس - استیک‌خانه!")
 ```
 
-## ماشین‌های حالت با شرط‌های تو در تو
+### تمرین ۳: ساختار را درست کن
 
-### ماشین حالت ساده
+این کد خیلی تودرتو است. آن را صاف کن:
+
 ```python
-def process_order(order_status, payment_received, items_in_stock):
-    if order_status == "pending":
-        if payment_received:
-            if items_in_stock:
-                return "shipped", "Order shipped successfully"
+# خیلی تودرتو - این را درست کن!
+if is_logged_in:
+    if is_verified:
+        if not is_banned:
+            if has_credits:
+                print("می‌تواند پست بگذارد")
             else:
-                return "backordered", "Items temporarily out of stock"
+                print("نیاز به اعتبار دارد")
         else:
-            return "pending", "Waiting for payment"
-    elif order_status == "shipped":
-        return "shipped", "Order already shipped"
-    elif order_status == "cancelled":
-        return "cancelled", "Order was cancelled"
+            print("ممنوع است")
     else:
-        return "unknown", "Unknown order status"
-
-# حالت‌های مختلف را تست کن
-status, message = process_order("pending", True, True)
-print(f"Status: {status}, Message: {message}")  # "shipped", "Order shipped successfully"
-
-status, message = process_order("pending", True, False)
-print(f"Status: {status}, Message: {message}")  # "backordered", "Items temporarily out of stock"
+        print("تأیید نشده")
+else:
+    print("وارد نشده")
 ```
 
-## ملاحظات عملکرد
+<details>
+<summary>برای دیدن پاسخ کلیک کنید</summary>
 
-### ارزیابی کوتاه‌مدت
 ```python
-# شرایط را بر اساس احتمال/هزینه مرتب کن
-def is_valid_user(user):
-    # شرایط ارزان را اول چک کن
-    return (user is not None and
-            hasattr(user, 'id') and
-            user.is_active and
-            user.email_confirmed and
-            complex_database_check(user.id))  # چک گران آخر
+# نسخه صاف شده
+if not is_logged_in:
+    print("وارد نشده")
+elif not is_verified:
+    print("تأیید نشده")
+elif is_banned:
+    print("ممنوع است")
+elif not has_credits:
+    print("نیاز به اعتبار دارد")
+else:
+    print("می‌تواند پست بگذارد")
 ```
+</details>
 
-### اجتناب از تو در تو عمیق
-```python
-# تو در تو عمیق - سخت برای خواندن
-def calculate_tax(income, state, filing_status):
-    if state == "CA":
-        if filing_status == "single":
-            if income < 10000:
-                return income * 0.05
-            elif income < 50000:
-                return income * 0.08
-            else:
-                return income * 0.10
-        elif filing_status == "married":
-            # شرط‌های تو در تو بیشتر...
-    # ایالت‌های بیشتر...
+---
 
-# flattened با early returns
-def calculate_tax_better(income, state, filing_status):
-    if state != "CA":
-        return 0  # ساده‌سازی شده
+## مرجع سریع
 
-    base_rate = 0.08 if filing_status == "married" else 0.10
+| موقعیت | استفاده کن |
+|-----------|-----|
+| بررسی نیازمندی‌ها به ترتیب | ifهای تودرتو |
+| نتایج مختلف بر اساس ترکیبات | زنجیره elif با `and`/`or` |
+| شرایط مستقل متعدد | ifهای جداگانه |
+| سطوح زیاد (۳+) | صاف کردن با early returns |
 
-    if income < 10000:
-        rate = 0.05
-    elif income < 50000:
-        rate = base_rate
-    else:
-        rate = base_rate + 0.02
-
-    return income * rate
-```
-
-## تست شرط‌های تو در تو
-
-### پوشش موارد تست
-```python
-def test_calculate_tax():
-    # همه شاخه‌ها را تست کن
-    assert calculate_tax_better(5000, "CA", "single") == 250    # < 10000, single
-    assert calculate_tax_better(30000, "CA", "single") == 2400  # 10000-50000, single
-    assert calculate_tax_better(70000, "CA", "single") == 7200  # > 50000, single
-    assert calculate_tax_better(30000, "CA", "married") == 1920 # 10000-50000, married
-    assert calculate_tax_better(5000, "NY", "single") == 0      # ایالت غیر CA
-
-    print("All tests passed!")
-
-test_calculate_tax()
-```
-
-### تست boundary
-```python
-def test_boundaries():
-    # موارد edge را تست کن
-    assert calculate_tax_better(9999, "CA", "single") == 499.95   # دقیقاً زیر 10000
-    assert calculate_tax_better(10000, "CA", "single") == 800     # دقیقاً 10000
-    assert calculate_tax_better(10001, "CA", "single") == 801     # دقیقاً بالای 10000
-
-test_boundaries()
-```
-
-## بازسازی شرط‌های تو در تو
-
-### Extract Method
-```python
-# قبل: شرط‌های تو در تو در یک روش
-def process_payment(amount, card_type, is_international):
-    if amount > 0:
-        if card_type in ["visa", "mastercard"]:
-            if is_international:
-                fee = amount * 0.03
-            else:
-                fee = amount * 0.02
-            return amount + fee
-        else:
-            raise ValueError("Unsupported card type")
-    else:
-        raise ValueError("Amount must be positive")
-
-# بعد: روش‌های helper استخراج شده
-def calculate_fee(amount, card_type, is_international):
-    if card_type not in ["visa", "mastercard"]:
-        raise ValueError("Unsupported card type")
-
-    rate = 0.03 if is_international else 0.02
-    return amount * rate
-
-def process_payment_refactored(amount, card_type, is_international):
-    if amount <= 0:
-        raise ValueError("Amount must be positive")
-
-    fee = calculate_fee(amount, card_type, is_international)
-    return amount + fee
-```
-
-### از دیکشنری‌ها برای منطق پیچیده استفاده کن
-```python
-# شرط‌های تو در تو را با جداول lookup جایگزین کن
-def get_shipping_cost(region, weight, expedited):
-    # نرخ‌های ارسال را تعریف کن
-    rates = {
-        "domestic": {
-            False: {  # standard
-                "light": 5.99,
-                "medium": 8.99,
-                "heavy": 12.99
-            },
-            True: {   # expedited
-                "light": 12.99,
-                "medium": 18.99,
-                "heavy": 24.99
-            }
-        },
-        "international": {
-            False: {  # standard
-                "light": 15.99,
-                "medium": 22.99,
-                "heavy": 32.99
-            },
-            True: {   # expedited
-                "light": 25.99,
-                "medium": 35.99,
-                "heavy": 49.99
-            }
-        }
-    }
-
-    # دسته وزن را تعیین کن
-    if weight <= 1:
-        weight_cat = "light"
-    elif weight <= 5:
-        weight_cat = "medium"
-    else:
-        weight_cat = "heavy"
-
-    return rates[region][expedited][weight_cat]
-
-# استفاده
-cost = get_shipping_cost("international", 2.5, True)
-print(f"Shipping cost: ${cost}")  # $35.99
-```
+---
 
 ## نکات کلیدی
 
-۱. **شرط‌های تو در تو درختان تصمیم پیچیده ایجاد می‌کنند** اما می‌توانند سخت برای نگهداری شوند
-۲. **بندهای نگهبان و early returns** می‌توانند منطق تو در تو را ساده کنند
-۳. **عملگرهای منطقی** اغلب جایگزین‌های پاک‌تری نسبت به تو در تو عمیق فراهم می‌کنند
-۴. **پوشش تست** برای منطق شرطی پیچیده crucial است
-۵. **بازسازی** می‌تواند خوانایی و قابلیت نگهداری را بهبود بخشد
-۶. **عملکرد و وضوح** باید انتخاب بین رویکردها را هدایت کند
+1. **شرایط تودرتو** دستورات if هستند که داخل دستورات if دیگر قرار دارند
+2. **از تودرتو استفاده کنید** وقتی باید نیازمندی‌ها را مرحله به مرحله بررسی کنید
+3. **از سطوح زیاد اجتناب کنید** (۳+ معمولاً خیلی زیاد است)
+4. **با elif صاف کنید** وقتی ممکن است برای کد تمیزتر
+5. **تورفتگی نشان می‌دهد** کدام کد متعلق به کدام شرط است
+6. **early returns** (با استفاده از توابع) می‌توانند کد را واضح‌تر کنند
 
-## مطالعه بیشتر
-- الگوهای طراحی برای منطق شرطی
-- ماشین‌های حالت و نظریه automata
-- تکنیک‌های بازسازی برای کد پیچیده
-- توسعه test-driven برای منطق شرطی
+---
+
+## گام بعدی
+
+حالا می‌دانید چگونه با تصمیم‌های پیچیده برخورد کنید! در ادامه یاد می‌گیریم:
+- چگونه با حلقه‌ها کد را تکرار کنیم (for و while)
+- چگونه با حلقه‌ها موارد متعدد را مدیریت کنیم
+- چگونه تکرارها را متوقف یا رد کنیم

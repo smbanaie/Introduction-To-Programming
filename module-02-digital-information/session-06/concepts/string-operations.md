@@ -1,371 +1,618 @@
-# String Operations: Manipulating Text Data
+# String Operations: Working with Text in Programs
 
-## Strings as Sequences
+## Introduction: Text as Data
 
-In programming, strings are sequences of characters. Each character has a position (index) and can be accessed individually or manipulated as a group.
+In the real world, we work with text constantly:
+- Searching for a name in a contact list
+- Replacing a word in a document
+- Checking if a password is long enough
+- Combining first and last names
+
+In programming, these actions are called **string operations**. A "string" is just a sequence of characters stored in the computer's memory.
+
+---
+
+## What is a String?
+
+### Definition
+
+A **string** is a sequence of characters treated as a single unit.
+
+```
+String: "Hello, World!"
+Characters: H-e-l-l-o-,- -W-o-r-l-d-!
+Positions:  0-1-2-3-4-5-6-7-8-9-10-11-12
+```
+
+### Strings in Memory
+
+```
+Text:   H    e    l    l    o    ,    _    W    o    r    l    d    !
+ASCII:  72  101  108  108  111   44   32   87  111  114  108  100   33
+Bytes:  48   65   6C   6C   6F   2C   20   57   6F   72   6C   64   21
+```
+
+**Key concept:** Strings are stored as a sequence of numbers, one per character.
+
+---
 
 ## Basic String Operations
 
-### Creating Strings
+### 1. Creating Strings
+
 ```python
-# Single quotes
-text1 = 'Hello'
+# Using quotes
+name = "Alice"
+message = 'Hello, World!'
+paragraph = """This is a
+multi-line string"""
 
-# Double quotes
-text2 = "World"
+# From other data
+number = 42
+string_num = str(number)  # "42"
 
-# Multi-line strings
-poem = """Roses are red
-Violets are blue"""
-
-# Escape sequences
-path = "C:\\Users\\file.txt"
-quote = "He said \"Hello\""
+# Empty string
+empty = ""
 ```
 
-### String Concatenation
+### 2. Getting String Length
+
+**Length** = Number of characters in the string.
+
 ```python
-# Using + operator
-full_name = first_name + " " + last_name
+text = "Hello"
+length = len(text)  # 5
 
-# Using join() for efficiency
-words = ["Hello", "world", "from", "Python"]
-sentence = " ".join(words)  # "Hello world from Python"
-
-# String multiplication
-divider = "=" * 50  # "=================================================="
+text2 = "Hello, World!"
+length2 = len(text2)  # 13 (includes spaces and punctuation)
 ```
 
-## String Indexing and Slicing
+**Important:** Length counts characters, not bytes! Emoji 😀 is 1 character but 4 bytes in UTF-8.
 
-### Character Access
+### 3. Accessing Individual Characters
+
+Use **indexing** (position numbers starting from 0):
+
 ```python
 text = "Python"
-print(text[0])    # 'P' (first character)
-print(text[5])    # 'n' (last character)
-print(text[-1])   # 'n' (negative indexing)
+
+first = text[0]   # 'P' (position 0)
+second = text[1]  # 'y' (position 1)
+last = text[5]    # 'n' (position 5)
+
+# From the end (negative indices)
+last = text[-1]   # 'n' (last character)
+second_last = text[-2]  # 'o'
 ```
 
-### String Slicing
+**Visual:**
+```
+String:  P   y   t   h   o   n
+Index:   0   1   2   3   4   5
+Reverse: -6  -5  -4  -3  -2  -1
+```
+
+### 4. Slicing (Getting Substrings)
+
+Extract a portion of the string using `[start:end]`:
+
 ```python
-text = "Hello World"
+text = "Hello, World!"
 
-# Basic slicing: string[start:end]
-print(text[0:5])   # 'Hello'
-print(text[6:])    # 'World'
-print(text[:5])    # 'Hello'
+# From position 0 to 4 (not including 5)
+hello = text[0:5]    # "Hello"
 
-# With step: string[start:end:step]
-print(text[::2])   # 'HloWrd' (every other character)
-print(text[::-1])  # 'dlroW olleH' (reversed)
+# From position 7 to end
+world = text[7:12]   # "World"
+
+# Shorthand - start from beginning
+hello = text[:5]     # "Hello"
+
+# Shorthand - go to end
+world = text[7:]     # "World!"
+
+# The whole string
+copy = text[:]       # "Hello, World!"
+
+# Skip characters (step)
+every_second = text[::2]  # "Hlo ol!"
+reverse = text[::-1]      # "!dlroW ,olleH"
 ```
 
-## String Methods
+**Visual:**
+```
+H   e   l   l   o   ,   _   W   o   r   l   d   !
+0   1   2   3   4   5   6   7   8   9   10  11  12
 
-### Case Conversion
+[0:5] → positions 0,1,2,3,4 = "Hello"
+[7:12] → positions 7,8,9,10,11 = "World"
+```
+
+---
+
+## Common String Operations
+
+### 1. Changing Case
+
 ```python
-text = "Hello World"
+text = "Hello, World!"
 
-text.upper()       # 'HELLO WORLD'
-text.lower()       # 'hello world'
-text.capitalize()  # 'Hello world'
-text.title()       # 'Hello World'
-text.swapcase()    # 'hELLO wORLD'
+upper = text.upper()      # "HELLO, WORLD!"
+lower = text.lower()      # "hello, world!"
+title = text.title()      # "Hello, World!" (each word capitalized)
+capitalized = text.capitalize()  # "Hello, world!" (first letter only)
 ```
 
-### Searching and Finding
+**Use case:** Case-insensitive comparison
 ```python
-text = "Python programming is fun"
+# Bad
+if user_input == "yes":  # Only matches "yes", not "YES" or "Yes"
 
-text.find("pro")          # 7 (index where found)
-text.find("xyz")          # -1 (not found)
-text.index("pro")         # 7 (raises error if not found)
-text.count("i")           # 2 (count occurrences)
-text.startswith("Python") # True
-text.endswith("fun")      # True
+# Good
+if user_input.lower() == "yes":  # Matches "yes", "YES", "Yes", etc.
 ```
 
-### Modification Methods
+### 2. Finding and Searching
+
 ```python
-text = "  Hello World  "
+text = "The quick brown fox jumps over the lazy dog"
 
-text.strip()              # 'Hello World' (remove whitespace)
-text.lstrip()             # 'Hello World  ' (left strip)
-text.rstrip()             # '  Hello World' (right strip)
+# Find first occurrence
+position = text.find("fox")       # 16 (position where "fox" starts)
+position = text.find("cat")       # -1 (not found)
 
-text.replace("World", "Python")  # '  Hello Python  '
-text.split()              # ['Hello', 'World'] (split on spaces)
-text.split("l")           # ['  He', '', 'o Wor', 'd  ']
+# Check if contains (returns True/False)
+has_fox = "fox" in text           # True
+has_cat = "cat" in text           # False
+
+# Count occurrences
+count_the = text.count("the")     # 2
 ```
 
-### Testing Methods
+### 3. Replacing Text
+
+```python
+text = "I like cats. Cats are great!"
+
+# Replace all occurrences
+new_text = text.replace("cats", "dogs")
+# "I like dogs. Cats are great!" (only lowercase changed!)
+
+# Case-insensitive replacement (manual)
+new_text = text.lower().replace("cats", "dogs")
+# "i like dogs. dogs are great!"
+
+# Replace only first N occurrences
+new_text = text.replace("a", "X", 2)
+# "I like cXts. CXts are great!"
+```
+
+### 4. Removing Whitespace
+
+```python
+text = "   Hello, World!   \n\t"
+
+# Remove from both ends
+stripped = text.strip()       # "Hello, World!"
+
+# Remove from left only
+left_stripped = text.lstrip()  # "Hello, World!   \n\t"
+
+# Remove from right only
+right_stripped = text.rstrip() # "   Hello, World!"
+
+# Remove specific characters
+cleaned = "...Hello...".strip(".")  # "Hello"
+```
+
+**Use case:** Cleaning user input
+```python
+username = input("Enter username: ").strip()
+# Removes accidental spaces
+```
+
+---
+
+## String Checking Operations
+
+### Testing String Content
+
 ```python
 text = "Hello123"
 
-text.isalpha()     # False (contains numbers)
-text.isdigit()     # False (contains letters)
-text.isalnum()     # True (letters and numbers)
-text.islower()     # False (mixed case)
-text.isupper()     # False (not all upper)
-text.isspace()     # False (not all whitespace)
+# Check if all alphabetic
+is_alpha = text.isalpha()       # False (has numbers)
+
+# Check if all digits
+is_digit = text.isdigit()       # False (has letters)
+
+# Check if alphanumeric
+is_alnum = text.isalnum()       # True (letters + numbers)
+
+# Check if all uppercase
+is_upper = text.isupper()       # False
+
+# Check if all lowercase
+is_lower = text.islower()       # False
+
+# Check if whitespace only
+is_space = "   ".isspace()      # True
+
+# Check if starts with...
+starts_with_hello = text.startswith("Hello")  # True
+
+# Check if ends with...
+ends_with_123 = text.endswith("123")        # True
 ```
 
-## Advanced String Formatting
+### Practical Example: Input Validation
 
-### F-Strings (Python 3.6+)
+```python
+def validate_username(username):
+    """Check if username is valid."""
+    
+    # Remove whitespace
+    username = username.strip()
+    
+    # Check length
+    if len(username) < 3:
+        return False, "Username must be at least 3 characters"
+    
+    if len(username) > 20:
+        return False, "Username must be at most 20 characters"
+    
+    # Check characters
+    if not username.isalnum():
+        return False, "Username must contain only letters and numbers"
+    
+    # Check doesn't start with number
+    if username[0].isdigit():
+        return False, "Username cannot start with a number"
+    
+    return True, "Username is valid"
+
+# Test
+print(validate_username("alice"))      # Valid
+print(validate_username("123bob"))     # Invalid (starts with number)
+print(validate_username("bob@email"))  # Invalid (special character)
+print(validate_username("ab"))         # Invalid (too short)
+```
+
+---
+
+## String Splitting and Joining
+
+### Splitting: Breaking Strings Apart
+
+```python
+# Split by spaces (default)
+text = "The quick brown fox"
+words = text.split()  # ["The", "quick", "brown", "fox"]
+
+# Split by specific character
+csv = "apple,banana,cherry"
+fruits = csv.split(",")  # ["apple", "banana", "cherry"]
+
+# Split by newline
+lines = "Line 1\nLine 2\nLine 3".split("\n")
+# ["Line 1", "Line 2", "Line 3"]
+
+# Split with max splits
+text = "a,b,c,d,e"
+parts = text.split(",", 2)  # ["a", "b", "c,d,e"]
+
+# Split from the right
+parts = text.rsplit(",", 2)  # ["a,b,c", "d", "e"]
+```
+
+### Joining: Putting Strings Together
+
+```python
+# Join with spaces
+words = ["The", "quick", "brown", "fox"]
+sentence = " ".join(words)  # "The quick brown fox"
+
+# Join with commas
+fruits = ["apple", "banana", "cherry"]
+csv = ",".join(fruits)  # "apple,banana,cherry"
+
+# Join with nothing (concatenate)
+letters = ["H", "e", "l", "l", "o"]
+word = "".join(letters)  # "Hello"
+
+# Join with newlines
+lines = ["Line 1", "Line 2", "Line 3"]
+text = "\n".join(lines)
+# "Line 1\nLine 2\nLine 3"
+```
+
+### Split and Join Together
+
+```python
+def reverse_words(sentence):
+    """Reverse the order of words."""
+    words = sentence.split()
+    reversed_words = words[::-1]  # Reverse the list
+    return " ".join(reversed_words)
+
+# Example
+print(reverse_words("Hello World"))  # "World Hello"
+print(reverse_words("The quick brown fox"))  # "fox brown quick The"
+```
+
+---
+
+## Formatting Strings
+
+### Method 1: Concatenation (Joining with +)
+
 ```python
 name = "Alice"
 age = 25
-height = 1.68
 
-# Basic f-string
-message = f"Hello, {name}!"
+# Using +
+message = "Hello, " + name + "! You are " + str(age) + " years old."
+# "Hello, Alice! You are 25 years old."
 
-# With expressions
-message = f"Next year you will be {age + 1} years old."
-
-# With formatting
-message = f"Height: {height:.2f} meters"
-message = f"Age: {age:03d}"  # Zero-padded
+# Hard to read and error-prone!
 ```
 
-### Format Method
+### Method 2: %-formatting (Old Style)
+
 ```python
-# Positional formatting
-template = "{} is {} years old".format(name, age)
-# "Alice is 25 years old"
+name = "Alice"
+age = 25
 
-# Named formatting
-template = "{name} is {age} years old and {height:.1f}m tall".format(
-    name=name, age=age, height=height)
+message = "Hello, %s! You are %d years old." % (name, age)
+# "Hello, Alice! You are 25 years old."
 
-# Format specifications
-f"Value: {42:04d}"    # 'Value: 0042'
-f"Float: {3.14159:.2f}"  # 'Float: 3.14'
+# Format codes:
+# %s - string
+# %d - integer
+# %f - float
+# %.2f - float with 2 decimal places
 ```
 
-### Old Style Formatting
+### Method 3: str.format() (Newer Style)
+
 ```python
-# % formatting (legacy)
-template = "%s is %d years old" % (name, age)
-# "Alice is 25 years old"
+name = "Alice"
+age = 25
+
+# Positional arguments
+message = "Hello, {}! You are {} years old.".format(name, age)
+
+# Named arguments
+message = "Hello, {name}! You are {age} years old.".format(name=name, age=age)
+
+# Reordering
+message = "{1} is {0} years old.".format(age, name)
+# "Alice is 25 years old."
+
+# Formatting numbers
+price = 19.99
+print("Price: ${:.2f}".format(price))  # "Price: $19.99"
 ```
 
-## String Comparison and Sorting
+### Method 4: F-strings (Modern, Recommended)
 
-### Lexicographic Comparison
 ```python
-"apple" < "banana"     # True (a < b)
-"Apple" < "apple"      # True (A < a in ASCII)
-"10" < "2"            # True (1 < 2, lexicographic not numeric)
+name = "Alice"
+age = 25
+
+message = f"Hello, {name}! You are {age} years old."
+# "Hello, Alice! You are 25 years old."
+
+# Expressions inside
+a = 5
+b = 3
+print(f"{a} + {b} = {a + b}")  # "5 + 3 = 8"
+
+# Formatting
+price = 19.99
+print(f"Price: ${price:.2f}")  # "Price: $19.99"
+
+# Alignment
+text = "Hello"
+print(f"[{text:>10}]")  # "[     Hello]" (right align)
+print(f"[{text:<10}]")  # "[Hello     ]" (left align)
+print(f"[{text:^10}]")  # "[  Hello   ]" (center)
 ```
 
-### Case-Insensitive Comparison
-```python
-text1 = "Hello"
-text2 = "hello"
+---
 
-text1.lower() == text2.lower()  # True
-text1.casefold() == text2.casefold()  # True (better for internationalization)
-```
+## Advanced String Operations
 
-### Sorting Strings
-```python
-words = ["zebra", "apple", "Banana", "cherry"]
-sorted(words)  # ['Banana', 'apple', 'cherry', 'zebra'] (ASCII order)
+### Regular Expressions (Pattern Matching)
 
-# Case-insensitive sort
-sorted(words, key=str.lower)  # ['apple', 'Banana', 'cherry', 'zebra']
-```
-
-## Regular Expressions
-
-### Pattern Matching
 ```python
 import re
 
-text = "The email is user@example.com and phone is 555-1234"
+# Find email pattern
+text = "Contact me at alice@example.com or bob@test.org"
+emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
+# ["alice@example.com", "bob@test.org"]
 
-# Find email
-email = re.search(r'\w+@\w+\.\w+', text)
-print(email.group())  # 'user@example.com'
+# Replace all digits
+text = re.sub(r'\d+', 'X', "Room 101, Floor 3")
+# "Room X, Floor X"
 
-# Find phone
-phone = re.search(r'\d{3}-\d{4}', text)
-print(phone.group())  # '555-1234'
-
-# Replace
-cleaned = re.sub(r'\d{3}-\d{4}', '[PHONE]', text)
-print(cleaned)  # 'The email is user@example.com and phone is [PHONE]'
+# Check if valid phone number
+phone = "555-123-4567"
+is_valid = re.match(r'\d{3}-\d{3}-\d{4}$', phone) is not None
+# True
 ```
 
-### Common Patterns
+### String Translation
+
 ```python
-# Email
-r'[\w\.-]+@[\w\.-]+\.\w+'
+# Replace multiple characters
 
-# Phone (US)
-r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
+# Remove punctuation
+text = "Hello, World! How are you?"
+no_punct = text.translate(str.maketrans("", "", "!?,.'\""))
+# "Hello World How are you"
 
-# URL
-r'https?://(?:[-\w.])+(?:[:\d]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:#(?:\w*))?)?'
-
-# Date (MM/DD/YYYY)
-r'\d{1,2}/\d{1,2}/\d{4}'
+# Replace characters
+text = "Hello World"
+leet = text.translate(str.maketrans("ol", "01"))
+# "He110 W0r1d"
 ```
 
-## Text Processing Algorithms
+---
 
-### String Reversal
+## Common String Patterns
+
+### Pattern 1: Building a String Incrementally
+
+```python
+def build_report(items):
+    """Build a formatted report from a list."""
+    lines = []
+    lines.append("=" * 40)
+    lines.append("REPORT")
+    lines.append("=" * 40)
+    
+    for item in items:
+        lines.append(f"- {item}")
+    
+    lines.append("=" * 40)
+    
+    return "\n".join(lines)
+
+# Usage
+report = build_report(["Item 1", "Item 2", "Item 3"])
+print(report)
+```
+
+### Pattern 2: Safe String Conversion
+
+```python
+def safe_string(value):
+    """Convert anything to string safely."""
+    if value is None:
+        return ""
+    return str(value)
+
+# Usage
+print(safe_string(42))       # "42"
+print(safe_string("hello"))  # "hello"
+print(safe_string(None))     # ""
+```
+
+### Pattern 3: Normalizing Input
+
+```python
+def normalize_text(text):
+    """Clean and standardize text."""
+    # Remove leading/trailing whitespace
+    text = text.strip()
+    
+    # Convert to lowercase
+    text = text.lower()
+    
+    # Remove extra spaces
+    text = " ".join(text.split())
+    
+    # Remove special characters (keep only alphanumeric and spaces)
+    text = "".join(c for c in text if c.isalnum() or c.isspace())
+    
+    return text
+
+# Usage
+print(normalize_text("  Hello,   WORLD!!!  "))
+# "hello world"
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: String Reversal
+Write a function to reverse a string without using `[::-1]`.
+
 ```python
 def reverse_string(text):
-    return text[::-1]
+    # Your code here
+    pass
 
-# Or using recursion
-def reverse_recursive(text):
-    if len(text) <= 1:
-        return text
-    return reverse_recursive(text[1:]) + text[0]
+# Test
+print(reverse_string("Hello"))  # Should print "olleH"
 ```
 
-### Palindrome Check
+### Exercise 2: Palindrome Checker
+Write a function to check if a string is a palindrome (reads same forwards and backwards).
+
 ```python
 def is_palindrome(text):
-    clean_text = ''.join(c.lower() for c in text if c.isalnum())
-    return clean_text == clean_text[::-1]
+    # Ignore case and spaces
+    # Your code here
+    pass
 
-print(is_palindrome("A man, a plan, a canal: Panama"))  # True
+# Test
+print(is_palindrome("Race car"))  # True
+print(is_palindrome("Hello"))     # False
 ```
 
-### Word Frequency Count
+### Exercise 3: Word Count
+Write a function to count words in a sentence.
+
 ```python
-def word_frequency(text):
-    words = text.lower().split()
-    frequency = {}
-    for word in words:
-        # Remove punctuation
-        word = ''.join(c for c in word if c.isalnum())
-        if word:
-            frequency[word] = frequency.get(word, 0) + 1
-    return frequency
+def word_count(text):
+    # Your code here
+    pass
+
+# Test
+print(word_count("The quick brown fox"))  # 4
 ```
 
-### String Compression
+### Exercise 4: Password Strength
+Write a function to check password strength.
+
+Requirements:
+- At least 8 characters
+- Contains uppercase
+- Contains lowercase
+- Contains digits
+- Contains special characters
+
 ```python
-def compress_string(text):
-    if not text:
-        return ""
-    compressed = []
-    count = 1
-    for i in range(1, len(text)):
-        if text[i] == text[i-1]:
-            count += 1
-        else:
-            compressed.append(text[i-1] + str(count))
-            count = 1
-    compressed.append(text[-1] + str(count))
-    result = ''.join(compressed)
-    return result if len(result) < len(text) else text
-
-print(compress_string("aabcccccaaa"))  # "a2b1c5a3"
+def check_password(password):
+    # Return (is_valid, message)
+    pass
 ```
 
-## Unicode and International Text
-
-### Unicode Operations
-```python
-# Unicode normalization
-import unicodedata
-
-text = "café"
-normalized = unicodedata.normalize('NFC', text)
-
-# Unicode categories
-for char in text:
-    print(f"{char}: {unicodedata.category(char)}")
-```
-
-### Handling Different Scripts
-```python
-# Arabic text (right-to-left)
-arabic = "مرحبا بالعالم"
-
-# Mixed scripts
-mixed = "Hello 世界 Привет"
-
-# Length considerations
-len(mixed)  # 15 (character count)
-len(mixed.encode('utf-8'))  # 21 (byte count)
-```
-
-## Performance Considerations
-
-### String Immutability
-```python
-# Strings are immutable - each operation creates new string
-text = "hello"
-text = text.upper()  # Creates new string
-text = text + " world"  # Creates another new string
-
-# For many operations, use lists then join
-parts = []
-for i in range(1000):
-    parts.append(str(i))
-result = ''.join(parts)  # Efficient
-```
-
-### String Interning
-```python
-# Python interns short strings for efficiency
-a = "hello"
-b = "hello"
-a is b  # True (same object)
-
-# But not for longer or dynamically created strings
-a = "a" * 1000
-b = "a" * 1000
-a is b  # False (different objects)
-```
-
-## Common String Problems
-
-### Encoding Issues
-```python
-# Wrong encoding leads to errors
-text = "café"
-try:
-    text.encode('ascii')  # Will fail
-except UnicodeEncodeError:
-    print("Cannot encode with ASCII")
-```
-
-### Index Errors
-```python
-text = "hello"
-# text[10]  # IndexError
-# Use slicing safely
-chunk = text[2:10]  # No error, just truncated
-```
-
-### Case Sensitivity Issues
-```python
-# Case-sensitive by default
-"Apple" == "apple"  # False
-
-# Use lower() for case-insensitive
-"Apple".lower() == "apple".lower()  # True
-```
+---
 
 ## Key Takeaways
 
-1. **Strings are sequences**: Characters can be accessed by index
-2. **Rich method library**: 40+ methods for text manipulation
-3. **Formatting options**: f-strings, format(), % formatting
-4. **Unicode support**: Handle text in any language
-5. **Performance matters**: Consider immutability and interning
+1. **Strings are sequences**: Access by index, slice to get portions
+2. **Strings are immutable**: Operations return new strings, don't modify originals
+3. **Common operations**: upper(), lower(), find(), replace(), split(), join()
+4. **Formatting**: Use f-strings for readable, modern code
+5. **Validation**: Use string methods to check content (isdigit(), isalpha(), etc.)
 
-## Further Reading
-- Study string algorithms (KMP, Boyer-Moore)
-- Learn about text compression techniques
-- Explore natural language processing
-- Understand collation and internationalization
+## Remember
+
+| Operation | Method | Example |
+|-----------|--------|---------|
+| Get length | `len(s)` | `len("hello")` → 5 |
+| Access char | `s[i]` | `"hello"[1]` → "e" |
+| Slice | `s[start:end]` | `"hello"[1:4]` → "ell" |
+| To uppercase | `s.upper()` | `"hi".upper()` → "HI" |
+| To lowercase | `s.lower()` | `"HI".lower()` → "hi" |
+| Find | `s.find(sub)` | `"hello".find("ll")` → 2 |
+| Replace | `s.replace(old, new)` | `"a,b".replace(",", "-")` → "a-b" |
+| Split | `s.split()` | `"a b".split()` → ["a", "b"] |
+| Join | `sep.join(list)` | `" ".join(["a", "b"])` → "a b" |
+| Strip | `s.strip()` | `"  hi  ".strip()` → "hi" |
+| Check start | `s.startswith(x)` | `"hi".startswith("h")` → True |
+
+---
+
+## Next Steps
+
+- Learn regular expressions for pattern matching
+- Understand Unicode and string encoding
+- Study string algorithms (searching, matching)
+- Explore string manipulation in data processing

@@ -1,295 +1,486 @@
-# Text Encoding Standards: From ASCII to Unicode
+# Text Encoding Standards: The Rules of Digital Text
+
+## Introduction: Why Standards Matter
+
+Imagine if every country used different rules for writing addresses. One puts the street first, another puts the city first. Chaos! 
+
+Text encoding standards exist so that when you save a document on your computer, someone else can open it on theirs and see exactly what you wrote. Without standards, digital text would be a mess of incomprehensible symbols.
+
+---
 
 ## The Evolution of Text Encoding
 
-Text encoding has evolved from simple 7-bit ASCII to comprehensive Unicode systems that support every writing system in the world.
+### Timeline of Major Standards
 
-## ASCII: The Beginning
-
-### Historical Context
-- **Created**: 1963 by ANSI committee
-- **Purpose**: Standardize teleprinter communication
-- **Design**: 7 bits for reliability, 1 bit for error checking
-- **Coverage**: 128 characters (95 printable, 33 control)
-
-### ASCII Character Set
 ```
-0-31: Control characters (null, bell, backspace, etc.)
-32: Space
-33-47: !"#$%&'()*+,-./
-48-57: 0123456789
-58-64: :;<=>?@
-65-90: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-91-96: [\]^_`
-97-122: abcdefghijklmnopqrstuvwxyz
-123-126: {|}~
-127: Delete
+1963: ASCII (7-bit, 128 characters)
+  ↓
+1980s: Extended ASCII variants (8-bit, 256 characters, different per region)
+  ↓
+1991: Unicode 1.0 (16-bit, 65,536 characters planned)
+  ↓
+1992: UTF-8 invented (variable-length encoding)
+  ↓
+2008: UTF-8 becomes dominant web encoding
+  ↓
+Today: UTF-8 is used by 98% of web pages
 ```
 
-### ASCII Properties
-- **Fixed width**: 7 bits per character
-- **US-centric**: Only English and basic symbols
-- **Efficient**: Minimal space usage
-- **Universal**: Same on all ASCII-compatible systems
+---
 
-## Extended ASCII Variants
+## ASCII: The Foundation (1963)
 
-### 8-Bit ASCII
-- **Extended range**: 128-255 (additional 128 characters)
-- **Backwards compatible**: First 128 same as 7-bit ASCII
-- **Problem**: Multiple incompatible variants
+### What Made ASCII Revolutionary
 
-### Code Page Systems
-Different regions created their own extensions:
-- **CP437**: Original IBM PC character set
-- **CP1252**: Windows Western European
-- **ISO-8859-1**: Internet standard for Western European
-- **KOI8-R**: Russian character set
+Before ASCII, every computer manufacturer used their own encoding:
+- IBM had EBCDIC
+- CDC had their own system
+- Teletypes had different codes
 
-### Problems with Extended ASCII
-- **Incompatibility**: Same byte meant different characters
-- **Limited coverage**: Still couldn't represent all languages
-- **Web issues**: Documents looked wrong on different systems
+**ASCII unified them all.**
 
-## The Unicode Revolution
+### ASCII Structure (7-bit = 128 characters)
 
-### Unicode Creation
-- **Started**: 1987 by Xerox and Apple engineers
-- **Goal**: Universal character encoding
-- **Current version**: Unicode 15.0 (September 2022)
-- **Coverage**: 149,186 characters across 161 scripts
-
-### Unicode Design Principles
-- **Universal**: Every character in every language
-- **Unique**: One code point per character
-- **Logical**: Related characters have related codes
-- **Efficient**: Common characters use fewer bytes
-
-### Unicode Character Properties
-Each Unicode character has:
-- **Code point**: Unique identifier (U+0041 for 'A')
-- **Name**: LATIN CAPITAL LETTER A
-- **Category**: Letter, number, punctuation, etc.
-- **Script**: Latin, Arabic, Devanagari, etc.
-- **Block**: Range of related characters
-
-## Unicode Transformation Formats
-
-### UTF-8: The Dominant Format
-
-#### Design
-- **Variable length**: 1-4 bytes per character
-- **ASCII compatible**: ASCII characters unchanged
-- **Self-synchronizing**: Can find boundaries anywhere
-- **Internet standard**: 95%+ of web pages
-
-#### Byte Distribution
 ```
-1 byte:  U+0000 to U+007F (ASCII, 0xxxxxxx)
-2 bytes: U+0080 to U+07FF (110xxxxx 10xxxxxx)
-3 bytes: U+0800 to U+FFFF (1110xxxx 10xxxxxx 10xxxxxx)
-4 bytes: U+10000 to U+10FFFF (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
+Codes 0-31:   Control characters (non-printable)
+Code 32:      Space
+Codes 33-47:  !"#$%&'()*+,-./
+Codes 48-57:  0-9
+Codes 58-64:  :;<=>?@
+Codes 65-90:  A-Z
+Codes 91-96:  [\]^_`
+Codes 97-122: a-z
+Codes 123-126: {|}~
+Code 127:     DEL (Delete)
 ```
 
-#### UTF-8 Examples
+### Control Characters (Important Ones)
+
+| Code | Abbreviation | Name | Purpose |
+|------|--------------|------|---------|
+| 0 | NUL | Null | End of string in C |
+| 7 | BEL | Bell | Make a beep sound |
+| 8 | BS | Backspace | Delete previous character |
+| 9 | TAB | Horizontal Tab | Indent text |
+| 10 | LF | Line Feed | New line (Unix) |
+| 13 | CR | Carriage Return | Return to start of line |
+| 27 | ESC | Escape | Start escape sequences |
+| 127 | DEL | Delete | Delete character |
+
+### ASCII Limitations
+
+- **Only English**: No accented characters (é, ñ, ü)
+- **No currency**: No €, ¥, £ (well, £ is there at 163 in some variants)
+- **No math symbols**: No ±, ×, ÷
+- **No box drawing**: No lines and corners
+
+---
+
+## Extended ASCII: The Tower of Babel (1980s)
+
+### The Problem
+
+Everyone wanted more characters, but the 8th bit gave only 128 more slots. Different regions chose differently.
+
+### Major Extended ASCII Variants
+
+| Name | Region | Year | Notable Features |
+|------|--------|------|------------------|
+| ISO-8859-1 (Latin-1) | Western Europe | 1987 | Covers most Western European languages |
+| ISO-8859-2 (Latin-2) | Central Europe | 1987 | Polish, Czech, Hungarian |
+| ISO-8859-5 | Cyrillic | 1988 | Russian, Bulgarian |
+| ISO-8859-6 | Arabic | 1987 | Arabic script |
+| ISO-8859-7 | Greek | 1987 | Greek alphabet |
+| ISO-8859-8 | Hebrew | 1988 | Hebrew alphabet |
+| Windows-1252 | Windows Western | 1992 | Microsoft's variant of Latin-1 |
+| KOI8-R | Russia | 1993 | Popular in Russian internet |
+| Shift-JIS | Japan | 1997 | Japanese characters |
+| GB2312/GBK | China | 1980/1995 | Chinese characters |
+
+### ISO-8859-1 (Latin-1) Character Ranges
+
 ```
-A:  01000001 (1 byte, same as ASCII)
-é:  11000011 10101001 (2 bytes)
-中: 11100100 10111000 10101101 (3 bytes)
-🎵: 11110000 10011111 10001110 10110101 (4 bytes)
+0x00-0x7F:   Same as ASCII
+0x80-0x9F:   Control characters (rarely used)
+0xA0-0xFF:   Extended characters
+
+Examples:
+0xA1 = ¡ (inverted exclamation)
+0xA9 = © (copyright)
+0xC0 = À (A with grave)
+0xE9 = é (e with acute)
+0xF1 = ñ (n with tilde)
+0xFC = ü (u with umlaut)
 ```
 
-### UTF-16: Windows Standard
+### The Encoding Nightmare
 
-#### Design
-- **Variable length**: 2 or 4 bytes per character
-- **BMP optimization**: Most characters in 2 bytes
-- **Byte order mark**: Detects endianness
-- **Windows internal**: Used by Windows OS and Java
-
-#### UTF-16 Structure
+**Scenario 1: The Email Problem**
 ```
-2 bytes: U+0000 to U+FFFF (most characters)
-4 bytes: U+10000 to U+10FFFF (surrogate pairs)
-```
+Sender in France uses ISO-8859-1
+Writes: "déjeuner" (lunch)
+Bytes: 64 E9 6A 65 75 6E 65 72
 
-### UTF-32: Fixed Width
+Receiver in USA opens with ASCII:
+Sees: "d□jeuner" (box instead of é)
 
-#### Design
-- **Fixed length**: 4 bytes per character
-- **Simple**: Direct mapping from code points
-- **Space wasteful**: 4 bytes even for ASCII
-- **Rarely used**: Too inefficient for most applications
-
-## Encoding Detection and BOM
-
-### Byte Order Mark (BOM)
-Special sequence at file start:
-```
-UTF-8:    EF BB BF
-UTF-16BE: FE FF
-UTF-16LE: FF FE
-UTF-32BE: 00 00 FE FF
-UTF-32LE: FF FE 00 00
+Receiver in Russia opens with KOI8-R:
+Sees: "dжjeuner" (Russian letter instead of é)
 ```
 
-### Automatic Detection
-- **Browser heuristics**: Guess encoding from content
-- **Library functions**: chardet, cchardet
-- **Metadata**: HTTP headers, XML declarations
-
-## Character Properties and Categories
-
-### Unicode Categories
+**Scenario 2: The Web Page Problem**
 ```
-Letter: Lu (uppercase), Ll (lowercase), Lt (titlecase), Lm (modifier), Lo (other)
-Mark: Mn (nonspacing), Mc (spacing combining), Me (enclosing)
-Number: Nd (decimal digit), Nl (letter-like), No (other)
-Punctuation: Pc (connector), Pd (dash), Ps (open), Pe (close), Pi (initial), Pf (final), Po (other)
-Symbol: Sm (math), Sc (currency), Sk (modifier), So (other)
-Separator: Zs (space), Zl (line), Zp (paragraph)
-Other: Cc (control), Cf (format), Cs (surrogate), Co (private use), Cn (not assigned)
+Web developer saves HTML as Windows-1252
+Includes: "smart quotes" (curly quotes)
+Bytes: 93 ... 94
+
+Browser assumes ISO-8859-1:
+Shows: "smart quotes" works (both have same bytes)
+
+Browser assumes UTF-8:
+Shows: "smart quotes" (Mojibake!)
+Because 93 and 94 are invalid UTF-8 sequences
 ```
 
-### Normalization Forms
-Different ways to represent same text:
-- **NFC**: Composed (é = U+00E9)
-- **NFD**: Decomposed (é = U+0065 U+0301)
-- **NFKC/NFKD**: Compatibility forms
+---
 
-## International Text Issues
+## Unicode: The Universal Solution (1991)
 
-### Text Direction
-- **LTR**: Left-to-right (English, Spanish, German)
-- **RTL**: Right-to-left (Arabic, Hebrew, Persian)
-- **BiDi**: Mixed directional text
+### Unicode's Goals
 
-### Line Breaking
-Different languages break lines differently:
-- **English**: Break on spaces
-- **Chinese/Japanese**: Can break anywhere
-- **Thai**: Complex rules for syllable boundaries
+1. **Universal**: Include every writing system
+2. **Efficient**: Use space wisely
+3. **Unambiguous**: One code point per character
+4. **Stable**: Never change character assignments
+5. **Plain text**: Just characters, no formatting
 
-### Collation (Sorting)
-Language-specific sorting rules:
-- **English**: A, B, C (alphabetical)
-- **German**: Ä sorts with A
-- **Swedish**: W, V, X, Y, Z, Å, Ä, Ö
+### How Unicode is Organized
 
-## Implementation in Programming Languages
+**Code Points:** U+0000 to U+10FFFF (1,114,112 possible)
 
-### Python Unicode Support
+**17 Planes** (groups of 65,536 code points each):
+
+| Plane | Range | Name | Purpose |
+|-------|-------|------|---------|
+| 0 | U+0000-U+FFFF | BMP | Most used characters |
+| 1 | U+10000-U+1FFFF | SMP | Historic scripts, symbols |
+| 2 | U+20000-U+2FFFF | SIP | More Chinese/Japanese/Korean |
+| 3 | U+30000-U+3FFFF | TIP | Even more CJK |
+| 14 | U+E0000-U+EFFFF | SSP | Specials (format controls) |
+| 15-16 | U+F0000-U+10FFFF | PUP | Private use |
+
+### Basic Multilingual Plane (BMP) - Plane 0
+
+Contains 65,536 characters including:
+- All modern alphabets (Latin, Cyrillic, Greek, Arabic...)
+- Chinese, Japanese, Korean (first 20,000 CJK)
+- Symbols (currency, math, arrows)
+- Control characters
+
+**95% of text uses only the BMP!**
+
+### Unicode Character Categories
+
+| Category | Code Range | Examples |
+|----------|------------|----------|
+| Lu (Letter, uppercase) | U+0041-U+005A | A-Z |
+| Ll (Letter, lowercase) | U+0061-U+007A | a-z |
+| Nd (Number, decimal) | U+0030-U+0039 | 0-9 |
+| P (Punctuation) | Various | !@#$% |
+| Z (Separators) | U+0020, U+00A0 | Space, NBSP |
+| C (Control/Format) | U+0000-U+001F | TAB, newline |
+| So (Symbol, other) | U+2600-U+26FF | ☀, ★, ♠ |
+| Emojis | U+1F600+ | 😀, 🚀, ❤️ |
+
+---
+
+## UTF-8: The Encoding That Won the Internet
+
+### Why UTF-8 Was Invented
+
+**Problem with UTF-16 (the original Unicode encoding):**
+- Every character takes 2 bytes minimum
+- English text doubles in size
+- Old ASCII files break
+
+**Ken Thompson's brilliant solution (1992): UTF-8**
+
+### UTF-8 Design Principles
+
+1. **Backward compatible**: ASCII files are valid UTF-8
+2. **Self-synchronizing**: Can find character boundaries anywhere
+3. **Compact**: 1 byte for common characters
+4. **Universal**: Can encode all Unicode
+
+### UTF-8 Byte Patterns
+
+| Bytes | First Byte | Continuation | Range | Capacity |
+|-------|------------|--------------|-------|----------|
+| 1 | 0xxxxxxx | None | U+0000-U+007F | 128 |
+| 2 | 110xxxxx | 10xxxxxx | U+0080-U+07FF | 1,920 |
+| 3 | 1110xxxx | 10xxxxxx × 2 | U+0800-U+FFFF | 61,440 |
+| 4 | 11110xxx | 10xxxxxx × 3 | U+10000-U+10FFFF | 1,048,576 |
+
+**The trick:** Continuation bytes always start with `10`, so you can always tell where a character starts!
+
+### UTF-8 Encoding Examples
+
+```
+$ (U+0024):
+  Binary: 00100100
+  UTF-8:  00100100 (same as ASCII!)
+
+¢ (U+00A2):
+  Binary: 00000000 10100010
+  Needs 2 bytes (above U+007F)
+  UTF-8:  11000010 10100010 (0xC2 0xA2)
+
+€ (U+20AC):
+  Binary: 00100000 10101100
+  Needs 3 bytes (above U+07FF)
+  UTF-8:  11100010 10000010 10101100 (0xE2 0x82 0xAC)
+
+𐍈 (U+10348):
+  Binary: 0001 00000011 01001000
+  Needs 4 bytes (above U+FFFF)
+  UTF-8:  11110000 10010000 10001101 10001000 (0xF0 0x90 0x8D 0x88)
+```
+
+### UTF-8 Statistics
+
+| Website Type | % Using UTF-8 |
+|--------------|---------------|
+| All websites | 98.1% |
+| English sites | 99.5% |
+| Chinese sites | 99.9% |
+| Japanese sites | 99.8% |
+| Russian sites | 99.6% |
+
+**UTF-8 is the de facto standard!**
+
+---
+
+## Other Unicode Encodings
+
+### UTF-16
+
+**Design:**
+- BMP characters (U+0000-U+FFFF): 2 bytes
+- Supplementary characters: 4 bytes (surrogate pairs)
+
+**Used by:**
+- Java, JavaScript, C# (internally)
+- Windows (internally)
+- Microsoft Office
+
+**Pros:**
+- Fixed 2-byte access for BMP
+- Direct indexing into arrays
+
+**Cons:**
+- 2× space for ASCII
+- Surrogate pairs complicate processing
+- Byte order issues (BOM needed)
+
+### UTF-32
+
+**Design:** Always 4 bytes per character.
+
+**Used when:**
+- Character-by-character processing at fixed offsets
+- Internal representation when memory isn't tight
+
+**Pros:**
+- Simple: every character is exactly 4 bytes
+- Direct indexing: nth character at byte position n×4
+
+**Cons:**
+- 4× space for ASCII
+- Wasteful for most text
+
+### Comparison: Storing "Hello, 世界!"
+
+| Encoding | Bytes | Hex Dump |
+|----------|-------|----------|
+| UTF-8 | 13 | `48 65 6C 6C 6F 2C 20 E4 B8 96 E7 95 8C 21` |
+| UTF-16 | 20 | `48 00 65 00 6C 00 6C 00 6F 00 2C 00 20 00 16 4E 4C 75 21 00` |
+| UTF-32 | 40 | `48 00 00 00 65 00 00 00 ...` |
+
+**UTF-8 wins for mixed text!**
+
+---
+
+## Encoding Detection and Declaration
+
+### The BOM (Byte Order Mark)
+
+Some files start with special bytes to indicate encoding:
+
+| Encoding | BOM Bytes | Hex |
+|----------|-----------|-----|
+| UTF-8 | EF BB BF | `0xEF 0xBB 0xBF` |
+| UTF-16 BE | FE FF | `0xFE 0xFF` |
+| UTF-16 LE | FF FE | `0xFF 0xFE` |
+| UTF-32 BE | 00 00 FE FF | `0x00 0x00 0xFE 0xFF` |
+| UTF-32 LE | FF FE 00 00 | `0xFF 0xFE 0x00 0x00` |
+
+**UTF-8 BOM is optional** and sometimes causes problems. Many recommend not using it.
+
+### Declaring Encoding in Documents
+
+**HTML:**
+```html
+<!-- Method 1: HTTP header (best) -->
+Content-Type: text/html; charset=utf-8
+
+<!-- Method 2: Meta tag -->
+<meta charset="UTF-8">
+
+<!-- Method 3: Older style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+```
+
+**XML:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+```
+
+**Python file:**
 ```python
-# Strings are Unicode by default (Python 3)
-text = "Hello, 世界, سلام"
-print(len(text))  # 15 characters
-
-# Encode to bytes
-utf8_bytes = text.encode('utf-8')
-print(len(utf8_bytes))  # 21 bytes
-
-# Decode back
-decoded = utf8_bytes.decode('utf-8')
+# -*- coding: utf-8 -*-
 ```
 
-### JavaScript Unicode
-```javascript
-// Strings are UTF-16
-let text = "Hello, 世界";
-console.log(text.length);  // 9 (each Chinese char = 2 code units)
+**JSON:** Always UTF-8 (no declaration needed, it's in the spec)
 
-// Code points vs code units
-console.log([...text].length);  // 8 (actual characters)
+---
+
+## Common Encoding Problems and Solutions
+
+### Problem 1: Mojibake
+
+**Symptom:** Text shows wrong characters.
+
+**Example:**
+```
+Should be: "Hello, café!"
+Shows as: "Hello, cafÃ©!"
+
+Cause: UTF-8 bytes interpreted as Latin-1
 ```
 
-### C/C++ Unicode
-```cpp
-// Requires explicit Unicode handling
-std::string utf8 = u8"Hello, 世界";
-std::u16string utf16 = u"Hello, 世界";
-std::u32string utf32 = U"Hello, 世界";
-```
+**Fix:** Open/save with correct encoding.
 
-## Common Encoding Problems
+### Problem 2: Invalid Sequences
 
-### Mojibake (Garbled Text)
-Wrong encoding interpretation:
-```
-UTF-8 bytes: c3 a9 (é)
-Latin-1: Ã© (two characters)
-```
+**Symptom:** Programs throw "invalid UTF-8" errors.
 
-### Character Corruption
-Splitting multi-byte sequences:
-```
-"café" UTF-8: 63 61 66 c3 a9
-Truncated: 63 61 66 c3 → "cafÃ"
-```
+**Cause:** File contains bytes that don't form valid UTF-8.
 
-### Mixed Encoding Files
-Files with inconsistent encoding:
-```
-ASCII + UTF-8 = corruption
-Windows-1252 + UTF-8 = garbage
-```
-
-## Best Practices
-
-### Always Specify Encoding
+**Fix:**
 ```python
-# Good
-with open('file.txt', 'r', encoding='utf-8') as f:
-    text = f.read()
+# Replace invalid characters
+text = bytes_data.decode('utf-8', errors='replace')
+# Invalid bytes become (replacement character)
+
+# Or ignore them
+text = bytes_data.decode('utf-8', errors='ignore')
+```
+
+### Problem 3: Truncated Characters
+
+**Symptom:** String cut mid-character.
+
+**Cause:** Cutting byte arrays at wrong positions.
+
+**Fix:** Cut at character boundaries, not byte boundaries.
+
+---
+
+## Best Practices for Developers
+
+### 1. Always Specify Encoding
+
+```python
+# Good - explicit UTF-8
+with open('file.txt', 'w', encoding='utf-8') as f:
+    f.write(text)
 
 # Bad - system dependent
-with open('file.txt', 'r') as f:
-    text = f.read()
+with open('file.txt', 'w') as f:  # Don't do this!
+    f.write(text)
 ```
 
-### Use UTF-8 Everywhere
-- **Web standard**: 95%+ of websites
-- **ASCII compatible**: Existing text works
-- **Space efficient**: Variable length saves space
-- **Universal support**: All modern systems
+### 2. Use UTF-8 for Everything
 
-### Handle Errors Gracefully
+- Source code files
+- Configuration files
+- Database connections
+- API responses
+- Web pages
+- Email
+
+### 3. Handle Errors Gracefully
+
 ```python
 try:
-    with open('file.txt', 'r', encoding='utf-8') as f:
-        text = f.read()
+    text = data.decode('utf-8')
 except UnicodeDecodeError:
-    # Try alternative encodings
-    for encoding in ['latin-1', 'cp1252', 'utf-16']:
+    # Try fallback encodings
+    for encoding in ['utf-8', 'latin-1', 'cp1252']:
         try:
-            with open('file.txt', 'r', encoding=encoding) as f:
-                text = f.read()
+            text = data.decode(encoding)
             break
         except UnicodeDecodeError:
             continue
 ```
 
-## Future of Text Encoding
+### 4. Test with International Text
 
-### Unicode Expansion
-- **New scripts**: Support for ancient and constructed languages
-- **Emoji evolution**: From simple to complex emoji sequences
-- **Symbol expansion**: Mathematical, technical, and decorative symbols
+Always test your software with:
+- Accented characters (café, naïve, résumé)
+- Non-Latin scripts (مرحبا, 你好, Привет)
+- Emoji (😀🎉🚀)
+- Right-to-left text (Arabic, Hebrew)
 
-### Beyond Unicode
-- **ISO 10646**: Universal character set standard
-- **Private use areas**: Custom character assignments
-- **Ideographic variation**: Different glyphs for same character
+### 5. Normalize Unicode When Comparing
+
+```python
+import unicodedata
+
+# Some characters can be represented multiple ways
+# é can be:
+#   U+00E9 (single character - NFC)
+#   U+0065 U+0301 (e + combining accent - NFD)
+
+# Normalize before comparing
+text1 = unicodedata.normalize('NFC', text1)
+text2 = unicodedata.normalize('NFC', text2)
+```
+
+---
 
 ## Key Takeaways
 
-1. **ASCII was limited**: 128 characters for English only
-2. **Unicode provides universality**: 149,000+ characters for all languages
-3. **UTF-8 is the standard**: Efficient, compatible, dominant on web
-4. **Encoding matters**: Wrong encoding corrupts text
-5. **Always specify encoding**: Prevents platform-dependent issues
+1. **ASCII started it all**: Simple but limited to English
+2. **Extended ASCII was a mess**: Different standards for different regions
+3. **Unicode is the solution**: One standard for all characters
+4. **UTF-8 is the standard encoding**: Universal, efficient, backward compatible
+5. **Always be explicit**: Declare and specify encodings everywhere
 
-## Further Reading
-- Unicode Standard documentation (unicode.org)
-- Character encoding tutorials and guides
-- Internationalization (i18n) best practices
-- Text processing library documentation
+## Summary Table
+
+| Era | Standard | Year | Characters | Status |
+|-----|----------|------|------------|--------|
+| 1960s | ASCII | 1963 | 128 | Legacy |
+| 1980s | Extended ASCII | 1987+ | 256 | Legacy |
+| 1990s | Unicode | 1991 | 149,000+ | Current |
+| Today | UTF-8 | 1992+ | All Unicode | Standard |
+
+---
+
+## Next Steps
+
+- Learn Unicode normalization (NFC, NFD, NFKC, NFKD)
+- Understand collation (locale-specific sorting)
+- Study bidirectional text algorithms
+- Explore Unicode security (homoglyph attacks)
