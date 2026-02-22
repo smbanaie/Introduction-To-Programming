@@ -1,554 +1,897 @@
-# Exception Handling: Managing Errors Gracefully
+# Exception Handling: Catching and Managing Errors
 
-## Introduction to Exceptions
+## Introduction: What Are Exceptions?
 
-Exceptions are events that occur during program execution that disrupt the normal flow of instructions. Python uses exceptions to signal that something unexpected happened, allowing programs to respond appropriately rather than crashing.
+An **exception** is an event that disrupts the normal flow of a program. When Python encounters a problem it can't handle, it "raises" an exception. Your job is to "catch" these exceptions and handle them gracefully.
 
-## Basic Exception Handling
+### The Exception Metaphor
 
-### try-except Block
+Think of exceptions like catching a ball:
+- Someone **throws** (raises) the ball
+- You **catch** (handle) the ball
+- Or the ball hits the ground (program crashes)
+
 ```python
-try:
-    # Code that might raise an exception
-    result = 10 / 0
-    print("This line won't execute")
-except ZeroDivisionError:
-    # Code to handle the exception
-    print("Cannot divide by zero!")
+# Without exception handling - program crashes
+number = int("not a number")  # ValueError - program stops!
+print("This never runs")      # Never reached
 
-print("Program continues after exception handling")
+# With exception handling - program recovers
+try:
+    number = int("not a number")
+except ValueError:
+    print("Please enter a valid number")  # Graceful recovery
+print("Program continues...")             # This runs!
 ```
 
-### Catching Multiple Exceptions
+---
+
+## Part 1: Basic Try-Except
+
+### The Simplest Form
+
+```python
+try:
+    # Code that might fail
+    result = 10 / 0
+except ZeroDivisionError:
+    # Code that runs if it fails
+    print("Can't divide by zero!")
+
+print("Program keeps running...")
+```
+
+**How it works:**
+1. Python tries the code in the `try` block
+2. If an error occurs, it looks for a matching `except`
+3. If found, it runs that code and continues
+4. If not found, the program crashes
+
+### Catching Specific Exceptions
+
 ```python
 def safe_divide(a, b):
+    """Divide two numbers safely."""
     try:
         return a / b
     except ZeroDivisionError:
         return "Cannot divide by zero"
     except TypeError:
-        return "Both arguments must be numbers"
-    except Exception as e:
-        return f"An unexpected error occurred: {e}"
+        return "Both must be numbers"
 
+# Test
 print(safe_divide(10, 2))      # 5.0
 print(safe_divide(10, 0))      # "Cannot divide by zero"
-print(safe_divide(10, "2"))    # "Both arguments must be numbers"
+print(safe_divide(10, "2"))    # "Both must be numbers"
 ```
 
-### Generic Exception Handling
+### Getting Error Details
+
 ```python
 try:
-    # Risky operations
-    with open("file.txt", "r") as f:
-        data = f.read()
-    result = int(data.strip())
-except Exception as e:
-    # Catch any exception
-    print(f"An error occurred: {e}")
-    result = None
+    number = int("hello")
+except ValueError as e:  # 'e' contains the error message
+    print(f"Error occurred: {e}")
+    print(f"Error type: {type(e).__name__}")
 
-print(f"Result: {result}")
+# Output:
+# Error occurred: invalid literal for int() with base 10: 'hello'
+# Error type: ValueError
 ```
 
-## Exception Hierarchy
+---
 
-### Built-in Exception Types
+## Part 2: The Full Exception Structure
+
+### try-except-else-finally
+
 ```python
-# Common exceptions you'll encounter:
+try:
+    # Try this first
+    print("Attempting to open file...")
+    with open("data.txt", "r") as f:
+        content = f.read()
 
-# ValueError - Invalid value for operation
-int("not_a_number")  # ValueError
+except FileNotFoundError:
+    # Runs if FileNotFoundError occurs
+    print("File not found!")
+    content = None
 
-# TypeError - Operation on incompatible types
-"string" + 5         # TypeError
+else:
+    # Runs ONLY if no exception occurred
+    print("File read successfully!")
+    print(f"Content: {content[:50]}...")
 
-# KeyError - Dictionary key not found
-my_dict = {}
-my_dict["missing"]   # KeyError
+finally:
+    # ALWAYS runs (whether exception or not)
+    print("Cleanup complete")
 
-# IndexError - List index out of range
-my_list = [1, 2, 3]
-my_list[10]          # IndexError
-
-# FileNotFoundError - File doesn't exist
-open("nonexistent.txt")  # FileNotFoundError
-
-# ZeroDivisionError - Division by zero
-10 / 0               # ZeroDivisionError
-
-# AttributeError - Object doesn't have attribute
-obj = "string"
-obj.some_method()    # AttributeError
+print("Program continues...")
 ```
 
-### Custom Exceptions
+### Execution Flow
+
+```
+Scenario 1: No errors
+    try → (success) → else → finally → continue
+
+Scenario 2: Error occurs and is caught
+    try → (error) → except → finally → continue
+
+Scenario 3: Error occurs, no matching except
+    try → (error) → finally → CRASH
+```
+
+### Practical Example: File Processing
+
 ```python
-class InsufficientFundsError(Exception):
-    """Raised when account has insufficient funds."""
-    def __init__(self, balance, amount):
-        self.balance = balance
-        self.amount = amount
-        super().__init__(f"Insufficient funds: balance ${balance}, needed ${amount}")
+def process_user_file(filename):
+    """Process user data from file with full error handling."""
+    users = []
 
-class InvalidAmountError(Exception):
-    """Raised when transaction amount is invalid."""
-    pass
+    try:
+        print(f"Opening {filename}...")
+        with open(filename, 'r') as f:
+            lines = f.readlines()
 
-def withdraw_money(account, amount):
-    if amount <= 0:
-        raise InvalidAmountError("Withdrawal amount must be positive")
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found")
+        return []
 
-    if amount > account.balance:
-        raise InsufficientFundsError(account.balance, amount)
+    except PermissionError:
+        print(f"Error: No permission to read '{filename}'")
+        return []
 
-    account.balance -= amount
-    return account.balance
+    else:
+        # File opened successfully
+        print(f"Processing {len(lines)} lines...")
+
+        for line_num, line in enumerate(lines, 1):
+            try:
+                name, age = line.strip().split(',')
+                users.append({"name": name, "age": int(age)})
+            except ValueError:
+                print(f"Warning: Invalid data on line {line_num}: {line.strip()}")
+
+        print(f"Successfully loaded {len(users)} users")
+        return users
+
+    finally:
+        # This always runs
+        print("Processing complete")
 
 # Usage
-account = type('Account', (), {'balance': 100})()
+users = process_user_file("users.txt")
+```
+
+---
+
+## Part 3: Common Exception Types
+
+### The Exception Family Tree
+
+```
+BaseException
+├── SystemExit          (raised by sys.exit())
+├── KeyboardInterrupt   (Ctrl+C)
+└── Exception           (this is what we usually catch)
+    ├── ArithmeticError
+    │   └── ZeroDivisionError
+    ├── LookupError
+    │   ├── IndexError       (list index too big)
+    │   └── KeyError         (dict key missing)
+    ├── TypeError            (wrong type)
+    ├── ValueError           (wrong value)
+    ├── FileNotFoundError
+    └── ... many more
+```
+
+### Most Common Exceptions You'll Meet
+
+| Exception | When It Happens | Example |
+|-----------|-----------------|---------|
+| `ZeroDivisionError` | Dividing by zero | `10 / 0` |
+| `ValueError` | Wrong value for operation | `int("abc")` |
+| `TypeError` | Operation on wrong type | `"hello" + 5` |
+| `IndexError` | List index doesn't exist | `[1,2,3][10]` |
+| `KeyError` | Dictionary key missing | `{"a":1}["b"]` |
+| `FileNotFoundError` | File doesn't exist | `open("missing.txt")` |
+| `NameError` | Variable doesn't exist | `print(undefined)` |
+| `AttributeError` | Object has no attribute | `"hi".nonexistent()` |
+
+### Catching Multiple Exceptions
+
+```python
+# Method 1: Separate except blocks
+def load_data(filename):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"File {filename} not found")
+    except json.JSONDecodeError:
+        print(f"File {filename} contains invalid JSON")
+    except PermissionError:
+        print(f"No permission to read {filename}")
+
+# Method 2: Group related exceptions
+def load_data_v2(filename):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, PermissionError) as e:
+        print(f"Cannot access file: {e}")
+    except json.JSONDecodeError:
+        print(f"Invalid JSON in file")
+
+# Method 3: Catch all (use carefully!)
+def load_data_v3(filename):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except Exception as e:  # Catches everything
+        print(f"Something went wrong: {e}")
+```
+
+---
+
+## Part 4: Raising Your Own Exceptions
+
+### When to Raise Exceptions
+
+Raise exceptions when:
+- Invalid arguments are passed to your function
+- A required condition isn't met
+- Something unexpected happens that callers should know about
+
+### Basic Raising
+
+```python
+def validate_age(age):
+    """Validate age and raise exception if invalid."""
+    if not isinstance(age, int):
+        raise TypeError(f"Age must be integer, got {type(age)}")
+
+    if age < 0:
+        raise ValueError(f"Age cannot be negative, got {age}")
+
+    if age > 150:
+        raise ValueError(f"Age seems unrealistic: {age}")
+
+# Usage
+try:
+    validate_age("twenty")  # Raises TypeError
+except TypeError as e:
+    print(f"Type error: {e}")
 
 try:
-    withdraw_money(account, 150)
+    validate_age(-5)  # Raises ValueError
+except ValueError as e:
+    print(f"Value error: {e}")
+```
+
+### Creating Custom Exceptions
+
+```python
+# Define custom exception
+class InsufficientFundsError(Exception):
+    """Raised when account has insufficient funds."""
+    pass
+
+class InvalidAmountError(Exception):
+    """Raised when amount is invalid."""
+    pass
+
+# Bank account example
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def withdraw(self, amount):
+        """Withdraw money with validation."""
+        if amount <= 0:
+            raise InvalidAmountError("Amount must be positive")
+
+        if amount > self.balance:
+            raise InsufficientFundsError(
+                f"Balance ${self.balance} is less than ${amount}"
+            )
+
+        self.balance -= amount
+        return self.balance
+
+# Usage
+account = BankAccount(100)
+
+try:
+    account.withdraw(150)  # Will raise InsufficientFundsError
 except InsufficientFundsError as e:
-    print(f"Transaction failed: {e}")
+    print(f"Cannot withdraw: {e}")
 except InvalidAmountError as e:
     print(f"Invalid amount: {e}")
 ```
 
-## Exception Handling Patterns
+### Advanced Custom Exceptions
 
-### finally Block
 ```python
-def read_file_with_cleanup(filename):
-    file = None
-    try:
-        file = open(filename, "r")
-        content = file.read()
-        return content
-    except FileNotFoundError:
-        print(f"File {filename} not found")
-        return None
-    finally:
-        # This always executes, even if exception occurs
-        if file:
-            file.close()
-            print("File closed")
+class ValidationError(Exception):
+    """Base class for validation errors."""
+    def __init__(self, field, message):
+        self.field = field
+        self.message = message
+        super().__init__(f"{field}: {message}")
 
-# Better approach using context manager
-def read_file_context_manager(filename):
-    try:
-        with open(filename, "r") as file:
-            return file.read()
-    except FileNotFoundError:
-        print(f"File {filename} not found")
-        return None
-    # File automatically closed here
+class InvalidEmailError(ValidationError):
+    """Raised when email format is invalid."""
+    def __init__(self, email):
+        super().__init__("email", f"'{email}' is not a valid email")
+
+class InvalidPasswordError(ValidationError):
+    """Raised when password doesn't meet requirements."""
+    def __init__(self, reason):
+        super().__init__("password", reason)
+
+# Usage
+def validate_user(email, password):
+    if "@" not in email:
+        raise InvalidEmailError(email)
+
+    if len(password) < 8:
+        raise InvalidPasswordError("must be at least 8 characters")
+
+try:
+    validate_user("invalid-email", "short")
+except ValidationError as e:
+    print(f"Validation failed on field '{e.field}': {e.message}")
 ```
 
-### else Block
+---
+
+## Part 5: Resource Management with Context Managers
+
+### The Problem: Resource Cleanup
+
 ```python
-def process_data(data):
+# Without context manager - cleanup might be missed
+def read_file_bad(filename):
+    file = open(filename, 'r')
     try:
-        # Try to process
-        result = int(data)
-    except ValueError:
-        print("Invalid number format")
-        return None
-    else:
-        # Only executes if no exception occurred
-        print(f"Successfully processed: {result}")
-        return result * 2
-    finally:
-        # Always executes
-        print("Processing complete")
-
-process_data("42")      # Success path
-process_data("invalid") # Error path
-```
-
-### Exception Chaining
-```python
-def process_user_data(raw_data):
-    try:
-        # Parse JSON
-        import json
-        data = json.loads(raw_data)
-
-        # Validate required fields
-        if "name" not in data:
-            raise ValueError("Missing required field: name")
-
-        if "age" not in data:
-            raise ValueError("Missing required field: age")
-
-        # Validate age
-        age = data["age"]
-        if not isinstance(age, int) or age < 0:
-            raise ValueError("Age must be a positive integer")
-
+        data = file.read()
         return data
+    except Exception:
+        return None
+    # If exception occurs, file might not close!
+    file.close()
 
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON format: {e}") from e
-    except KeyError as e:
-        raise ValueError(f"Missing required field: {e}") from e
-```
-
-## Context Managers and Resources
-
-### Manual Resource Management
-```python
-def risky_file_operation(filename):
-    file_handle = None
+# With try-finally - guaranteed cleanup
+def read_file_okay(filename):
+    file = open(filename, 'r')
     try:
-        file_handle = open(filename, "r")
-        content = file_handle.read()
-        # Process content...
-        return len(content)
-    except FileNotFoundError:
-        print(f"File {filename} not found")
-        return 0
-    except PermissionError:
-        print(f"Permission denied for {filename}")
-        return 0
+        data = file.read()
+        return data
     finally:
-        # Ensure file is closed even if exception occurs
-        if file_handle:
-            file_handle.close()
+        # This ALWAYS runs, even if exception
+        file.close()
 ```
 
-### Context Manager Pattern
+### The Solution: with Statement
+
+```python
+# Best way: context manager
+def read_file_good(filename):
+    with open(filename, 'r') as file:
+        data = file.read()
+        return data
+    # File automatically closed here!
+```
+
+### How Context Managers Work
+
 ```python
 class DatabaseConnection:
-    def __init__(self, config):
-        self.config = config
+    """Example of a custom context manager."""
+
+    def __init__(self, connection_string):
+        self.connection_string = connection_string
         self.connection = None
 
     def __enter__(self):
-        # Setup - acquire resource
-        self.connection = self._connect()
+        # Called when entering 'with' block
+        print(f"Connecting to {self.connection_string}...")
+        self.connection = "DatabaseConnection"
         return self.connection
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        # Cleanup - release resource
-        if self.connection:
-            self.connection.close()
-
-    def _connect(self):
-        # Simulate database connection
-        print(f"Connecting to database: {self.config}")
-        return "database_connection_object"
+        # Called when exiting 'with' block
+        # Runs even if exception occurred
+        print("Closing connection...")
+        self.connection = None
+        # Return False to propagate exception, True to suppress
+        return False
 
 # Usage
-config = {"host": "localhost", "port": 5432}
-
-try:
-    with DatabaseConnection(config) as conn:
-        # Use connection
-        print(f"Using connection: {conn}")
-        # Perform database operations...
-except Exception as e:
-    print(f"Database operation failed: {e}")
-# Connection automatically closed here
+with DatabaseConnection("localhost:5432") as conn:
+    print(f"Using connection: {conn}")
+    # If error happens here, __exit__ still runs
+# Connection automatically closed
 ```
 
-### Built-in Context Managers
+### Multiple Context Managers
+
 ```python
-# File operations
+# Processing data from one file to another
+with open("input.txt", "r") as input_file, \
+     open("output.txt", "w") as output_file:
+
+    for line in input_file:
+        processed = line.upper()
+        output_file.write(processed)
+
+# Both files automatically closed
+```
+
+---
+
+## Part 6: Best Practices
+
+### 1. Be Specific About Exceptions
+
+```python
+# BAD - Catches everything, including KeyboardInterrupt (Ctrl+C)
 try:
-    with open("data.txt", "r") as file:
-        data = file.read()
-        # Process data...
+    do_something()
+except:  # Bare except - bad!
+    print("Error")
+
+# BETTER - Catch specific exceptions
+try:
+    do_something()
+except ValueError:
+    print("Invalid value")
 except FileNotFoundError:
     print("File not found")
 
-# Multiple resources
+# OKAY - If you really need to catch all
 try:
-    with open("input.txt", "r") as input_file, \
-         open("output.txt", "w") as output_file:
-
-        for line in input_file:
-            # Process line
-            processed = line.upper()
-            output_file.write(processed)
-
-except IOError as e:
-    print(f"File operation failed: {e}")
-```
-
-## Exception Handling Best Practices
-
-### Specific Exception Types
-```python
-# Bad - catches everything
-try:
-    risky_operation()
-except Exception:
-    print("Something went wrong")
-
-# Good - catches specific exceptions
-try:
-    risky_operation()
-except ValueError:
-    print("Invalid value provided")
-except ConnectionError:
-    print("Network connection failed")
-except Exception as e:
+    do_something()
+except Exception as e:  # Explicitly catch Exception
     print(f"Unexpected error: {e}")
 ```
 
-### Avoid Bare except Clauses
+### 2. Don't Swallow Errors Silently
+
 ```python
-# Bad - catches system exit and keyboard interrupt
+# BAD - Error is hidden
 try:
-    do_something()
+    result = risky_operation()
 except:
-    print("Error occurred")
+    pass  # Error disappears!
 
-# Better - be specific
-try:
-    do_something()
-except ValueError:
-    handle_value_error()
-except (IOError, OSError):
-    handle_io_error()
-
-# If you must catch everything, be explicit
-try:
-    do_something()
-except Exception:
-    handle_general_error()
-```
-
-### Preserve Exception Information
-```python
-# Bad - loses original exception
-try:
-    risky_call()
-except ValueError:
-    raise RuntimeError("Something failed")
-
-# Good - chains exceptions
-try:
-    risky_call()
-except ValueError as e:
-    raise RuntimeError("Something failed") from e
-
-# Even better - re-raise with context
-try:
-    risky_call()
-except ValueError as e:
-    raise RuntimeError(f"Something failed while processing: {e}") from e
-```
-
-### Resource Management
-```python
-# Bad - resource leak possible
-file = open("data.txt", "r")
-try:
-    data = file.read()
-finally:
-    file.close()  # Might not execute if exception in try
-
-# Good - use context manager
-with open("data.txt", "r") as file:
-    data = file.read()  # Automatically closed
-```
-
-## Common Error Scenarios and Solutions
-
-### Network Operations
-```python
-import requests
-from requests.exceptions import RequestException, Timeout, ConnectionError
-
-def fetch_user_data(user_id):
-    try:
-        response = requests.get(f"https://api.example.com/users/{user_id}", timeout=5)
-        response.raise_for_status()  # Raise for HTTP error codes
-        return response.json()
-    except Timeout:
-        print("Request timed out")
-        return None
-    except ConnectionError:
-        print("Network connection failed")
-        return None
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTP error: {e}")
-        return None
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-        return None
-```
-
-### Database Operations
-```python
-import sqlite3
-
-def get_user_balance(user_id):
-    try:
-        conn = sqlite3.connect("bank.db")
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT balance FROM accounts WHERE id = ?", (user_id,))
-        result = cursor.fetchone()
-
-        if result is None:
-            raise ValueError(f"User {user_id} not found")
-
-        return result[0]
-
-    except sqlite3.OperationalError as e:
-        print(f"Database operation failed: {e}")
-        raise
-    except sqlite3.IntegrityError as e:
-        print(f"Data integrity error: {e}")
-        raise
-    finally:
-        if 'conn' in locals():
-            conn.close()
-```
-
-### Mathematical Operations
-```python
-def safe_calculate(expression):
-    """Safely evaluate mathematical expression."""
-    try:
-        # Only allow safe operations
-        allowed_names = {
-            "abs": abs, "round": round, "min": min, "max": max,
-            "__builtins__": {}  # Disable built-ins for security
-        }
-
-        result = eval(expression, allowed_names)
-        return result
-
-    except ZeroDivisionError:
-        return "Division by zero"
-    except NameError:
-        return "Invalid function or variable name"
-    except (TypeError, SyntaxError):
-        return "Invalid expression syntax"
-    except Exception as e:
-        return f"Calculation error: {e}"
-
-print(safe_calculate("10 / 2"))        # 5.0
-print(safe_calculate("10 / 0"))        # "Division by zero"
-print(safe_calculate("import os"))     # "Invalid function or variable name"
-print(safe_calculate("10 + 'text'"))   # "Invalid expression syntax"
-```
-
-## Testing Exception Handling
-
-### Unit Testing Exceptions
-```python
-import pytest
-
-def test_safe_divide():
-    """Test safe_divide function."""
-    from my_module import safe_divide
-
-    # Normal cases
-    assert safe_divide(10, 2) == 5.0
-    assert safe_divide(10, 5) == 2.0
-
-    # Error cases
-    assert safe_divide(10, 0) == "Cannot divide by zero"
-    assert safe_divide("10", 2) == "Both arguments must be numbers"
-
-def test_exceptions_with_pytest():
-    """Test that exceptions are raised correctly."""
-
-    def risky_function(value):
-        if value < 0:
-            raise ValueError("Value must be non-negative")
-        return value * 2
-
-    # Test normal operation
-    assert risky_function(5) == 10
-
-    # Test exception is raised
-    with pytest.raises(ValueError, match="must be non-negative"):
-        risky_function(-1)
-```
-
-### Integration Testing
-```python
-def test_file_processing_integration():
-    """Test file processing with various error conditions."""
-    import tempfile
-    import os
-
-    # Test with valid file
-    with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
-        f.write("test data")
-        temp_filename = f.name
-
-    try:
-        result = process_file(temp_filename)
-        assert result is not None
-    finally:
-        os.unlink(temp_filename)
-
-    # Test with missing file
-    result = process_file("nonexistent_file.txt")
-    assert result is None or isinstance(result, str)  # Should handle gracefully
-```
-
-## Performance Considerations
-
-### Exception Handling Overhead
-```python
-# Exceptions have performance cost - use for exceptional cases only
-def find_item(items, target):
-    """Find item in list."""
-    try:
-        return items.index(target)
-    except ValueError:
-        return -1
-
-# For frequent operations, use conditional checks instead
-def find_item_efficient(items, target):
-    """Find item in list efficiently."""
-    for i, item in enumerate(items):
-        if item == target:
-            return i
-    return -1
-```
-
-### Logging vs Raising Exceptions
-```python
+# GOOD - At minimum log the error
 import logging
 
-def process_data(data):
-    """Process data with appropriate error handling."""
-    try:
-        # Attempt processing
-        result = risky_operation(data)
-        return result
-    except ValueError as e:
-        # Log and continue for recoverable errors
-        logging.warning(f"Data validation failed: {e}")
-        return get_default_value()
-    except Exception as e:
-        # Re-raise for serious errors
-        logging.error(f"Critical error in data processing: {e}")
-        raise
+try:
+    result = risky_operation()
+except Exception as e:
+    logging.error(f"Operation failed: {e}")
+    # Or re-raise if you can't handle it
+    raise
 ```
+
+### 3. Use else for Success-Only Code
+
+```python
+# Without else
+try:
+    data = fetch_data()
+    process_data(data)  # What if fetch_data raises?
+except NetworkError:
+    print("Network failed")
+
+# With else - clearer separation
+try:
+    data = fetch_data()
+except NetworkError:
+    print("Network failed")
+else:
+    # Only runs if no exception
+    process_data(data)
+```
+
+### 4. Chain Exceptions for Context
+
+```python
+# Without chaining - loses original error info
+def parse_config(text):
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        raise ValueError("Invalid configuration")
+
+# With chaining - preserves original error
+def parse_config_better(text):
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        raise ValueError("Invalid configuration") from e
+
+# Result shows full chain:
+# ValueError: Invalid configuration
+# from JSONDecodeError: Expecting property name...
+```
+
+### 5. Don't Use Exceptions for Control Flow
+
+```python
+# BAD - Using exceptions for normal logic
+items = [1, 2, 3]
+try:
+    while True:
+        item = items.pop()
+        process(item)
+except IndexError:
+    pass  # List is empty - this is normal!
+
+# BETTER - Use normal control flow
+items = [1, 2, 3]
+while items:
+    item = items.pop()
+    process(item)
+```
+
+---
+
+## Part 7: Practical Examples
+
+### Example 1: Safe User Input
+
+```python
+def get_integer_input(prompt, min_val=None, max_val=None):
+    """Get integer from user with validation."""
+    while True:
+        try:
+            value = input(prompt)
+            number = int(value)
+
+            if min_val is not None and number < min_val:
+                print(f"Please enter a number >= {min_val}")
+                continue
+
+            if max_val is not None and number > max_val:
+                print(f"Please enter a number <= {max_val}")
+                continue
+
+            return number
+
+        except ValueError:
+            print("That's not a valid number. Please try again.")
+
+# Usage
+age = get_integer_input("Enter your age: ", min_val=0, max_val=150)
+quantity = get_integer_input("How many items? ", min_val=1)
+```
+
+### Example 2: Robust File Operations
+
+```python
+import os
+import json
+from datetime import datetime
+
+def backup_data(source_file, backup_dir="backups"):
+    """Backup data file with comprehensive error handling."""
+    try:
+        # Validate source exists
+        if not os.path.exists(source_file):
+            raise FileNotFoundError(f"Source file not found: {source_file}")
+
+        # Ensure backup directory exists
+        os.makedirs(backup_dir, exist_ok=True)
+
+        # Create backup filename with timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = os.path.basename(source_file)
+        backup_file = os.path.join(backup_dir, f"{filename}.{timestamp}.bak")
+
+        # Read and backup
+        with open(source_file, 'r') as src:
+            data = src.read()
+
+        with open(backup_file, 'w') as dst:
+            dst.write(data)
+
+        print(f"Backup created: {backup_file}")
+        return backup_file
+
+    except PermissionError:
+        print(f"Error: No permission to access files")
+        return None
+    except IOError as e:
+        print(f"IO error during backup: {e}")
+        return None
+
+# Usage
+backup_data("important_data.json")
+```
+
+### Example 3: API Call with Retry
+
+```python
+import time
+import random
+
+def unreliable_api_call():
+    """Simulate API that sometimes fails."""
+    if random.random() < 0.7:  # 70% failure rate
+        raise ConnectionError("Network timeout")
+    return {"status": "success", "data": "api_response"}
+
+def call_api_with_retry(max_attempts=3, delay=1):
+    """Call API with exponential backoff retry."""
+    for attempt in range(max_attempts):
+        try:
+            result = unreliable_api_call()
+            print(f"Success on attempt {attempt + 1}")
+            return result
+
+        except ConnectionError as e:
+            print(f"Attempt {attempt + 1} failed: {e}")
+
+            if attempt < max_attempts - 1:
+                wait_time = delay * (2 ** attempt)  # 1, 2, 4 seconds
+                print(f"Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+            else:
+                print("All attempts failed")
+                raise  # Re-raise the last error
+
+# Usage
+try:
+    result = call_api_with_retry()
+    print(f"API result: {result}")
+except ConnectionError:
+    print("Could not reach API after multiple attempts")
+```
+
+---
+
+## Part 8: Testing Exception Handling
+
+### Testing That Exceptions Are Raised
+
+```python
+def test_exceptions():
+    """Test that functions raise correct exceptions."""
+
+    # Test 1: Division by zero raises ZeroDivisionError
+    try:
+        result = 10 / 0
+        assert False, "Should have raised ZeroDivisionError"
+    except ZeroDivisionError:
+        print("✓ ZeroDivisionError raised correctly")
+
+    # Test 2: Invalid conversion raises ValueError
+    try:
+        number = int("not a number")
+        assert False, "Should have raised ValueError"
+    except ValueError:
+        print("✓ ValueError raised correctly")
+
+    # Test 3: Your function raises expected exception
+    def validate_positive(number):
+        if number <= 0:
+            raise ValueError("Number must be positive")
+        return number
+
+    try:
+        validate_positive(-5)
+        assert False, "Should have raised ValueError"
+    except ValueError as e:
+        assert "positive" in str(e)
+        print("✓ Custom validation raises correct exception")
+
+# Run tests
+test_exceptions()
+```
+
+### Testing Exception Handling
+
+```python
+def safe_divide(a, b):
+    """Divide with error handling."""
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None
+    except TypeError:
+        return "Invalid types"
+
+def test_safe_divide():
+    """Test that safe_divide handles errors correctly."""
+
+    # Normal case
+    result = safe_divide(10, 2)
+    assert result == 5.0, f"Expected 5.0, got {result}"
+    print("✓ Normal division works")
+
+    # Zero division handled
+    result = safe_divide(10, 0)
+    assert result is None, f"Expected None, got {result}"
+    print("✓ Division by zero handled")
+
+    # Type error handled
+    result = safe_divide(10, "2")
+    assert result == "Invalid types", f"Expected 'Invalid types', got {result}"
+    print("✓ Type error handled")
+
+# Run tests
+test_safe_divide()
+```
+
+---
+
+## Common Beginner Mistakes
+
+### Mistake 1: Catching Everything
+
+```python
+# BAD - Can't even stop the program with Ctrl+C
+try:
+    long_running_operation()
+except:
+    print("Something happened")
+
+# RIGHT - Be specific
+try:
+    long_running_operation()
+except NetworkError:
+    print("Network problem")
+except TimeoutError:
+    print("Operation timed out")
+```
+
+### Mistake 2: Losing Error Information
+
+```python
+# BAD - Original error is lost
+try:
+    data = parse_json(raw_data)
+except json.JSONDecodeError:
+    raise ValueError("Parse failed")  # Original error info lost!
+
+# RIGHT - Chain exceptions
+try:
+    data = parse_json(raw_data)
+except json.JSONDecodeError as e:
+    raise ValueError("Parse failed") from e
+```
+
+### Mistake 3: Using Exceptions for Normal Flow
+
+```python
+# BAD - Exceptions are slow and unclear
+items = [1, 2, 3]
+try:
+    while True:
+        item = items.pop()
+        process(item)
+except IndexError:
+    pass  # List is empty - this is normal!
+
+# RIGHT - Use normal control flow
+items = [1, 2, 3]
+while items:
+    item = items.pop()
+    process(item)
+```
+
+### Mistake 4: Not Cleaning Up Resources
+
+```python
+# BAD - File might not close
+def process_file(filename):
+    file = open(filename, 'r')
+    return file.read()
+    file.close()  # Never reached!
+
+# RIGHT - Use context manager
+def process_file(filename):
+    with open(filename, 'r') as file:
+        return file.read()
+    # Automatically closed
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Safe Calculator
+
+Create a calculator that handles all errors gracefully:
+
+```python
+def safe_calculator():
+    """
+    Get two numbers and operation from user.
+    Handle all possible errors.
+    """
+    # Your code here
+    pass
+
+# Should handle:
+# - Invalid numbers
+# - Division by zero
+# - Unknown operations
+# - Keyboard interrupt (Ctrl+C)
+```
+
+### Exercise 2: File Processor
+
+Write a function that reads a file and processes each line, handling all errors:
+
+```python
+def process_data_file(filename):
+    """
+    Read file, convert each line to integer, return sum.
+    Handle: file not found, permission denied, invalid data.
+    """
+    # Your code here
+    pass
+```
+
+### Exercise 3: Custom Exceptions
+
+Create a login system with custom exceptions:
+
+```python
+class AuthenticationError(Exception):
+    pass
+
+class InvalidCredentialsError(AuthenticationError):
+    pass
+
+class AccountLockedError(AuthenticationError):
+    pass
+
+def login(username, password):
+    """
+    Authenticate user.
+    Raise appropriate exceptions for different failures.
+    """
+    # Your code here
+    pass
+```
+
+---
 
 ## Key Takeaways
 
-1. **Exceptions handle unexpected events** without crashing programs
-2. **Specific exception types** provide better error handling than generic catching
-3. **finally blocks** ensure cleanup code always runs
-4. **Context managers** automatically handle resource cleanup
-5. **Custom exceptions** provide meaningful error messages
-6. **Testing exception handling** ensures robust error recovery
+1. **Try-except** prevents crashes and enables graceful recovery
+2. **Be specific** - catch particular exceptions, not everything
+3. **Use else** for code that runs only when no exception occurs
+4. **Use finally** for cleanup that always runs
+5. **Context managers** (with statement) handle resources automatically
+6. **Raise exceptions** to signal problems in your own code
+7. **Custom exceptions** make error handling clearer
+8. **Don't use exceptions** for normal program flow
+
+## Quick Reference Card
+
+| Pattern | Syntax | When to Use |
+|---------|--------|-------------|
+| Basic | `try...except Error` | Catch specific errors |
+| With message | `except Error as e` | Need error details |
+| Multiple | `except (A, B)` | Same handling for multiple |
+| Success only | `else` | Code that needs success |
+| Cleanup | `finally` | Always run this code |
+| All | `except Exception` | Last resort, log and re-raise |
+| Resources | `with` statement | Automatic cleanup |
+
+---
 
 ## Further Reading
-- Python exception hierarchy documentation
-- Context manager protocol
-- Logging best practices
-- Error handling patterns in different programming paradigms
-- Defensive programming techniques
+
+- **Next**: Session 19 - Working with Files
+- **Practice**: Add exception handling to all your existing functions
+- **Challenge**: Create a robust command-line tool that never crashes
+- **Explore**: Look up Python's full exception hierarchy
