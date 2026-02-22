@@ -212,6 +212,32 @@ flags = flags & ~(1 << 3); // Clear bit 3
 ### "Bits are too small to matter"
 **Reality**: Small inefficiencies at the bit level become huge problems with billions of operations.
 
+## Practice Exercises
+
+### Binary Conversion Practice
+Try converting these decimal numbers to binary:
+- 13 → Binary: ________
+- 27 → Binary: ________
+- 64 → Binary: ________
+
+Try converting these binary numbers to decimal:
+- 1010 → Decimal: ________
+- 11111 → Decimal: ________
+- 110011 → Decimal: ________
+
+### Data Size Estimation
+Estimate the file sizes for these items:
+- A short email (100 words): ________ bytes
+- A high-resolution photo: ________ MB
+- A 3-minute MP3 song: ________ MB
+- A 2-hour movie: ________ GB
+
+### Real-World Application Questions
+1. Why do computers use binary instead of decimal?
+2. How many different values can 1 byte represent?
+3. Name one type of data and explain how it's stored in binary.
+4. Why are larger data units (KB, MB, GB) based on powers of 2 rather than powers of 10?
+
 ## Key Takeaways
 
 1. **Bits are the fundamental unit**: Everything digital starts with 0s and 1s

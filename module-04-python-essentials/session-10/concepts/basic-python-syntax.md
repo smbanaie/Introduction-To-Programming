@@ -447,6 +447,54 @@ chmod +x my_script.py
 ./my_script.py
 ```
 
+## Practice Exercises
+
+### REPL Exploration
+Try these exercises in the Python REPL:
+
+1. **Basic Operations**: Try simple math operations
+   ```python
+   >>> 5 + 3
+   >>> 10 * 2
+   >>> 15 / 3
+   ```
+
+2. **String Operations**: Experiment with text
+   ```python
+   >>> "Hello" + " " + "World"
+   >>> "Python".upper()
+   >>> len("Hello")
+   ```
+
+3. **Variables**: Create and use variables
+   ```python
+   >>> name = "Alice"
+   >>> age = 25
+   >>> print(f"My name is {name} and I am {age} years old")
+   ```
+
+### Script Creation Challenges
+
+1. **Hello World**: Create a script that prints "Hello, World!"
+2. **Personal Greeting**: Modify the script to ask for the user's name and greet them personally
+3. **Simple Calculator**: Write a script that asks for two numbers and prints their sum
+
+### Error Debugging
+Identify and fix these common errors:
+
+```python
+# Fix these errors:
+print("Hello)          # Missing quote
+Print("Hello")         # Wrong case
+print(Hello)           # Missing quotes for string
+print("Hello"          # Missing closing parenthesis
+```
+
+### Exit Ticket Questions
+1. How do you start Python REPL?
+2. What's the difference between a script and REPL?
+3. Write a Python statement to print your name
+
 ## Key Takeaways
 
 1. **Indentation matters**: Python uses indentation to define code blocks
