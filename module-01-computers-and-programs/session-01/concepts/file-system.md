@@ -1,8 +1,16 @@
 # File System: Organizing Digital Information
 
+## In Plain Terms
+
+**What you'll learn:** When you save a document to "Documents" or download a file to "Downloads," where does it actually go? How does your computer keep track of millions of files? This article explains folders, paths, and how your operating system organizes everything on your hard drive or SSD.
+
+**Newbie tip:** A file path like `C:\Users\You\Documents\report.docx` is like a full address—it tells the computer exactly where to find the file, from the drive (C:) down to the specific file (report.docx).
+
+---
+
 ## What is a File System?
 
-A **file system** is like a digital filing cabinet. It organizes data on storage devices (hard drives, SSDs, USB drives) so you can store, find, and retrieve information easily.
+A **file system** is the method your computer uses to organize data on storage devices (hard drives, SSDs, USB drives). Think of it as a digital filing cabinet with rules: files go in folders, folders can contain other folders, and everything has a unique "address" (path) so the computer can find it.
 
 ## File System Components
 
@@ -173,6 +181,14 @@ rm filename
 - **File Explorer** (Windows)
 - **Finder** (macOS)
 - **File Manager** (Linux)
+
+## Quick Check (Test Your Understanding)
+
+1. What's the difference between an absolute path and a relative path?
+2. Why do Windows paths use `\` while Mac/Linux use `/`?
+3. What is metadata, and why might it be useful?
+
+---
 
 ## Further Reading
 - Learn about cloud storage systems (Dropbox, Google Drive)

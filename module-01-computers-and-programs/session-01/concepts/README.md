@@ -1,92 +1,67 @@
 # Session 1 Concepts: Computer Fundamentals
 
-This section contains comprehensive articles exploring the fundamental concepts of computer systems and program execution. These detailed explanations supplement the session lecture and provide deeper understanding of how computers work at a fundamental level.
+Welcome! This section explains how computers work in plain language. No prior experience needed—if you're new to programming or computers, you're in the right place.
 
-## 📚 Table of Contents
+## 🌟 For Complete Beginners
 
-### Core Computer Concepts
-| Article | Description | Questions Answered |
-|---------|-------------|-------------------|
-| [**🔄 Process Lifecycle**](process-lifecycle.md) | How programs execute as processes from creation to termination | What is a process? How does program execution work? What are process states? |
-| [**🧠 Memory Architecture**](memory-architecture.md) | Computer memory systems, RAM organization, and memory hierarchy | How does computer memory work? What is RAM vs storage? How is memory managed? |
-| [**📁 File System**](file-system.md) | Data organization on storage devices and file operations | How are files stored? What are file systems? How does data persistence work? |
+**What is this?** These articles explain the basics of how computers work—from how programs run to how files are stored. Think of them as friendly guides that answer the "how" and "why" behind everyday computer use.
 
-### Fundamental Computing Principles
-| Article | Description | Questions Answered |
-|---------|-------------|-------------------|
-| [**🔢 Binary Format**](binary-format.md) | Why computers use binary representation for all digital information | Why do computers use binary? How is information represented digitally? What is the binary system? |
-| [**⚙️ Operating System**](operating-system.md) | System management software and boot processes | What is an operating system? How does the computer start up? What services does OS provide? |
-
-## ❓ Questions Answered in These Files
-
-### Computer Architecture & Hardware
-- What are the main components of a computer system?
-- How does CPU execute instructions?
-- What is the role of RAM in program execution?
-- How does storage differ from memory?
-- What are input/output devices and their functions?
-
-### Program Execution
-- How does a program transform from source code to running process?
-- What are the different states of a process?
-- How does the operating system manage processes?
-- What happens when a program starts executing?
-
-### Memory Management
-- How is computer memory organized hierarchically?
-- What is virtual memory and why is it needed?
-- How does caching improve performance?
-- What are the differences between various memory types?
-
-### Data Storage & File Systems
-- How are files organized on storage devices?
-- What are file system structures and hierarchies?
-- How do directories work?
-- What file operations are supported?
-
-### Binary Representation
-- Why do computers use binary instead of decimal?
-- How is all information represented as 0s and 1s?
-- What is the relationship between bits and bytes?
-- How do binary operations work?
-
-### Operating System Functions
-- What is the role of OS in computer operation?
-- How does the boot process work?
-- What system services does OS provide?
-- How does OS manage hardware resources?
-
-## 🎯 Learning Objectives
-
-After reading these concept articles, you will be able to:
-
-1. **Explain computer architecture** at a detailed technical level
-2. **Understand program execution** from source code to machine execution
-3. **Analyze memory management** and storage systems
-4. **Apply binary concepts** to digital information representation
-5. **Describe operating system functions** and system management
-
-## 📖 How to Use These Articles
-
-1. **Sequential Reading**: Start with Process Lifecycle, then Memory Architecture
-2. **Topic-Specific**: Jump to specific articles based on areas of interest
-3. **Reference Guide**: Return to articles when implementing related concepts
-4. **Discussion Preparation**: Use examples for class discussions and questions
-
-## 🔗 Connection to Session Content
-
-These articles provide the technical depth for:
-- Understanding computer components discussed in the lecture
-- Deeper exploration of program execution concepts
-- Foundation for subsequent sessions on data representation
-
-## 💡 Key Themes
-
-- **Hardware/Software Interaction**: How physical components work with programs
-- **Resource Management**: How computers allocate and manage limited resources
-- **Data Organization**: How information is stored, accessed, and processed
-- **System Coordination**: How different components work together seamlessly
+**How to read them:** Take your time. Each article starts with a simple summary, then goes deeper. You don't need to memorize everything—understanding the big picture matters most.
 
 ---
 
-*These articles are designed for learners seeking substantial technical depth. They provide the "why" and "how" behind computer operations, essential for serious programming study.*
+## 📚 Table of Contents
+
+### Start Here (Recommended Order)
+
+| Order | Article | In Plain Terms |
+|-------|---------|----------------|
+| 1 | [**🔄 Process Lifecycle**](process-lifecycle.md) | What happens when you open an app? How do programs "live" and "die"? |
+| 2 | [**⚙️ Operating System**](operating-system.md) | What is Windows/Mac/Linux? How does your computer start up? |
+| 3 | [**🧠 Memory Architecture**](memory-architecture.md) | Why does your computer slow down with many tabs open? RAM vs storage explained. |
+| 4 | [**📁 File System**](file-system.md) | How are files and folders organized? Where does your data actually live? |
+| 5 | [**🔢 Binary Format**](binary-format.md) | Why do computers use 0s and 1s? How does everything become numbers? |
+
+### Quick Reference
+
+| Article | Key Questions |
+|---------|---------------|
+| Process Lifecycle | What is a process? Why do programs freeze or crash? |
+| Memory Architecture | What is RAM? Why is it different from my hard drive? |
+| File System | How do folders and paths work? What is a file system? |
+| Binary Format | Why binary? How do computers store text and images? |
+| Operating System | What does an OS do? What happens when I press the power button? |
+
+---
+
+## 🎯 What You'll Learn (In Simple Terms)
+
+After these articles, you'll be able to:
+
+1. **Explain** what happens when you double-click an app
+2. **Understand** why closing programs frees up memory
+3. **Navigate** file systems and understand paths
+4. **Grasp** why computers use binary (0s and 1s)
+5. **Describe** what an operating system does for you
+
+---
+
+## 📖 How to Use These Articles
+
+- **First time?** Read in order (Process → OS → Memory → File System → Binary)
+- **Curious about one topic?** Jump to any article—each stands on its own
+- **Something unclear?** Re-read the "In Plain Terms" or "Real-World Analogy" sections
+- **Want to go deeper?** Check the "Further Reading" at the end of each article
+
+---
+
+## 💡 Big Ideas (The Themes That Connect Everything)
+
+- **Programs need resources** — Memory, CPU time, and storage. The OS manages who gets what.
+- **Everything is data** — Text, images, and programs all become 0s and 1s eventually.
+- **Organization matters** — File systems and memory hierarchies help computers work efficiently.
+- **Layers work together** — Hardware, OS, and your programs all cooperate behind the scenes.
+
+---
+
+*These articles are written for beginners. Technical terms are explained when first used, and real-world analogies help make abstract concepts concrete.*
