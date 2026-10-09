@@ -20,10 +20,13 @@ This folder contains articles about expressing algorithms visually (flowcharts) 
 
 ## Persian Translations
 
-For Persian speakers:
-- **📝 [مبانی شبه‌کد](pseudocode-fundamentals_fa.md)** - Pseudocode fundamentals in Persian
-- **🔧 [ساختارهای کنترلی](control-structures_fa.md)** - Control structures in Persian
-- **💻 [از شبه‌کد به کد](pseudocode-to-code_fa.md)** - Pseudocode to code in Persian
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **📈 [مبانی فلوچارت](flowchart-fundamentals_fa.md)** — طراحی بصری الگوریتم
+- **📝 [مبانی شبه‌کد](pseudocode-fundamentals_fa.md)** — پل میان الگوریتم و کد
+- **🔀 [ساختارهای کنترلی](control-structures_fa.md)** — هدایت جریان برنامه
+- **🔗 [از شبه‌کد به کد](pseudocode-to-code_fa.md)** — پیاده‌سازی الگوریتم‌ها
 
 ## Recommended Reading Order
 

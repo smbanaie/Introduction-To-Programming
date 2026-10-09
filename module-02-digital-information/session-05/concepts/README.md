@@ -22,6 +22,17 @@ Explore advanced binary arithmetic including multiplication algorithms, division
 ### 🔧 [Bitwise Operations](bitwise-operations.md)
 Discover powerful bit-level operations including AND, OR, XOR, shifts, and masks. Learn how these operations enable efficient algorithms, cryptography, and low-level programming techniques.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **➕ [جمع و تفریق باینری](binary-addition-subtraction_fa.md)** — کامپیوترها چطور حساب می‌کنند
+- **✖️ [ضرب و تقسیم باینری](binary-multiplication-division_fa.md)** — حساب باینری پیشرفته
+- **🔧 [عملیات بیتی](bitwise-operations_fa.md)** — قدرت کار با بیت‌های تکی
+
+---
+
 ## How to Use These Articles
 
 1. **Start with basics**: Learn addition and subtraction first

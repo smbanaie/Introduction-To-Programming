@@ -24,11 +24,12 @@ Discover why programmers use hexadecimal (base 16) for memory addresses, color c
 
 ## 🇮🇷 Persian Translations
 
-Persian versions of the articles below are available:
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
 
-- **🔢 [سیستم عددی باینری: چگونه کامپیوترها می‌شمرند](binary-number-system_fa.md)**
-
-Not yet translated: [decimal-binary-conversion](decimal-binary-conversion.md), [hexadecimal-system](hexadecimal-system.md). The English version is the complete one.
+- **🔢 [سیستم عددی باینری: چگونه کامپیوترها می‌شمرند](binary-number-system_fa.md)** — چگونه شمردن با فقط دو رقم کار می‌کند
+- **🔄 [تبدیل دهدهی و باینری](decimal-binary-conversion_fa.md)** — ترجمه بین اعداد انسانی و کامپیوتری
+- **🔡 [سیستم هگزادسیمال](hexadecimal-system_fa.md)** — نگارش فشرده باینری
 
 ---
 
