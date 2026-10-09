@@ -107,7 +107,7 @@ def generate_report(students):
     print("\n" + "="*50)
     print("STUDENT GRADE REPORT")
     print("="*50)
-    print("<25")
+    print(f"{'Name':<25}{'Average':>10}{'Grade':>8}{'Status':>10}")
     print("-" * 50)
 
     for student in students:
@@ -115,7 +115,7 @@ def generate_report(students):
         letter = get_letter_grade(avg)
         status = get_grade_status(avg)
 
-        print("<25")
+        print(f"{student['name']:<25}{avg:>10.1f}{letter:>8}{status:>10}")
 
     # Calculate class statistics
     all_scores = [score for student in students for score in student['scores']]
@@ -123,8 +123,8 @@ def generate_report(students):
     pass_count = sum(1 for s in students if calculate_average(s['scores']) >= 60)
 
     print("-" * 50)
-    print("<25")
-    print(f"Students Passing: {pass_count}/{len(students)} ({pass_count/len(students)*100:.1f}%)")
+    print(f"{'Class Average':<25}{class_avg:>10.1f}")
+    print(f"{'Students Passing':<25}{pass_count}/{len(students)} ({pass_count/len(students)*100:.1f}%)")
 ```
 
 ### Step 4: Main Program Loop

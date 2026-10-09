@@ -149,6 +149,6 @@ This course takes a "concepts first, syntax second" approach because:
 
 ## Next Steps
 
-Ready to begin? Start with [Session 1: What Is a Computer?](session-01/README.md) to explore the fundamental question of what computers are and how they work.
+Ready to begin? Start with [Session 1: What Is a Computer?](module-01-computers-and-programs/session-01/README.md) to explore the fundamental question of what computers are and how they work.
 
 Happy learning! 🚀

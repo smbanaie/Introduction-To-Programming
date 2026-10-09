@@ -56,7 +56,7 @@ def generate_report(students):
     print("\n" + "="*60)
     print("STUDENT GRADE REPORT")
     print("="*60)
-    print("<25")
+    print(f"{'Name':<25}{'Average':>10}{'Grade':>8}{'Status':>10}")
     print("-" * 60)
 
     for student in students:
@@ -64,7 +64,7 @@ def generate_report(students):
         letter = get_letter_grade(avg)
         status = get_grade_status(avg)
 
-        print("<25")
+        print(f"{student['name']:<25}{avg:>10.1f}{letter:>8}{status:>10}")
 
     # Calculate class statistics
     all_scores = [score for student in students for score in student['scores']]
@@ -72,9 +72,8 @@ def generate_report(students):
     pass_count = sum(1 for s in students if calculate_average(s['scores']) >= 60)
 
     print("-" * 60)
-    print("<25")
-    print(".1f")
-    print(f"Students Passing: {pass_count}/{len(students)} ({pass_count/len(students)*100:.1f}%)")
+    print(f"{'Class Average':<25}{class_avg:>10.1f}")
+    print(f"{'Students Passing':<25}{pass_count}/{len(students)} ({pass_count/len(students)*100:.1f}%)")
 
 def show_statistics(students):
     """Show detailed class statistics"""
@@ -87,8 +86,7 @@ def show_statistics(students):
     print("\nClass Statistics:")
     print(f"Total students: {len(students)}")
     print(f"Total scores recorded: {len(all_scores)}")
-    print(".2f")
-    print(".2f")
+    print(f"Class average: {calculate_average(all_scores):.2f}")
     print(f"Highest score: {max(all_scores)}")
     print(f"Lowest score: {min(all_scores)}")
 

@@ -311,7 +311,7 @@ These concepts provide the foundation for:
 ## 📝 Before You Begin
 
 **Prerequisites:**
-- [Session 1 Concepts](../session-01/concepts/) (recommended but not required)
+- [Session 1 Concepts](../../session-01/concepts/README.md) (recommended but not required)
 - Basic Python knowledge (you can write simple programs)
 - Curiosity about how things work!
 
