@@ -22,6 +22,17 @@ Explore Python's key-value data structure for fast lookups. Learn dictionary cre
 ### 🔗 [Sets and Tuples](sets-tuples.md)
 Discover specialized collection types including immutable tuples for fixed data, sets for unique elements, named tuples for readable access, and frozen sets for hashable collections.
 
+## Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **📋 [فهرست‌های پایتون](python-lists_fa.md)** — نخستین ساختار داده شما
+- **🔑 [دیکشنری‌های پایتون](python-dictionaries_fa.md)** — جفت‌های کلید-مقدار
+- **🔗 [مجموعه‌ها و تاپل‌ها](sets-tuples_fa.md)** — مجموعه‌های تخصصی
+
+---
+
 ## How to Use These Articles
 
 1. **Start with lists**: Learn Python's primary sequence type
