@@ -67,7 +67,7 @@ Thinking like a programmer - designing step-by-step solutions before writing cod
 ### **Module 4: Python Language Fundamentals** (Sessions 10-16)
 Core Python programming - variables, control structures, data types, and basic operations.
 
-### **Theme 5: Practical Programming & Mini-Projects** (Sessions 17-22)
+### **Module 5: Practical Programming & Mini-Projects** (Sessions 17-22)
 Advanced concepts and real applications - functions, files, error handling, and complete programs.
 
 ## Target Audience
@@ -86,11 +86,19 @@ This course is designed for:
 
 ## How to Use This Repository
 
-The course is organized into 5 thematic modules, each containing related sessions. Each session folder contains:
+The course is organized into 5 thematic modules, each containing related sessions. Every session folder has:
 
-- **`README.md`**: Main concepts, explanations, and tutorial content for that session
-- **`workshop/`**: Hands-on activities, starter code, and exercise prompts
-- **`homeworks/`**: Homework assignments, descriptions, and starter templates
+- **`README.md`** (and **`README_FA.md`**): the session's objectives, key concepts, ASCII diagrams, workshop activities, homework, and takeaways
+- **`concepts/`**: in-depth articles for that session, each with an index README and a Persian translation where one exists
+
+A few sessions also carry runnable material:
+
+- **`workshop/`**: present for Sessions 10 and 21
+- **`homeworks/`**: present for Session 10
+
+For extra practice on any single topic, see [`Workshops/`](Workshops/README.md) — eight standalone tutorials with their own quizzes and answers.
+
+**[`syllabus.md`](syllabus.md)** is the authoritative session-by-session breakdown: learning objectives, tutorial content summary, workshop ideas, and homework suggestions for all 22 sessions.
 
 ### Getting Started
 

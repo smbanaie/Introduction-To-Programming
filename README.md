@@ -52,13 +52,12 @@ By the end of this course, you will be able to:
 
 **Key Concepts**: Information theory, number systems, arithmetic operations, text encoding
 
-### **Module 3: Algorithmic Thinking** (4 sessions)
+### **Module 3: Algorithmic Thinking** (3 sessions)
 **Logic Layer** - Developing systematic problem-solving skills
 
-- **Session 7**: Input-Process-Output Model - Fundamental programming model
-- **Session 8**: Algorithm Characteristics & Types - Big O notation, algorithm analysis
-- **Session 9**: Pseudocode & Translation - Structured English, language mapping
-- **Session 10**: Control Structures - Sequence, selection, iteration patterns
+- **Session 7**: Input-Process-Output Model - Fundamental programming model, state
+- **Session 8**: Algorithm Characteristics & Types - FIDEO framework, algorithm analysis
+- **Session 9**: Pseudocode & Flowcharts - Structured English, control structures, translation
 
 **Key Concepts**: IPO model, algorithm analysis, pseudocode, control flow
 
@@ -168,26 +167,27 @@ Upon successful completion:
 
 ## 📋 Course Materials
 
-### **Lecture Notes**
-- **22 Sessions**: Comprehensive teaching materials
+### **Session Notes**
+- **22 Sessions**: One folder per session, each with objectives, concepts, workshop activities, and homework
 - **Classroom-Ready**: Suitable for instructors and self-study
 - **Progressive Difficulty**: From basic concepts to advanced topics
 
 ### **Concept Articles**
-- **60+ Detailed Articles**: In-depth explanations beyond lectures
+- **65 Detailed Articles**: In-depth explanations beyond the session notes
+- **Bilingual**: 67 have Persian translations; the remainder are English-only
 - **Practical Examples**: Real-world code examples and applications
-- **Best Practices**: Professional development standards
-- **Reference Material**: Comprehensive technical documentation
+- **ASCII Diagrams**: Worked visualisations that need no external tooling
 
 ### **Code Examples**
 - **Interactive Examples**: Working Python code throughout
 - **Progressive Complexity**: From simple scripts to complete applications
 - **Error Handling**: Robust, production-ready code patterns
 
-### **Project Templates**
+### **Project Material**
 - **Mini-Projects**: Smaller assignments to build confidence
 - **Capstone Projects**: Complete application development
 - **Portfolio Pieces**: Professional-quality code samples
+- **Workshop Folders**: Present for Sessions 10 and 21; the rest live in [`Workshops/`](Workshops/README.md)
 
 ---
 
