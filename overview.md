@@ -102,6 +102,9 @@ For extra practice on any single topic, see [`Workshops/`](Workshops/README.md) 
 
 ### Getting Started
 
+0. **Optional Primer**: If flowchart design is new to you, work through
+   [Section 0: Flowcharts](section-0-flowcharts/README.md) first - six lessons,
+   about 90 minutes, no prerequisites, available in English and Persian
 1. **Environment Setup**: Before Module 4, set up Python on your computer
 2. **Weekly Pace**: Complete one session per week, including workshops and homework
 3. **Practice First**: Focus on understanding concepts before writing code
@@ -112,6 +115,9 @@ For extra practice on any single topic, see [`Workshops/`](Workshops/README.md) 
 ```
 introduction-to-programming/
 ├── overview.md                           # This file - course overview
+├── section-0-flowcharts/                 # Optional primer - flowchart design before Session 1
+│   ├── README.md                         # Section overview and six-lesson roadmap
+│   └── concepts/                         # Six lessons, English + Persian
 ├── module-01-computers-and-programs/     # Computer fundamentals & program execution
 │   ├── README.md                         # Module overview and objectives
 │   ├── session-01/                       # What is a Computer?
@@ -156,6 +162,10 @@ This course takes a "concepts first, syntax second" approach because:
 4. **Sustainable learning**: Concepts stick better than memorized syntax
 
 ## Next Steps
+
+Never drawn a flowchart before? Start with the optional
+[Section 0: Flowcharts](section-0-flowcharts/README.md) primer - six lessons that
+teach you to design algorithms visually before you type them.
 
 Ready to begin? Start with [Session 1: What Is a Computer?](module-01-computers-and-programs/session-01/README.md) to explore the fundamental question of what computers are and how they work.
 

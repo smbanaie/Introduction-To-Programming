@@ -61,6 +61,18 @@ By the end of this course, you will be able to:
 
 **Key Concepts**: IPO model, algorithm analysis, pseudocode, control flow
 
+### **Section 0: Flowcharts** (optional primer, 6 lessons)
+**Orientation Layer** - Designing algorithms visually before Session 1
+
+- **Lesson 1**: Why Draw Before You Code
+- **Lesson 2**: The Six Symbols and the Five Laws
+- **Lesson 3**: The Three Control Patterns
+- **Lesson 4**: Loops and Trace Tables
+- **Lesson 5**: Design Method and Review Checklist
+- **Lesson 6**: Workshop - Three Briefs
+
+See [`section-0-flowcharts/`](section-0-flowcharts/README.md)
+
 ### **Module 4: Python Essentials** (7 sessions)
 **Programming Layer** - Learning Python programming from basics to intermediate concepts
 
@@ -177,6 +189,9 @@ Upon successful completion:
 - **Bilingual**: 67 have Persian translations; the remainder are English-only
 - **Practical Examples**: Real-world code examples and applications
 - **ASCII Diagrams**: Worked visualisations that need no external tooling
+
+### **Optional Primer**
+- **Section 0: Flowcharts**: Six lessons on drawing algorithms before coding, English and Persian ([entry point](section-0-flowcharts/README.md))
 
 ### **Code Examples**
 - **Interactive Examples**: Working Python code throughout
@@ -375,6 +390,7 @@ This course was developed to provide accessible, comprehensive programming educa
 - **۶۰+ مقاله مفهومی**: توضیحات عمیق و مثال‌های عملی
 - **تمرین‌های عملی**: برنامه‌نویسی کاربردی
 - **پروژه‌های عملی**: توسعه نرم‌افزار کامل
+- **بخش صفر (اختیاری)**: [شش درس مقدمه فلوچارت](section-0-flowcharts/README_FA.md) برای طراحی الگوریتم‌ها پیش از کدنویسی
 
 ### پیش‌نیازها:
 - سواد کامپیوتر پایه (استفاده از موس و کیبورد)

@@ -103,6 +103,12 @@ By the end of this module, you will be able to:
 ### Session 9: Expressing Algorithms - Flowcharts and Pseudocode
 **Focus**: Learning formal ways to describe algorithms
 
+> **New here to flowcharts?** Work through the optional
+> [Section 0: Flowcharts](../section-0-flowcharts/README.md) primer first. Six
+> lessons covering the six symbols, the three control patterns, loop anatomy, and
+> dry running - no prerequisites, English and Persian. Session 9 then goes deeper on
+> the same ground with pseudocode alongside.
+
 **Topics Covered**:
 - **Flowcharts**: Visual representation using standard symbols
   - Terminator, Process, Decision, I/O symbols
