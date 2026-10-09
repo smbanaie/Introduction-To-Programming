@@ -20,6 +20,16 @@ Explore the foundation of decision making with boolean values, logical operators
 ### 📊 [Nested Conditionals](nested-conditionals.md)
 Learn advanced conditional patterns including nested structures, guard clauses, decision trees, and refactoring techniques to avoid complex nested logic while maintaining clarity.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+- **🔀 [دستورات شرطی: تصمیم‌گیری در کد](conditional-statements_fa.md)**
+- **🔵 [منطق بولی: درست یا نادرست؟](boolean-logic_fa.md)**
+- **📊 [شرایط تو در تو: تصمیم‌های داخل تصمیم‌ها](nested-conditionals_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 1. **Start with conditionals**: Learn the basic if/elif/else syntax and patterns

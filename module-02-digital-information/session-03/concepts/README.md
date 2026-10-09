@@ -63,6 +63,18 @@ After reading these concept articles, you will be able to:
 4. **Describe data encoding methods** for different information types
 5. **Apply binary concepts** to real-world data processing scenarios
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **🔢 [بیت و بایت بنیادی: بلوک‌های سازنده اطلاعات دیجیتال](bits-bytes-fundamentals_fa.md)**
+- **💾 [واحدهای ذخیره‌سازی داده‌ها: اندازه‌گیری اطلاعات دیجیتال](data-storage-units_fa.md)**
+- **🌊 [دیجیتال در برابر آنالوگ: دو روش نمایش اطلاعات](digital-vs-analog_fa.md)**
+- **📊 [نمایش داده‌ها: چگونه اطلاعات دیجیتال می‌شود](data-representation_fa.md)**
+
+---
+
 ## 📖 How to Use These Articles
 
 1. **Foundational Reading**: Start with Bits and Bytes Fundamentals as the base layer

@@ -42,6 +42,16 @@ Practical case studies showing IPO in action:
 
 **Why read this?** Seeing IPO applied to familiar systems helps solidify understanding and provides templates for analyzing new problems.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+- **📥 [ورودی-پردازش-خروجی: پایه حل مسئله](input-process-output_fa.md)**
+- **🔄 [مدیریت وضعیت: پیگیری تغییر در برنامه‌ها](state-management_fa.md)**
+- **🌍 [IPO در کاربردهای دنیای واقعی: حل مسئله عملی](ipo-real-world-applications_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 ### Recommended Reading Order

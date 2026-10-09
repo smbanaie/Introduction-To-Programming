@@ -22,6 +22,16 @@ Explore while loops for conditional iteration where the number of iterations is 
 ### 🎛️ [Loop Control](loop-control.md)
 Understand loop control statements (break, continue, pass) and the else clause with loops. Learn advanced control patterns for nested loops, early exits, and complex iteration scenarios.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+- **🔄 [حلقه‌های for: تکرار کد به آسانی](for-loops_fa.md)**
+- **🔂 [حلقه‌های while: تکرار در حالی که شرط درست است](while-loops_fa.md)**
+- **🎛️ [کنترل حلقه: Break، Continue و Else](loop-control_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 1. **Start with for loops**: Learn the primary iteration mechanism in Python

@@ -59,6 +59,17 @@ After reading these concept articles, you will be able to:
 4. **Understand memory management** implications of different types
 5. **Debug type-related issues** in Python programs
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **🏷️ [متغیرهای پایتون: ذخیره اطلاعات](python-variables_fa.md)**
+- **📊 [انواع داده پایتون: درک انواع مختلف اطلاعات](python-data-types_fa.md)**
+- **🔄 [تبدیل نوع: تغییر انواع داده در پایتون](type-conversion_fa.md)**
+
+---
+
 ## 📖 How to Use These Articles
 
 1. **Sequential Learning**: Start with Python Variables, then Data Types, finally Type Conversion

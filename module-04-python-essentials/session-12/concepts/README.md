@@ -22,6 +22,16 @@ Explore Python's rich operator system including arithmetic, comparison, logical,
 ### ⚖️ [Evaluation Order](evaluation-order.md)
 Understand how Python evaluates complex expressions through operator precedence and associativity rules. Learn the complete precedence hierarchy and how to write clear, predictable expressions.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+- **📥 [ورودی و خروجی: صحبت با برنامه شما](input-output_fa.md)**
+- **🔢 [عبارات و عملگرها: ماشین‌حساب پایتون](expressions-operators_fa.md)**
+- **⚖️ [ترتیب ارزیابی: کدام محاسبه اول انجام می‌شود؟](evaluation-order_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 1. **Start with I/O**: Learn how programs communicate with the outside world

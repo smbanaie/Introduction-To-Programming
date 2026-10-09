@@ -8,6 +8,19 @@ This section explains how computers work in plain, simple language. **No prior e
 
 ---
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **🔄 [چرخه حیات فرآیند: چگونه برنامه‌ها زندگی می‌کنند و می‌میرند](process-lifecycle_fa.md)**
+- **⚙️ [سیستم عامل: مدیر کامپیوتر](operating-system_fa.md)**
+- **🧠 [معماری حافظه: فضای کاری کامپیوتر](memory-architecture_fa.md)**
+- **📁 [سیستم فایل: سازماندهی اطلاعات دیجیتال](file-system_fa.md)**
+- **🔢 [فرمت باینری: زبان کامپیوترها](binary-format_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 **First time here?** We recommend reading in order (top to bottom). Each article builds on concepts from the previous ones.

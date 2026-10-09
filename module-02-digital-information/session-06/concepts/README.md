@@ -22,6 +22,16 @@ Explore the evolution of text encoding from simple ASCII to comprehensive Unicod
 ### 🔧 [String Operations](string-operations.md)
 Dive into string manipulation techniques. Learn indexing, slicing, formatting, searching, and advanced text processing operations used in programming.
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+- **🔤 [کدگذاری کاراکتر: چگونه متن دیجیتال می‌شود](character-encoding_fa.md)**
+- **📝 [استانداردهای کدگذاری متن: از ASCII تا یونیکد](text-encoding-standards_fa.md)**
+- **🔧 [عملیات رشته: دستکاری داده‌های متنی](string-operations_fa.md)**
+
+---
+
 ## How to Use These Articles
 
 1. **Start with encoding basics**: Understand character encoding fundamentals

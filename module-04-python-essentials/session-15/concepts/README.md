@@ -22,6 +22,16 @@ Explore Python's string formatting capabilities including f-strings, .format() m
 ### 📊 [Text Processing](text-processing.md)
 Dive into text analysis and processing including regular expressions, text cleaning, validation, statistics, and advanced text manipulation techniques for real-world applications.
 
+## 🇮🇷 Persian Translations
+
+Persian versions of the articles below are available:
+
+- **🔤 [عملیات رشته: کار با متن](string-operations_fa.md)**
+
+Not yet translated: [string-formatting](string-formatting.md), [text-processing](text-processing.md). The English version is the complete one.
+
+---
+
 ## How to Use These Articles
 
 1. **Start with string operations**: Learn the core string manipulation techniques

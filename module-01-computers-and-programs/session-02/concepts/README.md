@@ -231,6 +231,19 @@ print(calc.sum_list([1, 2, 3, 4, 5]))
 
 ---
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **📄 [کد منبع در برابر کد ماشین در برابر بایت‌کد](source-machine-bytecode_fa.md)**
+- **⚙️ [فرآیند کامپایل: تبدیل منبع به کد ماشین](compilation-process_fa.md)**
+- **🎭 [فرآیند تفسیر: اجرای کد به صورت بلادرنگ](interpretation-process_fa.md)**
+- **🐍 [مدل اجرای Python: چگونه کد Python واقعاً اجرا می‌شود](python-execution-model_fa.md)**
+- **🏗️ [پارادایم‌های زبان برنامه‌نویسی: روش‌های مختلف تفکر درباره کد](programming-paradigms_fa.md)**
+
+---
+
 ## 📖 How to Use These Articles
 
 ### Article Features Guide

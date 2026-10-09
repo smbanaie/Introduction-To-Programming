@@ -22,6 +22,16 @@ Learn the essential skill of converting between decimal (human) and binary (comp
 ### 🔗 [Hexadecimal System](hexadecimal-system.md)
 Discover why programmers use hexadecimal (base 16) for memory addresses, color codes, and debugging. Learn hex-binary conversion and practical applications in computing.
 
+## 🇮🇷 Persian Translations
+
+Persian versions of the articles below are available:
+
+- **🔢 [سیستم عددی باینری: چگونه کامپیوترها می‌شمرند](binary-number-system_fa.md)**
+
+Not yet translated: [decimal-binary-conversion](decimal-binary-conversion.md), [hexadecimal-system](hexadecimal-system.md). The English version is the complete one.
+
+---
+
 ## How to Use These Articles
 
 1. **Master binary first**: Start with binary number system fundamentals

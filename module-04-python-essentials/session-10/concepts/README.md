@@ -62,6 +62,17 @@ After reading these concept articles, you will be able to:
 4. **Use Python interactively** for testing and experimentation
 5. **Apply fundamental programming concepts** in Python
 
+## 🇮🇷 Persian Translations
+
+Every article in this folder has a Persian version. Read either language,
+or both - the content is identical.
+
+- **🐍 [مفسر پایتون: مترجم کدهای شما](python-interpreter_fa.md)**
+- **💻 [محیط توسعه پایتون: ابزارهای برنامه‌نویسی](python-development-environment_fa.md)**
+- **📝 [نحو پایه پایتون: نوشتن اولین کد شما](basic-python-syntax_fa.md)**
+
+---
+
 ## 📖 How to Use These Articles
 
 1. **Environment First**: Start with Python Development Environment setup
