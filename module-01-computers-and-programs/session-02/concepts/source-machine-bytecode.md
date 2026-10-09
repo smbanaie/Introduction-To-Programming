@@ -434,6 +434,37 @@ Now let's see how code moves between these forms:
 
 ---
 
+## The Three Translation Paths as a Pipeline
+
+The three ways to get from source code to running instructions, drawn as
+pipelines. Path 3 is the one Python uses.
+
+```mermaid
+flowchart TD
+    subgraph P1["Path 1 - Compiled (C++, Rust)"]
+        A1["Source Code"] --> A2["Compiler"] --> A3["Machine Code"] --> A4["CPU runs"]
+    end
+
+    subgraph P2["Path 2 - Interpreted (old Python, JavaScript)"]
+        B1["Source Code"] --> B2["Interpreter"] --> B3["CPU runs<br/>line by line"]
+    end
+
+    subgraph P3["Path 3 - Hybrid (Python, Java, C#)"]
+        C1["Source Code"] --> C2["Compiler"] --> C3["Bytecode .pyc"] --> C4["Virtual Machine"] --> C5["CPU runs"]
+    end
+
+    style A3 fill:#e8f0fe,stroke:#4285f4
+    style B3 fill:#fef7e0,stroke:#f9ab00
+    style C3 fill:#e6f4ea,stroke:#34a853
+    style C4 fill:#e6f4ea,stroke:#34a853
+```
+
+Two details worth noticing. In path 2 there is no intermediate file at all, so
+errors surface while running. In path 3 the bytecode is cached to disk, which
+is why the second run of a Python script is faster than the first.
+
+---
+
 ## Visual Comparison: All Three Forms Side by Side
 
 Let's look at the same simple program in all three forms:
